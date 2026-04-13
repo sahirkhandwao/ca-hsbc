@@ -1,0 +1,86 @@
+.accordion details {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: var(--background-color);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion details + details {
+  margin-top: 16px;
+}
+
+.accordion details p {
+  margin-bottom: 0.8em;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+}
+
+.accordion details summary {
+  position: relative;
+  padding: 16px 20px;
+  padding-right: 50px;
+  cursor: pointer;
+  list-style: none;
+  overflow: auto;
+  transition: background-color 0.2s;
+  font-size: 16px;
+  font-weight: 500;
+  color: #111;
+}
+
+.accordion details[open] summary {
+  background-color: var(--background-color);
+}
+
+.accordion details summary:focus,
+.accordion details summary:hover {
+  background-color: #f9f9f9;
+}
+
+.accordion details summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion details summary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%) rotate(135deg);
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--link-color);
+  border-width: 2px 2px 0 0;
+  transition: transform 0.2s;
+}
+
+.accordion details[open] summary::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.accordion details .accordion-item-body {
+  padding: 0 20px 16px;
+}
+
+.accordion details[open] .accordion-item-body {
+  border-top: 1px solid #e8e8e8;
+  background-color: var(--background-color);
+}
+
+/* Blue accent bar under FAQ heading */
+.accordion-container h2 {
+  text-align: center;
+  position: relative;
+  padding-bottom: 16px;
+}
+
+.accordion-container h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: var(--link-color);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
