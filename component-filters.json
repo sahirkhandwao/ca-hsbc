@@ -17,7 +17,8 @@
       "columns",
       "fragment",
       "category-links",
-      "popular-searches"
+      "popular-searches",
+      "carousel"
     ]
   },
   {
@@ -39,6 +40,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "slide"
     ]
   }
 ]

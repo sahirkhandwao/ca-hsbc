@@ -195,6 +195,23 @@
     ]
   },
   {
+    "id": "slide",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "image",
+        "value": "",
+        "label": "Image"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text"
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
