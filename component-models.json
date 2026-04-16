@@ -248,5 +248,35 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "category-links",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "richtext",
+        "name": "links",
+        "label": "Links"
+      }
+    ]
+  },
+  {
+    "id": "popular-searches",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "richtext",
+        "name": "links",
+        "label": "Links"
+      }
+    ]
   }
 ]

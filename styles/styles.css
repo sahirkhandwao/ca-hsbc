@@ -252,93 +252,11 @@ main .section.highlight {
   padding: 40px 0;
 }
 
-/* Category & Popular Searches - shared horizontal pill/tag styles */
-.category-links ul,
-.popular-searches ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 12px;
-}
+/* Accordion block tweaks moved to block CSS if needed, keeping global styles for now */
 
-.category-links li,
-.popular-searches li {
-  margin: 0;
-}
 
-/* Category links - outlined pills */
-.category-links li a {
-  display: inline-block;
-  padding: 8px 20px;
-  border: 1.5px solid var(--link-color);
-  border-radius: 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--link-color);
-  transition: all 0.2s;
-  white-space: nowrap;
-}
 
-/* Popular Searches - filled tags */
-.popular-searches ul {
-  gap: 8px;
-}
 
-.popular-searches li a {
-  display: inline-block;
-  padding: 6px 16px;
-  background-color: var(--light-color);
-  border-radius: 20px;
-  font-size: 14px;
-  color: var(--text-color);
-  transition: all 0.2s;
-}
-
-/* Hover states for both */
-.category-links li a:hover,
-.popular-searches li a:hover {
-  background-color: var(--link-color);
-  color: white;
-  text-decoration: none;
-}
-
-/* Cards block tweaks */
-.cards .cards-card-body h3 {
-  font-size: 18px;
-  margin-top: 12px;
-}
-
-.cards .cards-card-body p {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.5;
-}
-
-/* Accordion section styling */
-main > .section.accordion-container {
-  background-color: var(--light-color);
-  padding: 40px 0;
-  margin: 0;
-}
-
-main > .section.accordion-container h2 {
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-/* Hero section - text overlay improvements */
-main > .section.hero-container {
-  margin-top: 0;
-}
-
-/* Cards 3-column on desktop */
-@media (width >= 900px) {
-  .cards > ul {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 
 /* ===== ARTICLE PAGE STYLES ===== */
 
