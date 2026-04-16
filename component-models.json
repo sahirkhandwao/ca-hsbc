@@ -216,10 +216,11 @@
     "id": "slide",
     "fields": [
       {
-        "component": "richtext",
+        "component": "reference",
+        "valueType": "string",
         "name": "image",
-        "value": "",
-        "label": "Image"
+        "label": "Image",
+        "multi": false
       },
       {
         "component": "richtext",
