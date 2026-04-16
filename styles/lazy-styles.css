@@ -1,1 +1,41 @@
-/* add global styles that can be loaded post LCP here */
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+/* Selection color - brand accent */
+::selection {
+  background-color: rgb(0 102 178 / 20%);
+}
+
+/* Smooth transitions for interactive elements */
+a,
+button {
+  transition: color 0.2s, background-color 0.2s;
+}
+
+/* Print styles */
+@media print {
+  header,
+  footer,
+  .carousel,
+  .section-metadata {
+    display: none;
+  }
+
+  main {
+    font-size: 12pt;
+  }
+
+  a::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    color: #666;
+  }
+}

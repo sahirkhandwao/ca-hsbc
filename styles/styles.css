@@ -11,17 +11,19 @@
  */
 
 :root {
-  /* colors */
+  /* colors - Canara HSBC brand */
   --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --light-color: #f5f7fa;
+  --dark-color: #333;
+  --text-color: #111;
+  --link-color: #0066b2;
+  --link-hover-color: #004d86;
+  --accent-color: #e31837;
+  --border-color: #e0e0e0;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  /* fonts - Canara HSBC uses Satoshi + Helvetica */
+  --body-font-family: 'Satoshi', satoshi-fallback, sans-serif;
+  --heading-font-family: 'Helvetica', 'Arial', sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -40,16 +42,10 @@
   --nav-height: 64px;
 }
 
-/* fallback fonts */
+/* fallback font for Satoshi */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
+  font-family: satoshi-fallback;
+  size-adjust: 102%;
   src: local('Arial');
 }
 
@@ -254,4 +250,188 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* Category & Popular Searches - shared horizontal pill/tag styles */
+.category-links ul,
+.popular-searches ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.category-links li,
+.popular-searches li {
+  margin: 0;
+}
+
+/* Category links - outlined pills */
+.category-links li a {
+  display: inline-block;
+  padding: 8px 20px;
+  border: 1.5px solid var(--link-color);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--link-color);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+/* Popular Searches - filled tags */
+.popular-searches ul {
+  gap: 8px;
+}
+
+.popular-searches li a {
+  display: inline-block;
+  padding: 6px 16px;
+  background-color: var(--light-color);
+  border-radius: 20px;
+  font-size: 14px;
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+
+/* Hover states for both */
+.category-links li a:hover,
+.popular-searches li a:hover {
+  background-color: var(--link-color);
+  color: white;
+  text-decoration: none;
+}
+
+/* Cards block tweaks */
+.cards .cards-card-body h3 {
+  font-size: 18px;
+  margin-top: 12px;
+}
+
+.cards .cards-card-body p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Accordion section styling */
+main > .section.accordion-container {
+  background-color: var(--light-color);
+  padding: 40px 0;
+  margin: 0;
+}
+
+main > .section.accordion-container h2 {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Hero section - text overlay improvements */
+main > .section.hero-container {
+  margin-top: 0;
+}
+
+/* Cards 3-column on desktop */
+@media (width >= 900px) {
+  .cards > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== ARTICLE PAGE STYLES ===== */
+
+/* Narrower article body content */
+.article-body > .section > div {
+  max-width: 800px;
+}
+
+/* Key Takeaways callout box */
+main > .section.key-takeaways > .default-content-wrapper {
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #f5a623;
+  border-radius: 8px;
+  padding: 24px 28px;
+  background-color: #fffdf7;
+}
+
+main > .section.key-takeaways h2 {
+  margin-top: 0;
+  font-size: 22px;
+  border-bottom: none;
+}
+
+main > .section.key-takeaways ul {
+  margin-top: 0;
+}
+
+main > .section.key-takeaways li {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+
+/* Blockquote - "Did You Know?" callout */
+main blockquote {
+  background-color: #eef6fb;
+  border: none;
+  border-left: 4px solid var(--link-color);
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin: 32px 0;
+  font-style: normal;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main blockquote p:first-child {
+  font-size: 20px;
+  margin-top: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main blockquote p:last-child {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Glossary section - blue box */
+main > .section.glossary > .default-content-wrapper {
+  background-color: #eef4fb;
+  border-radius: 12px;
+  padding: 28px 32px;
+}
+
+main > .section.glossary h3 {
+  color: var(--link-color);
+  position: relative;
+  padding-bottom: 12px;
+  margin-top: 0;
+}
+
+main > .section.glossary h3::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background-color: var(--link-color);
+  margin-top: 8px;
+  border-radius: 2px;
+}
+
+main > .section.glossary ol {
+  padding-left: 20px;
+}
+
+main > .section.glossary li {
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Article body H2 styling - blue left accent */
+main > .section > .default-content-wrapper h2 {
+  padding-bottom: 8px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 16px;
 }
