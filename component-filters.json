@@ -18,7 +18,14 @@
       "fragment",
       "category-links",
       "popular-searches",
-      "carousel"
+      "carousel",
+      "accordion"
+    ]
+  },
+  {
+    "id": "accordion",
+    "components": [
+      "accordion-item"
     ]
   },
   {

@@ -159,6 +159,23 @@
     ]
   },
   {
+    "id": "accordion-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "heading",
+        "value": "",
+        "label": "Question"
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "value": "",
+        "label": "Answer"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
