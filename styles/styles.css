@@ -66,6 +66,29 @@
   }
 }
 
+.primary-btn-outline{
+  -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: transparent;
+    border: 1px solid #00adef;
+    color: #00adef;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-family: Satoshi;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 120%;
+    padding: 1rem 1.6875rem;
+    position: relative;
+    -webkit-transition: background-color .3s ease;
+    transition: background-color .3s ease;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+}
 body {
   display: none;
   margin: 0;

@@ -1,7 +1,25 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, decorateIcons } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+const blogCardMeta = `
+  <div class="cards-card-meta">
+    <span class="cards-card-meta-item">
+      <span class="icon icon-calendar"></span>
+      <span>1 Apr '26</span>
+    </span>
+    <span class="cards-card-meta-item">
+      <span class="icon icon-eye"></span>
+      <span>37 Views</span>
+    </span>
+    <span class="cards-card-meta-item">
+      <span class="icon icon-clock"></span>
+      <span>7 minute read</span>
+    </span>
+  </div>
+`;
+
 export default function decorate(block) {
+  const isBlogCard = block.classList.contains('blog-card');
   /* change to ul, li */
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {
@@ -21,6 +39,14 @@ export default function decorate(block) {
         div.className = 'cards-card-body';
       }
     });
+    if (isBlogCard) {
+      const body = li.querySelector('.cards-card-body');
+      if (body) {
+        const h3 = body.querySelector('h3');
+        if (h3) h3.insertAdjacentHTML('afterend', blogCardMeta);
+        else body.insertAdjacentHTML('afterbegin', blogCardMeta);
+      }
+    }
     ul.append(li);
   });
   ul.querySelectorAll('picture > img').forEach((img) => {
@@ -42,4 +68,11 @@ export default function decorate(block) {
   });
 
   block.replaceChildren(ul);
+  if (isBlogCard) {
+    const loadMoreWrap = document.createElement('div');
+    loadMoreWrap.className = 'cards-loadmore-wrap';
+    loadMoreWrap.innerHTML = '<button type="button" class="cards-loadmore-btn primary-btn-outline">Load More</button>';
+    block.append(loadMoreWrap);
+    decorateIcons(block);
+  }
 }
