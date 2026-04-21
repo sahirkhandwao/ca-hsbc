@@ -59,7 +59,8 @@
         "cards",
         "columns",
         "fragment",
-        "blog-search"
+        "blog-search",
+        "breadcrumb"
       ]
     }
   ]
