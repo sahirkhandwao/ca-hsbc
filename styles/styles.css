@@ -15,7 +15,7 @@
   --background-color: white;
   --light-color: #f5f7fa;
   --dark-color: #333;
-  --text-color: #111;
+  --text-color:  #323232;
   --link-color: #0066b2;
   --link-hover-color: #004d86;
   --accent-color: #e31837;
@@ -222,27 +222,23 @@ main img {
   height: 100%;
   width: 100%;
 }
-
+main{
+    border-left: 1px solid #d0d0d0;
+    border-right: 1px solid #d0d0d0;
+    margin: 0 auto;
+    max-width: 90pc;
+}
 /* sections */
 main > .section {
-  margin: 40px 0;
-}
-
-main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
+  margin: 0 auto;
+  max-width: 1438px;
+  padding: 40px 80px;
 }
 
 main > .section:first-of-type {
   margin-top: 0;
 }
 
-@media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
-  }
-}
 
 /* section metadata */
 main .section.light,

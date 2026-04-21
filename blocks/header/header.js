@@ -113,7 +113,7 @@ export default async function decorate(block) {
   brand.classList.add('nav-brand');
   brand.innerHTML = `
     <a href="/" aria-label="Canara HSBC Life Insurance">
-      <img src="/assets/canara-hsbc-life-insurance-logo.svg" alt="Canara HSBC Life Insurance" class="logo">
+      <img src="/icons/canara-hsbc-life-insurance-logo.svg" alt="Canara HSBC Life Insurance" class="logo">
     </a>
   `;
 
@@ -133,15 +133,15 @@ export default async function decorate(block) {
   tools.classList.add('nav-tools');
   tools.innerHTML = `
     <div class="tool-item search">
-      <img src="/assets/icons/search.svg" alt="Search">
+      <img src="/icons/search.svg" alt="Search">
     </div>
     <div class="tool-item notification">
-      <img src="/assets/icons/bell.svg" alt="Notifications">
+      <img src="/icons/bell.svg" alt="Notifications">
       <span class="badge">1</span>
     </div>
     <div class="tool-item login">
       <a href="/login">
-        <img src="/assets/icons/user.svg" alt="Login">
+        <img src="/icons/user.svg" alt="Login">
         <span>Login</span>
       </a>
     </div>
@@ -152,7 +152,7 @@ export default async function decorate(block) {
   hamburger.classList.add('nav-hamburger');
   hamburger.innerHTML = `
     <button type="button" aria-controls="nav" aria-label="Open navigation">
-      <img src="/assets/icons/hamburger.svg" alt="Menu">
+      <img src="/icons/hamburger.svg" alt="Menu">
     </button>
   `;
 

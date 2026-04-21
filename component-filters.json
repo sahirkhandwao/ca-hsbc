@@ -15,17 +15,7 @@
       "hero",
       "cards",
       "columns",
-      "fragment",
-      "category-links",
-      "popular-searches",
-      "carousel",
-      "accordion"
-    ]
-  },
-  {
-    "id": "accordion",
-    "components": [
-      "accordion-item"
+      "fragment"
     ]
   },
   {
@@ -47,12 +37,6 @@
       "image",
       "button",
       "title"
-    ]
-  },
-  {
-    "id": "carousel",
-    "components": [
-      "slide"
     ]
   }
 ]

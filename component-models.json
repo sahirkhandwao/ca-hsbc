@@ -159,23 +159,6 @@
     ]
   },
   {
-    "id": "accordion-item",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "heading",
-        "value": "",
-        "label": "Question"
-      },
-      {
-        "component": "richtext",
-        "name": "body",
-        "value": "",
-        "label": "Answer"
-      }
-    ]
-  },
-  {
     "id": "card",
     "fields": [
       {
@@ -213,20 +196,19 @@
     ]
   },
   {
-    "id": "slide",
+    "id": "category-links",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "richtext",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text"
+        "name": "links",
+        "label": "Links",
+        "valueType": "string"
       }
     ]
   },
@@ -286,32 +268,19 @@
     ]
   },
   {
-    "id": "category-links",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "title",
-        "label": "Title"
-      },
-      {
-        "component": "richtext",
-        "name": "links",
-        "label": "Links"
-      }
-    ]
-  },
-  {
     "id": "popular-searches",
     "fields": [
       {
         "component": "richtext",
         "name": "title",
-        "label": "Title"
+        "label": "Title",
+        "valueType": "string"
       },
       {
         "component": "richtext",
         "name": "links",
-        "label": "Links"
+        "label": "Links",
+        "valueType": "string"
       }
     ]
   }
