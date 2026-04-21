@@ -37,6 +37,10 @@
             {
               "name": "Title Heading",
               "value": "title-heading"
+            },
+            {
+              "name": "Full Width Section",
+              "value": "full-width"
             }
           ]
         }
@@ -55,8 +59,7 @@
         "cards",
         "columns",
         "fragment",
-        "blog-search",
-        "full-width"
+        "blog-search"
       ]
     }
   ]
