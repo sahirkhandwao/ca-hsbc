@@ -1,156 +1,106 @@
-import { fetchPlaceholders } from '../../scripts/placeholders.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function updateActiveSlide(slide) {
-  const block = slide.closest('.carousel');
-  const slideIndex = parseInt(slide.dataset.slideIndex, 10);
-  block.dataset.activeSlide = slideIndex;
+const META_HTML = `
+  <div class="carousel-meta">
+    <span class="carousel-meta-item">
+      <span class="icon icon-calendar"></span>
+      <span>29 Jan '25</span>
+    </span>
+    <span class="carousel-meta-item">
+      <span class="icon icon-eye"></span>
+      <span>5950 Views</span>
+    </span>
+    <span class="carousel-meta-item">
+      <span class="icon icon-clock"></span>
+      <span>8 minute read</span>
+    </span>
+  </div>
+`;
 
+function parseSlide(row) {
+  const picture = row.querySelector('picture');
+  const h = row.querySelector('h1, h2, h3, h4, h5, h6');
+  const title = h ? h.textContent.trim() : '';
+  const paragraphs = [...row.querySelectorAll('p')];
+  const linkPara = paragraphs.find((p) => p.querySelector('a'));
+  const descPara = paragraphs.find((p) => !p.querySelector('a'));
+  const description = descPara ? descPara.textContent.trim() : '';
+  const link = linkPara ? linkPara.querySelector('a') : null;
+  const href = link ? link.getAttribute('href') : '#';
+  const linkText = link ? link.textContent.trim() : 'Read More';
+  return {
+    picture, title, description, href, linkText,
+  };
+}
+
+function setActive(block, index) {
   const slides = block.querySelectorAll('.carousel-slide');
-
-  slides.forEach((aSlide, idx) => {
-    aSlide.setAttribute('aria-hidden', idx !== slideIndex);
-    aSlide.querySelectorAll('a').forEach((link) => {
-      if (idx !== slideIndex) {
-        link.setAttribute('tabindex', '-1');
-      } else {
-        link.removeAttribute('tabindex');
-      }
-    });
+  const thumbs = block.querySelectorAll('.carousel-thumb');
+  if (!slides.length) return;
+  const i = (index + slides.length) % slides.length;
+  slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+  thumbs.forEach((t, idx) => {
+    t.classList.toggle('is-active', idx === i);
+    t.setAttribute('aria-current', idx === i ? 'true' : 'false');
   });
-
-  const indicators = block.querySelectorAll('.carousel-slide-indicator');
-  indicators.forEach((indicator, idx) => {
-    const button = indicator.querySelector('button');
-    if (idx !== slideIndex) {
-      button.removeAttribute('disabled');
-      button.removeAttribute('aria-current');
-    } else {
-      button.setAttribute('disabled', true);
-      button.setAttribute('aria-current', true);
-    }
-  });
+  block.dataset.activeSlide = i;
 }
 
-function showSlide(block, slideIndex = 0) {
-  const slides = block.querySelectorAll('.carousel-slide');
-  let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
-  if (slideIndex >= slides.length) realSlideIndex = 0;
-  const activeSlide = slides[realSlideIndex];
+export default function decorate(block) {
+  const rows = [...block.querySelectorAll(':scope > div')];
+  const data = rows.map((row) => ({ row, ...parseSlide(row) }));
 
-  activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
-  block.querySelector('.carousel-slides').scrollTo({
-    top: 0,
-    left: activeSlide.offsetLeft,
-    behavior: 'smooth',
-  });
-}
+  const slidesHtml = data.map((d, idx) => `
+    <div class="carousel-slide${idx === 0 ? ' is-active' : ''}" data-slide-index="${idx}">
+      <div class="carousel-slide-image">${d.picture ? d.picture.outerHTML : ''}</div>
+      <div class="carousel-slide-info">
+        <h3 class="carousel-slide-title">${d.title}</h3>
+        ${META_HTML}
+        <p class="carousel-slide-desc">${d.description}</p>
+        <a class="carousel-slide-link" href="${d.href}">${d.linkText}</a>
+      </div>
+    </div>
+  `).join('');
 
-function bindEvents(block) {
-  const slideIndicators = block.querySelector('.carousel-slide-indicators');
-  if (!slideIndicators) return;
+  const thumbsHtml = data.map((d, idx) => `
+    <button type="button" class="carousel-thumb${idx === 0 ? ' is-active' : ''}" data-slide-index="${idx}" aria-current="${idx === 0}">
+      <span class="carousel-thumb-image">${d.picture ? d.picture.outerHTML : ''}</span>
+      <span class="carousel-thumb-title">${d.title}</span>
+    </button>
+  `).join('');
 
-  slideIndicators.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const slideIndicator = e.currentTarget.parentElement;
-      showSlide(block, parseInt(slideIndicator.dataset.targetSlide, 10));
-    });
-  });
+  block.innerHTML = `
+    <div class="carousel-stage">
+      <div class="carousel-slides">${slidesHtml}</div>
+      <button type="button" class="carousel-nav carousel-prev" aria-label="Previous Slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="carousel-nav carousel-next" aria-label="Next Slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="carousel-thumbs">${thumbsHtml}</div>
+  `;
 
-  block.querySelector('.slide-prev').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) - 1);
-  });
-  block.querySelector('.slide-next').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) + 1);
-  });
-
-  const slideObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) updateActiveSlide(entry.target);
-    });
-  }, { threshold: 0.5 });
-  block.querySelectorAll('.carousel-slide').forEach((slide) => {
-    slideObserver.observe(slide);
-  });
-}
-
-function createSlide(row, slideIndex, carouselId) {
-  const slide = document.createElement('li');
-  slide.dataset.slideIndex = slideIndex;
-  slide.setAttribute('id', `carousel-${carouselId}-slide-${slideIndex}`);
-  slide.classList.add('carousel-slide');
-
-  row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
-    column.classList.add(`carousel-slide-${colIdx === 0 ? 'image' : 'content'}`);
-    moveInstrumentation(column, column); // This is redundant but harmless; actually just ensures columns keep their context if we were replacing them.
-    slide.append(column);
-  });
-
-  const labeledBy = slide.querySelector('h1, h2, h3, h4, h5, h6');
-  if (labeledBy) {
-    slide.setAttribute('aria-labelledby', labeledBy.getAttribute('id'));
-  }
-
-  return slide;
-}
-
-let carouselId = 0;
-export default async function decorate(block) {
-  carouselId += 1;
-  block.setAttribute('id', `carousel-${carouselId}`);
-  const rows = block.querySelectorAll(':scope > div');
-  const isSingleSlide = rows.length < 2;
-
-  const placeholders = await fetchPlaceholders();
-
-  block.setAttribute('role', 'region');
-  block.setAttribute('aria-roledescription', placeholders.carousel || 'Carousel');
-
-  const container = document.createElement('div');
-  container.classList.add('carousel-slides-container');
-
-  const slidesWrapper = document.createElement('ul');
-  slidesWrapper.classList.add('carousel-slides');
-  block.prepend(slidesWrapper);
-
-  let slideIndicators;
-  if (!isSingleSlide) {
-    const slideIndicatorsNav = document.createElement('nav');
-    slideIndicatorsNav.setAttribute('aria-label', placeholders.carouselSlideControls || 'Carousel Slide Controls');
-    slideIndicators = document.createElement('ol');
-    slideIndicators.classList.add('carousel-slide-indicators');
-    slideIndicatorsNav.append(slideIndicators);
-    block.append(slideIndicatorsNav);
-
-    const slideNavButtons = document.createElement('div');
-    slideNavButtons.classList.add('carousel-navigation-buttons');
-    slideNavButtons.innerHTML = `
-      <button type="button" class= "slide-prev" aria-label="${placeholders.previousSlide || 'Previous Slide'}"></button>
-      <button type="button" class="slide-next" aria-label="${placeholders.nextSlide || 'Next Slide'}"></button>
-    `;
-
-    container.append(slideNavButtons);
-  }
-
-  rows.forEach((row, idx) => {
-    const slide = createSlide(row, idx, carouselId);
-    moveInstrumentation(row, slide);
-    slidesWrapper.append(slide);
-
-    if (slideIndicators) {
-      const indicator = document.createElement('li');
-      indicator.classList.add('carousel-slide-indicator');
-      indicator.dataset.targetSlide = idx;
-      indicator.innerHTML = `<button type="button" aria-label="${placeholders.showSlide || 'Show Slide'} ${idx + 1} ${placeholders.of || 'of'} ${rows.length}"></button>`;
-      slideIndicators.append(indicator);
-    }
+  data.forEach(({ row }, idx) => {
+    const slide = block.querySelectorAll('.carousel-slide')[idx];
+    if (slide) moveInstrumentation(row, slide);
     row.remove();
   });
 
-  container.append(slidesWrapper);
-  block.prepend(container);
+  block.querySelectorAll('.carousel-thumb').forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      setActive(block, parseInt(thumb.dataset.slideIndex, 10));
+    });
+  });
+  block.querySelector('.carousel-prev').addEventListener('click', () => {
+    setActive(block, parseInt(block.dataset.activeSlide || 0, 10) - 1);
+  });
+  block.querySelector('.carousel-next').addEventListener('click', () => {
+    setActive(block, parseInt(block.dataset.activeSlide || 0, 10) + 1);
+  });
 
-  if (!isSingleSlide) {
-    bindEvents(block);
-  }
+  block.dataset.activeSlide = 0;
+
+  import('../../scripts/aem.js').then(({ decorateIcons }) => decorateIcons(block));
 }

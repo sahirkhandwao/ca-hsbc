@@ -145,6 +145,11 @@ export default async function decorate(block) {
         <span>Login</span>
       </a>
     </div>
+    <div class="tool-item hamburger">
+      <a href="/login">
+        <img src="/icons/sprite.svg" alt="Login">
+      </a>
+    </div>
   `;
 
   // Hamburger for mobile
