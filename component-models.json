@@ -163,6 +163,40 @@
     ]
   },
   {
+    "id": "blog-search",
+    "fields": [
+      {
+        "component": "text",
+        "name": "searchLabel",
+        "value": "Search",
+        "label": "Search Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "searchPlaceholder",
+        "value": "Search by name, category, author",
+        "label": "Search Placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "yearLabel",
+        "value": "Select Year",
+        "label": "Year Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "years",
+        "value": "2026,2025,2024,2023",
+        "label": "Years",
+        "description": "Comma-separated list of years for the dropdown",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "cards",
     "fields": [
       {

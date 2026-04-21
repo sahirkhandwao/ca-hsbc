@@ -1,0 +1,112 @@
+.blog-search{
+  margin: 1.5rem 0;
+}
+.blog-search-row{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.blog-search-field{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.blog-search-field--input{
+  flex: 1 1 auto;
+}
+.blog-search-field--year{
+  flex: 0 0 auto;
+  width: 100%;
+}
+.blog-search-label{
+  color: #323232;
+  font-family: Satoshi, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.blog-search-input-wrap{
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #00adef;
+  border-radius: 0;
+  background: #fff;
+}
+.blog-search-input{
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  color: #323232;
+  font-family: Satoshi, sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  padding: 0.875rem 1rem;
+  outline: none;
+}
+.blog-search-input::placeholder{
+  color: #a7a7a7;
+}
+.blog-search-submit{
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+}
+.blog-search-submit:hover{
+  opacity: 0.8;
+}
+.blog-search-select-wrap{
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #00adef;
+  background: #fff;
+}
+.blog-search-select-wrap::after{
+  content: '';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-right: 2px solid #00adef;
+  border-bottom: 2px solid #00adef;
+  transform: translateY(-75%) rotate(45deg);
+  pointer-events: none;
+}
+.blog-search-select{
+  appearance: none;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  color: #a7a7a7;
+  cursor: pointer;
+  font-family: Satoshi, sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  padding: 0.875rem 2.5rem 0.875rem 1rem;
+  outline: none;
+}
+.blog-search-select:focus,
+.blog-search-input:focus{
+  outline: none;
+}
+
+@media (width >= 900px) {
+  .blog-search-row{
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+  .blog-search-field--input{
+    flex: 1 1 75%;
+  }
+  .blog-search-field--year{
+    flex: 0 0 20%;
+    width: auto;
+  }
+}
