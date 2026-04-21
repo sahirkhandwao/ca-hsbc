@@ -17,7 +17,6 @@ header nav {
   max-width: 1400px;
   height: 80px;
   padding: 0 32px;
-  font-family: 'Outfit', sans-serif;
 }
 
 header nav[aria-expanded='true'] {
@@ -59,8 +58,8 @@ header nav .nav-sections ul {
 header nav .nav-sections ul > li > a {
   text-decoration: none;
   color: #333;
-  font-weight: 500;
-  font-size: 15px;
+      font-weight: 400;
+    font-size: 16px;
   transition: color 0.3s;
 }
 
@@ -109,8 +108,9 @@ header .tool-item.login a {
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  font-weight: 600;
-  color: #25b6e6;
+  font-weight: 400;
+    color: #25b6e6;
+    font-size: 16px
 }
 
 /* hamburger */

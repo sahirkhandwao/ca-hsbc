@@ -1,12 +1,15 @@
 /* stylelint-disable max-line-length */
 
+/* Helvetica - heading font used by Canara HSBC (CDN) */
+@import url('https://fonts.cdnfonts.com/css/helvetica-2');
+
 /* Satoshi - body font used by Canara HSBC */
 @font-face {
   font-family: Satoshi;
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('https://cdn.fontshare.com/wf/ZRUNELDMQ5RXKOCE5F6KNUAMXQ3TXR7E/EKSA6GLUI7RIQVBLGWJF5RQKBEEQBKGU/RJZTCL5CNSGL5BWNQ3EXN4S6F7M2Z5JO.woff2') format('woff2');
+  src: url('/fonts/satoshi-regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -14,7 +17,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('https://cdn.fontshare.com/wf/ZRUNELDMQ5RXKOCE5F6KNUAMXQ3TXR7E/I2FHMRWCG3GEZSFT4GQ6GOJHEZGCBLMZ/RJZTCL5CNSGL5BWNQ3EXN4S6F7M2Z5JO.woff2') format('woff2');
+  src: url('/fonts/satoshi-medium.woff2') format('woff2');
 }
 
 @font-face {
@@ -22,5 +25,5 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('https://cdn.fontshare.com/wf/ZRUNELDMQ5RXKOCE5F6KNUAMXQ3TXR7E/NFBXKZJOZHVGU5TLRRMFUYLNK5RQIZPZ/RJZTCL5CNSGL5BWNQ3EXN4S6F7M2Z5JO.woff2') format('woff2');
+  src: url('/fonts/satoshi-bold.woff2') format('woff2');
 }

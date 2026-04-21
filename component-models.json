@@ -136,6 +136,10 @@
           {
             "name": "Highlight",
             "value": "highlight"
+          },
+          {
+            "name": "Title Heading",
+            "value": "title-heading"
           }
         ]
       }
@@ -159,19 +163,24 @@
     ]
   },
   {
-    "id": "accordion-item",
+    "id": "cards",
     "fields": [
       {
-        "component": "richtext",
-        "name": "heading",
+        "component": "select",
+        "name": "classes",
         "value": "",
-        "label": "Question"
-      },
-      {
-        "component": "richtext",
-        "name": "body",
-        "value": "",
-        "label": "Answer"
+        "label": "Variation",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Blog Card",
+            "value": "blog-card"
+          }
+        ]
       }
     ]
   },
@@ -184,6 +193,14 @@
         "name": "image",
         "label": "Image",
         "multi": false
+      },
+      {
+        "component": "text",
+        "name": "tag",
+        "value": "",
+        "label": "Tag",
+        "description": "Short label shown above the card (e.g. Life Insurance)",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -213,20 +230,19 @@
     ]
   },
   {
-    "id": "slide",
+    "id": "category-links",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "richtext",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text"
+        "name": "links",
+        "label": "Links",
+        "valueType": "string"
       }
     ]
   },
@@ -286,32 +302,19 @@
     ]
   },
   {
-    "id": "category-links",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "title",
-        "label": "Title"
-      },
-      {
-        "component": "richtext",
-        "name": "links",
-        "label": "Links"
-      }
-    ]
-  },
-  {
     "id": "popular-searches",
     "fields": [
       {
         "component": "richtext",
         "name": "title",
-        "label": "Title"
+        "label": "Title",
+        "valueType": "string"
       },
       {
         "component": "richtext",
         "name": "links",
-        "label": "Links"
+        "label": "Links",
+        "valueType": "string"
       }
     ]
   }
