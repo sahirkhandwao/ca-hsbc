@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sSL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/123.0.0.0 Safari/537.36\" -o /tmp/canara.html \"https://www.canarahsbclife.com/blog/life-insurance\")",
+      "Bash(curl -sSL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/123.0.0.0 Safari/537.36\" -o icons/sprite.svg \"https://www.canarahsbclife.com/etc.clientlibs/chli/clientlibs/clientlib-site/resources/images/sprite/sprite.svg\")",
+      "Bash(node tmp-extract-icons.js)",
+      "Bash(node tmp-prune-icons.js)"
+    ]
+  }
+}

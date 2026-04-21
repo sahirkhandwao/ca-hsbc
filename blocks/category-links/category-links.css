@@ -29,6 +29,7 @@
   -webkit-overflow-scrolling: touch;
   cursor: grab;
   user-select: none;
+      scrollbar-width: none;
 }
 
 .category-links-content.is-dragging {
