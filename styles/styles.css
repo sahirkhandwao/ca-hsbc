@@ -263,11 +263,15 @@ main {
     margin: 0 auto;
     max-width: 90pc;
 }
-/* sections */
+/* sections padding and width are defined gloabally ===========================================  */
 main > .section {
     margin: 0 auto;
     max-width: 1438px;
     padding: 40px 80px;
+}
+ main > .section.full-width {
+        max-width: 100%;
+    padding: 0;
 }
 
 main > .section:first-of-type {
@@ -414,8 +418,5 @@ main > .section.glossary li {
         margin: 72px auto 0;
         padding: 0 20px;
     }
-    main > .section.full-width {
-        max-width: 100%;
-    padding: 0;
-}
+   
 }

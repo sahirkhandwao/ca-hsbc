@@ -4,50 +4,100 @@
   flex-direction: column;
   gap: 2px;
 }
-.category-links-container .category-links-title h3, .category-links-container .category-links-title h3{
-      color: #323232;
-    font-family: Satoshi;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 140%;
+
+.category-links-container .category-links-title h3,
+.category-links-container .category-links-title h3 {
+  color: #323232;
+  font-family: Satoshi, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 140%;
 }
+
 .category-links-title p {
   margin: 0;
   font-size: 1.1rem;
   color: #333;
 }
 
+.category-links-content {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #00adef transparent;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
+}
+
+.category-links-content.is-dragging {
+  cursor: grabbing;
+}
+
+.category-links-content.is-dragging a {
+  pointer-events: none;
+}
+
+.category-links-content::-webkit-scrollbar {
+  height: 6px;
+}
+
+.category-links-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.category-links-content::-webkit-scrollbar-thumb {
+  background-color: #cfeefb;
+  border-radius: 3px;
+}
+
+.category-links-content::-webkit-scrollbar-thumb:hover {
+  background-color: #00adef;
+}
+
 .category-links-content ul {
   list-style: none;
   padding: 0;
-  margin: 10px 0 0 0;
+  margin: 10px 0 12px;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 20px;
+  min-width: max-content;
 }
 
 .category-links-content ul li {
-     border: 1px solid #00adef;
-    box-sizing: border-box;
-    font-family: Satoshi;
-    font-size: 1.25rem;
-    font-weight: 500;
-    height: 5.3125rem;
-    line-height: 140%;
-    overflow: hidden;
-    padding: 1rem;
-    width: 7.8125rem;
-    color: #00adef !important;
-    text-align: center;
+  border: 1px solid #00adef;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  font-family: Satoshi, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  height: 5.3125rem;
+  line-height: 140%;
+  overflow: hidden;
+  padding: 1rem;
+  width: 7.8125rem;
+  color: #00adef !important;
+  text-align: center;
 }
 
 .category-links-content ul li a {
   text-decoration: none;
   color: #00adef;
   font-weight: 500;
-  /* font-size: 0.9rem; */
 }
 
 .category-links-content ul li a:hover {
   text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .category-links-content {
+    scroll-snap-type: x proximity;
+  }
+
+  .category-links-content ul li {
+    scroll-snap-align: start;
+  }
 }

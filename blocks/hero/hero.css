@@ -33,7 +33,7 @@
   text-align: left;
 }
 
-.hero .hero-text :is(h1, h2, h3, h4, h5, h6) {
+.hero .hero-text h2, .hero .hero-text h3{
   color: #0a0a0a;
   font-family: Satoshi, sans-serif;
   font-size: 32px;
@@ -51,16 +51,15 @@
 
 @media (width >= 900px) {
   .hero {
-    padding: 80px 96px;
-    min-height: 360px;
+   padding: 0 0 0 80px;
+        min-height: 28.125rem;
   }
 
   .hero .hero-text {
     max-width: 720px;
   }
-
-  .hero .hero-text :is(h1, h2, h3, h4, h5, h6) {
-    font-size: 44px;
+ .hero .hero-text h2, .hero .hero-text h3 {
+    font-size: 28px;
     margin-bottom: 20px;
   }
 

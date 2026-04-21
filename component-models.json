@@ -201,6 +201,18 @@
     ]
   },
   {
+    "id": "breadcrumb",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Items",
+        "description": "Add a list of breadcrumb items. Link the ones that should navigate; leave the last (current page) as plain text.",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "cards",
     "fields": [
       {
