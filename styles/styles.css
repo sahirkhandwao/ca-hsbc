@@ -239,7 +239,24 @@ main > .section:first-of-type {
   margin-top: 0;
 }
 
-
+.section.text-left .default-content-wrapper h2 {
+    text-align: left;
+}
+.section.title-heading .default-content-wrapper h2 {
+   font-family: Helvetica;
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 120%;
+    position: relative;
+}
+.section .default-content-wrapper:after{
+  position: absolute;
+  content: "";
+  background: linear-gradient(90deg, #00adef 0, #00adef 33%, #ffc20e 0, #ffc20e 66%, #db0011 0, #db0011);
+    height: .25rem;
+    margin-top: .625rem;
+    width: 10.5rem;
+}
 /* section metadata */
 main .section.light,
 main .section.highlight {

@@ -1,5 +1,8 @@
 /* stylelint-disable max-line-length */
 
+/* Helvetica - heading font used by Canara HSBC (CDN) */
+@import url('https://fonts.cdnfonts.com/css/helvetica-2');
+
 /* Satoshi - body font used by Canara HSBC */
 @font-face {
   font-family: Satoshi;
