@@ -248,14 +248,18 @@ main > .section:first-of-type {
     font-weight: 700;
     line-height: 120%;
     position: relative;
+    margin: 10px 0 32px;
+  
 }
-.section .default-content-wrapper:after{
+.section .default-content-wrapper h2:after{
   position: absolute;
   content: "";
   background: linear-gradient(90deg, #00adef 0, #00adef 33%, #ffc20e 0, #ffc20e 66%, #db0011 0, #db0011);
     height: .25rem;
     margin-top: .625rem;
     width: 10.5rem;
+      left: 0;
+    top: 25px;
 }
 /* section metadata */
 main .section.light,
@@ -361,8 +365,8 @@ main > .section.glossary li {
 }
 
 /* Article body H2 styling - blue left accent */
-main > .section > .default-content-wrapper h2 {
+/* main > .section > .default-content-wrapper h2 {
   padding-bottom: 8px;
   border-bottom: 2px solid #eee;
   margin-bottom: 16px;
-}
+} */

@@ -195,6 +195,14 @@
         "multi": false
       },
       {
+        "component": "text",
+        "name": "tag",
+        "value": "",
+        "label": "Tag",
+        "description": "Short label shown above the card (e.g. Life Insurance)",
+        "valueType": "string"
+      },
+      {
         "component": "richtext",
         "name": "text",
         "value": "",
