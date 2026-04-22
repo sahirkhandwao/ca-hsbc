@@ -2,18 +2,18 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const META_HTML = `
   <div class="carousel-meta">
-    <span class="carousel-meta-item">
+    <div class="carousel-meta-item">
       <span class="icon icon-calendar"></span>
-      <span>29 Jan '25</span>
-    </span>
-    <span class="carousel-meta-item">
+      <div>29 Jan '25</div>
+    </div>
+    <div class="carousel-meta-item">
       <span class="icon icon-eye"></span>
-      <span>5950 Views</span>
-    </span>
-    <span class="carousel-meta-item">
+      <div>5950 Views</div>
+    </div>
+    <div class="carousel-meta-item">
       <span class="icon icon-clock"></span>
-      <span>8 minute read</span>
-    </span>
+      <div>8 minute read</div>
+    </div>
   </div>
 `;
 
@@ -63,20 +63,24 @@ export default function decorate(block) {
   `).join('');
 
   const thumbsHtml = data.map((d, idx) => `
-    <button type="button" class="carousel-thumb${idx === 0 ? ' is-active' : ''}" data-slide-index="${idx}" aria-current="${idx === 0}">
-      <span class="carousel-thumb-image">${d.picture ? d.picture.outerHTML : ''}</span>
-      <span class="carousel-thumb-title">${d.title}</span>
-    </button>
+    <div role="button" tabindex="0" class="carousel-thumb${idx === 0 ? ' is-active' : ''}" data-slide-index="${idx}" aria-current="${idx === 0}">
+      <div class="carousel-thumb-image">${d.picture ? d.picture.outerHTML : ''}</div>
+      <div class="carousel-thumb-title">${d.title}</div>
+    </div>
   `).join('');
 
   block.innerHTML = `
     <div class="carousel-stage">
       <div class="carousel-slides">${slidesHtml}</div>
       <button type="button" class="carousel-nav carousel-prev" aria-label="Previous Slide">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15.5 5 8.75 11.25a1.06 1.06 0 0 0 0 1.5L15.5 19" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </button>
       <button type="button" class="carousel-nav carousel-next" aria-label="Next Slide">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M8.5 5l6.75 6.25a1.06 1.06 0 0 1 0 1.5L8.5 19" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </button>
     </div>
     <div class="carousel-thumbs">${thumbsHtml}</div>
@@ -89,8 +93,13 @@ export default function decorate(block) {
   });
 
   block.querySelectorAll('.carousel-thumb').forEach((thumb) => {
-    thumb.addEventListener('click', () => {
-      setActive(block, parseInt(thumb.dataset.slideIndex, 10));
+    const activate = () => setActive(block, parseInt(thumb.dataset.slideIndex, 10));
+    thumb.addEventListener('click', activate);
+    thumb.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activate();
+      }
     });
   });
   block.querySelector('.carousel-prev').addEventListener('click', () => {

@@ -14,45 +14,45 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-family: Satoshi, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 400;
   line-height: 1.4;
 }
 
 .breadcrumb .breadcrumb-item {
   display: inline-flex;
   align-items: center;
-  color: #9a9a9a;
+  color: #7a7a7a;
 }
 
 .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   content: '|';
-  margin-right: 10px;
-  color: #d0d0d0;
+  margin-right: 12px;
+  color: #c8c8c8;
   font-weight: 400;
 }
 
 .breadcrumb .breadcrumb-item a {
-  color: #9a9a9a;
+  color: #7a7a7a;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .breadcrumb .breadcrumb-item a:hover,
 .breadcrumb .breadcrumb-item a:focus-visible {
-  color: #00adef;
-  text-decoration: underline;
+  /* color: #00adef; */
 }
 
 .breadcrumb .breadcrumb-current {
-  color: #004a8f;
-  font-weight: 700;
+  /* color: #00adef; */
+  font-weight: 400;
 }
 
 @media (width >= 900px) {
   .breadcrumb {
-    padding: 28px 80px 0;
+    padding: 0;
   }
 
   .breadcrumb .breadcrumb-list {

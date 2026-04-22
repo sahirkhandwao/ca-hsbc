@@ -89,6 +89,8 @@ aspect-ratio: auto;
 .cards.blog-card ul li a .cards-card-tag{
     background-color: #ffc20e;
     color: #323232;
+    display: inline-block;
+    width: auto;
     font-family: Satoshi;
     font-size: .875rem;
     font-weight: 500;
@@ -98,6 +100,13 @@ aspect-ratio: auto;
     top: 1.25rem;
     position: absolute;
     text-transform: uppercase;
+    z-index: 1;
+}
+
+.cards.blog-card ul li a .cards-card-tag p {
+    margin: 0;
+    padding: 0;
+    display: inline;
 }
 .cards.blog-card .cards-card-body{
   border-bottom: 8px solid #ffc20e;
