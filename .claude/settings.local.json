@@ -5,7 +5,10 @@
       "Bash(curl -sSL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/123.0.0.0 Safari/537.36\" -o icons/sprite.svg \"https://www.canarahsbclife.com/etc.clientlibs/chli/clientlibs/clientlib-site/resources/images/sprite/sprite.svg\")",
       "Bash(node tmp-extract-icons.js)",
       "Bash(node tmp-prune-icons.js)",
-      "Bash(node tmp-colorize.js)"
+      "Bash(node tmp-colorize.js)",
+      "Bash(grep -oE '\\(Quick Links|Funds & NAV|Download Center|Proposal Form|Bima Bharosa|Central KYC|Claims Paying|Do not Call|Equal Opportunity|HIV and AIDS|Hyperlink Policy|List of Corporate|List of Insurance|List of Authorised|List of Products|Ombudsman|Privacy Policy|Public Disclosures|Quality Policy|Prevention of Sexual|Site Map|Tender|Term of Use|WPC Disclos|BEWARE OF|IRDAI is not|Canara HSBC Life Insurance Co\\)[^<>]{0,80}' /tmp/canara.html)",
+      "Bash(grep -oE 'IRDAI is not involved[^<]{0,500}' /tmp/canara.html)",
+      "Bash(grep -oE 'Canara HSBC Life Insurance Co\\\\. Ltd\\\\.[^<]{0,100}|©[^<]{0,80}|&copy;[^<]{0,80}' /tmp/canara.html)"
     ]
   }
 }

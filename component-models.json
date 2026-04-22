@@ -142,6 +142,10 @@
             "value": "title-heading"
           },
           {
+            "name": "Title Heading Center",
+            "value": "text-center"
+          },
+          {
             "name": "Full Width Section",
             "value": "full-width"
           }
