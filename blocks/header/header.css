@@ -660,9 +660,22 @@ header .tool-item.hamburger .nav-panel-toggle {
   justify-content: center;
 }
 
-header .tool-item.hamburger .nav-panel-toggle img {
+header .tool-item.hamburger .nav-panel-toggle img,
+header .tool-item.hamburger .nav-panel-toggle svg {
   width: 22px;
   height: 22px;
+}
+
+header .tool-item.hamburger .nav-panel-toggle .nav-panel-toggle-close {
+  display: none;
+}
+
+header .tool-item.hamburger .nav-panel-toggle[aria-expanded='true'] .nav-panel-toggle-open {
+  display: none;
+}
+
+header .tool-item.hamburger .nav-panel-toggle[aria-expanded='true'] .nav-panel-toggle-close {
+  display: block;
 }
 
 /* slide-in nav panel */
@@ -676,9 +689,7 @@ header .tool-item.hamburger .nav-panel-toggle img {
 .nav-panel .nav-panel-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(10, 10, 10, 0.35);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  background: transparent;
 }
 
 .nav-panel .nav-panel-drawer {
@@ -689,10 +700,15 @@ header .tool-item.hamburger .nav-panel-toggle img {
   width: min(440px, 90vw);
   background: #fff;
   box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
-  padding: 72px 40px 32px;
+      padding: 1.5rem;
   transform: translateX(100%);
   transition: transform 0.3s ease;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+      height: calc(100vh - 72px);
+    margin-top: 72px;
+    min-width: 446px;
 }
 
 .nav-panel.is-open {
@@ -708,18 +724,7 @@ header .tool-item.hamburger .nav-panel-toggle img {
 }
 
 .nav-panel .nav-panel-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: none;
 }
 
 .nav-panel .nav-panel-close svg {
@@ -732,6 +737,7 @@ header .tool-item.hamburger .nav-panel-toggle img {
   margin: 0;
   padding: 0;
   display: flex;
+  gap: 24px;
   flex-direction: column;
 }
 
@@ -745,7 +751,8 @@ header .tool-item.hamburger .nav-panel-toggle img {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  padding: 18px 0;
+      padding:0 10px 24px;
+    margin: 0;
   background: transparent;
   border: 0;
   color: #0a0a0a;
@@ -842,6 +849,85 @@ header .tool-item.hamburger .nav-panel-toggle img {
 .nav-panel .nav-panel-sublist a:hover,
 .nav-panel .nav-panel-sublist a:focus-visible {
   color: #25b6e6;
+}
+
+/* Follow Us section */
+.nav-panel .nav-panel-follow {
+  padding: 20px 0 16px;
+  border-top: 1px solid #e6e6e6;
+}
+
+.nav-panel .nav-panel-follow-title {
+  color: #0a0a0a;
+  font-family: Satoshi, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.nav-panel .nav-panel-follow-icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.nav-panel .nav-panel-follow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.nav-panel .nav-panel-follow-icon:hover,
+.nav-panel .nav-panel-follow-icon:focus-visible {
+  background: #eaf6fb;
+  outline: none;
+}
+
+.nav-panel .nav-panel-follow-icon img {
+  object-fit: contain;
+}
+
+/* Download App section */
+.nav-panel .nav-panel-apps {
+  padding: 18px 0 8px;
+  border-top: 1px solid #e6e6e6;
+}
+
+.nav-panel .nav-panel-apps-title {
+  color: #0a0a0a;
+  font-family: Satoshi, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.nav-panel .nav-panel-apps-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-panel .nav-panel-app-btn {
+  display: inline-block;
+  line-height: 0;
+  transition: opacity 0.2s;
+}
+
+.nav-panel .nav-panel-app-btn:hover {
+  opacity: 0.85;
+}
+
+.nav-panel .nav-panel-app-btn img {
+  height: 44px;
+  width: auto;
+  display: block;
 }
 
 /* hamburger */

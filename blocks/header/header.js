@@ -742,7 +742,10 @@ export default async function decorate(block) {
     </div>
     <div class="tool-item hamburger">
       <button type="button" class="nav-panel-toggle" aria-label="Open menu" aria-controls="nav-panel" aria-expanded="false">
-        <img src="/icons/hamburger-blue.svg" alt="">
+        <img class="nav-panel-toggle-open" src="/icons/hamburger-blue.svg" alt="">
+        <svg class="nav-panel-toggle-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#00adef" stroke-width="2" stroke-linecap="round" />
+        </svg>
       </button>
     </div>
   `;
@@ -855,6 +858,37 @@ export default async function decorate(block) {
       <ul class="nav-panel-list">
         ${panelItems.map(renderItem).join('')}
       </ul>
+      <div class="nav-panel-follow">
+        <div class="nav-panel-follow-title">Follow Us</div>
+        <div class="nav-panel-follow-icons">
+          <a class="nav-panel-follow-icon" href="https://www.facebook.com/canarahsbclifeinsurance" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <img src="/icons/canara-sprite/facebook.svg" alt="" aria-hidden="true">
+          </a>
+          <a class="nav-panel-follow-icon" href="https://www.youtube.com/@canarahsbclife" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+            <img src="/icons/canara-sprite/youtube.svg" alt="" aria-hidden="true">
+          </a>
+          <a class="nav-panel-follow-icon" href="https://www.instagram.com/canarahsbclife" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <img src="/icons/canara-sprite/instagram.svg" alt="" aria-hidden="true">
+          </a>
+          <a class="nav-panel-follow-icon" href="https://twitter.com/canarahsbclife" aria-label="X" target="_blank" rel="noopener noreferrer">
+            <img src="/icons/canara-sprite/xlogo.svg" alt="" aria-hidden="true">
+          </a>
+          <a class="nav-panel-follow-icon" href="https://www.linkedin.com/company/canara-hsbc-life-insurance" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <img src="/icons/canara-sprite/linkedin.svg" alt="" aria-hidden="true">
+          </a>
+        </div>
+      </div>
+      <div class="nav-panel-apps">
+        <div class="nav-panel-apps-title">Download the Canara HSBC Mobile App</div>
+        <div class="nav-panel-apps-buttons">
+          <a class="nav-panel-app-btn" href="https://play.google.com/store" aria-label="Get it on Google Play" target="_blank" rel="noopener noreferrer">
+            <img src="/icons/canara-sprite/get-it-on-google-play.svg" alt="Get it on Google Play">
+          </a>
+          <a class="nav-panel-app-btn" href="https://www.apple.com/app-store/" aria-label="Download on the App Store" target="_blank" rel="noopener noreferrer">
+            <img src="/icons/canara-sprite/app-store-download.svg" alt="Download on the App Store">
+          </a>
+        </div>
+      </div>
     </div>
   `;
 
@@ -874,17 +908,22 @@ export default async function decorate(block) {
     panel.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
     panelToggle.setAttribute('aria-expanded', 'true');
+    panelToggle.setAttribute('aria-label', 'Close menu');
     document.body.style.overflowY = 'hidden';
   };
   const closePanel = () => {
     panel.classList.remove('is-open');
     panel.setAttribute('aria-hidden', 'true');
     panelToggle.setAttribute('aria-expanded', 'false');
+    panelToggle.setAttribute('aria-label', 'Open menu');
     document.body.style.overflowY = '';
     panelToggle.focus();
   };
 
-  panelToggle.addEventListener('click', openPanel);
+  panelToggle.addEventListener('click', () => {
+    if (panel.classList.contains('is-open')) closePanel();
+    else openPanel();
+  });
   panel.addEventListener('click', (e) => {
     if (e.target.closest('[data-close]')) {
       closePanel();

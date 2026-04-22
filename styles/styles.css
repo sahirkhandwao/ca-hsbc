@@ -195,7 +195,10 @@ a:hover {
     color: var(--link-hover-color);
     text-decoration: underline;
 }
-
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
 /* buttons */
 a.button:any-link,
 button {
@@ -218,6 +221,7 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin: 0;
 }
 
 a.button:hover,
@@ -291,12 +295,12 @@ main > .section:first-of-type {
     position: relative;
     margin: 10px 0 32px;
 }
-.section.title-heading .default-content-wrapper h2:after{
-  top: 50%;
+.section.title-heading.text-center .default-content-wrapper h2:after{
+  top: 25px;
 left: 50%;
-transform: translate(-50%, -50%);
+transform: translateX(-50%);
 }
-.section .default-content-wrapper h2:after {
+.section.title-heading .default-content-wrapper h2:after {
     position: absolute;
     content: "";
     background: linear-gradient(

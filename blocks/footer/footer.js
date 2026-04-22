@@ -112,12 +112,12 @@ const RECOMMENDED = [
 ];
 
 const PARTNERS = [
-  { label: 'Canara Bank' },
-  { label: 'HSBC' },
-  { label: 'Punjab & Sind Bank' },
-  { label: 'Dhanlaxmi Bank' },
-  { label: 'Kerala Gramin Bank' },
-  { label: 'Canara Mutual Fund' },
+  { label: 'Canara Bank', src: '/icons/partners/canara-bank-logo.svg' },
+  { label: 'HSBC', src: '/icons/partners/hsbc-logo.svg' },
+  { label: 'Tamil Nadu Grama Bank', src: '/icons/partners/tngb-logo.svg' },
+  { label: 'Dhanlaxmi Bank', src: '/icons/partners/dhanlaxmi-bank-logo.svg' },
+  { label: 'Kerala Gramin Bank', src: '/icons/partners/kgb-logo.svg' },
+  { label: 'Can Fin Homes Ltd', src: '/icons/partners/can-fin-homes-logo.svg' },
 ];
 
 const SECONDARY = [
@@ -190,10 +190,10 @@ const renderSocial = () => SOCIAL.map((s) => `
 
 const renderRecommended = () => `
   <div class="footer-recommended">
-    <button type="button" class="footer-recommended-toggle" aria-expanded="true" aria-controls="footer-recommended-list">
+    <div role="button" tabindex="0" class="footer-recommended-toggle" aria-expanded="true" aria-controls="footer-recommended-list">
       <span>Recommended Articles</span>
       <img class="footer-recommended-caret" src="/icons/canara-sprite/down-arrow.svg" alt="" aria-hidden="true">
-    </button>
+    </div>
     <ul class="footer-recommended-list" id="footer-recommended-list">
       ${RECOMMENDED.map((r) => `
         <li>
@@ -216,29 +216,31 @@ const renderPartners = () => `
   </div>
 `;
 
-const renderSecondaryColumn = (col) => `
-  <div class="footer-secondary-col">
-    <button type="button" class="footer-secondary-toggle" aria-expanded="true">
-      <span>${col.title}</span>
-      <img class="footer-secondary-caret" src="/icons/canara-sprite/down-arrow.svg" alt="" aria-hidden="true">
-    </button>
-    <ul class="footer-secondary-list">
-      ${col.links.map((l) => `<li><a href="${l.href}">${l.label}</a></li>`).join('')}
-    </ul>
-  </div>
-`;
-
 const renderSecondary = () => `
   <div class="footer-secondary">
-    <div class="footer-secondary-cols">
-      ${SECONDARY.map(renderSecondaryColumn).join('')}
+    <div class="footer-secondary-tabs" role="tablist">
+      ${SECONDARY.map((col, i) => `
+        <div role="tab" tabindex="0" class="footer-secondary-tab"
+          id="footer-tab-${i}" aria-controls="footer-panel-${i}" aria-expanded="false" aria-selected="false">
+          <span>${col.title}</span>
+          <img class="footer-secondary-caret" src="/icons/canara-sprite/down-arrow.svg" alt="" aria-hidden="true">
+        </div>
+      `).join('')}
+    </div>
+    <div class="footer-secondary-panels">
+      ${SECONDARY.map((col, i) => `
+        <ul class="footer-secondary-panel" id="footer-panel-${i}" role="tabpanel"
+          aria-labelledby="footer-tab-${i}" hidden>
+          ${col.links.map((l) => `<li><a href="${l.href}">${l.label}</a></li>`).join('')}
+        </ul>
+      `).join('')}
     </div>
 
     <div class="footer-disclaimer">
-      <button type="button" class="footer-disclaimer-toggle" aria-expanded="false" aria-controls="footer-disclaimer-body">
+      <div role="button" tabindex="0" class="footer-disclaimer-toggle" aria-expanded="false" aria-controls="footer-disclaimer-body">
         <span>Disclaimer</span>
         <img class="footer-secondary-caret" src="/icons/canara-sprite/down-arrow.svg" alt="" aria-hidden="true">
-      </button>
+      </div>
       <div class="footer-disclaimer-body" id="footer-disclaimer-body" hidden>
         <p>Canara HSBC Life Insurance Company Limited is a joint venture between Canara Bank and HSBC Insurance (Asia Pacific) Holdings Limited (HIAPH). Regulated by the Insurance Regulatory and Development Authority of India (IRDAI).</p>
       </div>
@@ -260,6 +262,7 @@ export default async function decorate(block) {
 
   block.innerHTML = `
     <div class="footer-inner">
+      <div class="footer-content">
       <div class="footer-top">
         <a class="footer-brand" href="/" aria-label="Canara HSBC Life Insurance">
           <img src="/icons/canara-hsbc-life-insurance-logo.svg" alt="Canara HSBC Life Insurance">
@@ -304,37 +307,58 @@ export default async function decorate(block) {
       ${renderPartners()}
 
       ${renderSecondary()}
+      </div>
     </div>
   `;
+
+  const activateOnKey = (el, fn) => el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fn();
+    }
+  });
 
   const toggle = block.querySelector('.footer-recommended-toggle');
   const list = block.querySelector('.footer-recommended-list');
   if (toggle && list) {
-    toggle.addEventListener('click', () => {
+    const activate = () => {
       const expanded = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
       list.hidden = expanded;
-    });
+    };
+    toggle.addEventListener('click', activate);
+    activateOnKey(toggle, activate);
   }
 
-  block.querySelectorAll('.footer-secondary-toggle').forEach((btn) => {
-    const col = btn.closest('.footer-secondary-col');
-    const ul = col?.querySelector('.footer-secondary-list');
-    if (!ul) return;
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      ul.hidden = expanded;
-    });
+  const tabs = [...block.querySelectorAll('.footer-secondary-tab')];
+  const panels = [...block.querySelectorAll('.footer-secondary-panel')];
+  tabs.forEach((tab, idx) => {
+    const activate = () => {
+      const wasOpen = tab.getAttribute('aria-expanded') === 'true';
+      tabs.forEach((t) => {
+        t.setAttribute('aria-expanded', 'false');
+        t.setAttribute('aria-selected', 'false');
+      });
+      panels.forEach((p) => { p.hidden = true; });
+      if (!wasOpen) {
+        tab.setAttribute('aria-expanded', 'true');
+        tab.setAttribute('aria-selected', 'true');
+        if (panels[idx]) panels[idx].hidden = false;
+      }
+    };
+    tab.addEventListener('click', activate);
+    activateOnKey(tab, activate);
   });
 
   const disclaimerBtn = block.querySelector('.footer-disclaimer-toggle');
   const disclaimerBody = block.querySelector('.footer-disclaimer-body');
   if (disclaimerBtn && disclaimerBody) {
-    disclaimerBtn.addEventListener('click', () => {
+    const activate = () => {
       const expanded = disclaimerBtn.getAttribute('aria-expanded') === 'true';
       disclaimerBtn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
       disclaimerBody.hidden = expanded;
-    });
+    };
+    disclaimerBtn.addEventListener('click', activate);
+    activateOnKey(disclaimerBtn, activate);
   }
 }
