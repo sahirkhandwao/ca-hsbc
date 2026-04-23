@@ -61,6 +61,10 @@
             {
               "name": "Text Heading",
               "value": "text-heading"
+            },
+            {
+              "name": "Default List",
+              "value": "default-list"
             }
           ]
         }
