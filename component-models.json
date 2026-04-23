@@ -148,6 +148,14 @@
           {
             "name": "Full Width Section",
             "value": "full-width"
+          },
+          {
+            "name": "No Margin Top",
+            "value": "no-margin-top"
+          },
+          {
+            "name": "No Margin Bottom",
+            "value": "no-margin-bottom"
           }
         ]
       }

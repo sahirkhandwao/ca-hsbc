@@ -33,3 +33,23 @@
   border-color: #0066b2;
   color: #0066b2;
 }
+
+@media (max-width: 768px) {
+  .popular-searches-container {
+    padding: 1.25rem 16px;
+  }
+
+  .popular-searches-title h2 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+
+  .popular-searches-links ul {
+    gap: 0.5rem;
+  }
+
+  .popular-searches-links ul li a {
+    font-size: 0.8125rem;
+    padding: 0.35rem 0.625rem;
+  }
+}

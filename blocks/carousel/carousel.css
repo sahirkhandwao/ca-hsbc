@@ -246,6 +246,75 @@
   white-space: normal;
 }
 
+@media (max-width: 768px) {
+  .carousel {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .carousel-stage {
+    padding: 0;
+  }
+
+  .carousel-slide-image picture,
+  .carousel-slide-image img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .carousel-slide-info {
+    padding: 14px 16px 16px;
+  }
+
+  .carousel-slide-title {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .carousel-meta {
+    font-size: 11px;
+    gap: 2px;
+    margin-bottom: 0.5rem;
+  }
+
+  .carousel-meta-item {
+    padding: 0 8px;
+  }
+
+  .carousel-slide-desc {
+    font-size: 0.8125rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .carousel-nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .carousel-nav svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .carousel-prev {
+    left: 4px;
+  }
+
+  .carousel-next {
+    right: 4px;
+  }
+
+  .carousel-thumbs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  .carousel-thumb-title {
+    font-size: 0.875rem;
+    padding: 0 0.5rem 0.25rem;
+  }
+}
+
 @media (width >= 600px) {
   .carousel-thumbs {
     grid-template-columns: repeat(3, 1fr);

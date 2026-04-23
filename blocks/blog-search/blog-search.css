@@ -1,5 +1,5 @@
 .blog-search{
-  margin: 1.5rem 0;
+ padding: 24px 0 90px;
 }
 .blog-search-row{
   display: flex;
@@ -9,7 +9,7 @@
 .blog-search-field{
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 10px;
 }
 .blog-search-field--input{
   flex: 1 1 auto;
@@ -21,8 +21,8 @@
 .blog-search-label{
   color: #323232;
   font-family: Satoshi, sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1.2;
 }
 .blog-search-input-wrap{
@@ -41,7 +41,7 @@
   font-family: Satoshi, sans-serif;
   font-size: 1rem;
   line-height: 1.4;
-  padding: 0.875rem 1rem;
+  padding: 18px 16px;
   outline: none;
 }
 .blog-search-input::placeholder{
@@ -88,12 +88,29 @@
   font-family: Satoshi, sans-serif;
   font-size: 1rem;
   line-height: 1.4;
-  padding: 0.875rem 2.5rem 0.875rem 1rem;
+  padding: 18px 36px 18px 16px;
   outline: none;
 }
 .blog-search-select:focus,
 .blog-search-input:focus{
   outline: none;
+}
+
+@media (max-width: 768px) {
+  .blog-search {
+    margin: 1rem 0;
+    padding: 0 16px;
+  }
+
+  .blog-search-input,
+  .blog-search-select {
+    font-size: 0.9375rem;
+    padding: 0.75rem 2.25rem 0.75rem 0.875rem;
+  }
+
+  .blog-search-label {
+    font-size: 0.9375rem;
+  }
 }
 
 @media (width >= 900px) {

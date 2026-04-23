@@ -105,6 +105,7 @@ body.appear {
 
 header {
     height: var(--nav-height);
+    display: none;
 }
 
 header .header,
@@ -269,9 +270,9 @@ main {
 }
 /* sections padding and width are defined gloabally ===========================================  */
 main > .section {
-    margin: 0 auto;
+    margin: 96px auto;
     max-width: 1438px;
-    padding: 40px 80px;
+    padding: 0 80px;
 }
  main > .section.full-width {
         max-width: 100%;
@@ -285,7 +286,12 @@ main > .section:first-of-type {
 .section.text-center .default-content-wrapper h2 {
     text-align: center;
 }
-
+.section.no-margin-top{
+  margin-top: 0!important;
+}
+.section.no-margin-bottom{
+  margin-bottom: 0!important;
+}
 /* By default it is left aligned */
 .section.title-heading .default-content-wrapper h2 {
     font-family: Helvetica;
@@ -293,7 +299,7 @@ main > .section:first-of-type {
     font-weight: 700;
     line-height: 120%;
     position: relative;
-    margin: 10px 0 32px;
+    margin: 10px 0 45px;
 }
 .section.title-heading.text-center .default-content-wrapper h2:after{
   top: 25px;

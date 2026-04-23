@@ -20,14 +20,16 @@ export default function decorate(block) {
     li.className = 'breadcrumb-item';
     const isLast = index === source.length - 1;
 
-    if (item.href && !isLast) {
+    if (isLast) {
+      li.classList.add('breadcrumb-current', 'is-active');
+      li.setAttribute('aria-current', 'page');
+      li.textContent = item.text;
+    } else if (item.href) {
       const a = document.createElement('a');
       a.href = item.href;
       a.textContent = item.text;
       li.append(a);
     } else {
-      li.classList.add('breadcrumb-current');
-      li.setAttribute('aria-current', 'page');
       li.textContent = item.text;
     }
     ol.append(li);

@@ -112,6 +112,7 @@ header .nav-item--dropdown:focus-within .nav-dropdown {
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0.2s ease, visibility 0s linear;
+  display: none;
 }
 
 header .nav-item--dropdown:hover > .nav-link,

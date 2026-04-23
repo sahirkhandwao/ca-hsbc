@@ -23,7 +23,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: right center;
 }
 
 .hero .hero-text {
@@ -35,7 +35,6 @@
 
 .hero .hero-text h2, .hero .hero-text h3{
   color: #0a0a0a;
-  font-family: Satoshi, sans-serif;
   font-size: 32px;
   font-weight: 700;
   line-height: 1.2;
@@ -63,4 +62,30 @@
     margin-bottom: 20px;
   }
 
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 220px;
+    padding: 32px 16px;
+  }
+
+  .hero img {
+    object-position: right center;
+    opacity: 0.45;
+  }
+
+  .hero .hero-text {
+    max-width: 100%;
+  }
+
+  .hero .hero-text h2, .hero .hero-text h3 {
+    font-size: 22px;
+    margin: 0 0 10px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
 }

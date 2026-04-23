@@ -2,11 +2,12 @@
   max-width: unset;
   padding: 0;
 }
-
 .breadcrumb {
-  padding: 20px 24px 0;
+  padding: 16px 16px 0;
 }
-
+.section.breadcrumb-container{
+      padding: 32px 0 32px 80px;
+}
 .breadcrumb .breadcrumb-list {
   list-style: none;
   margin: 0;
@@ -25,6 +26,7 @@
   display: inline-flex;
   align-items: center;
   color: #7a7a7a;
+  font-size: 16px;
 }
 
 .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
@@ -45,9 +47,10 @@
   /* color: #00adef; */
 }
 
-.breadcrumb .breadcrumb-current {
-  /* color: #00adef; */
-  font-weight: 400;
+.breadcrumb .breadcrumb-current,
+.breadcrumb .breadcrumb-item.is-active {
+  color: #0067b1;
+  font-weight: 700;
 }
 
 @media (width >= 900px) {
