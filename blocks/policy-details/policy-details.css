@@ -4,6 +4,17 @@
   font-family: Satoshi, sans-serif;
 }
 
+.policy-details .policy-details-text-top {
+  max-width: 1400px;
+  margin: 0 auto 12px;
+  color: #fff;
+  font-family: Satoshi, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .policy-details .policy-details-wrap {
   display: flex;
   align-items: center;
