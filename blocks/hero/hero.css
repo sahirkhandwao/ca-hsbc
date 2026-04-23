@@ -7,8 +7,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 320px;
-  padding: 60px 24px;
+  min-height: 28.125rem;
+  padding: 0 0 0 80px;
   overflow: hidden;
 }
 
@@ -29,16 +29,17 @@
 .hero .hero-text {
   position: relative;
   z-index: 1;
-  max-width: 640px;
+  max-width: 720px;
   text-align: left;
 }
 
-.hero .hero-text h2, .hero .hero-text h3{
+.hero .hero-text h2,
+.hero .hero-text h3 {
   color: #0a0a0a;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 16px;
+  margin: 0 0 20px;
 }
 
 .hero p {
@@ -48,40 +49,26 @@
   margin: 0;
 }
 
-@media (width >= 900px) {
+@media (max-width: 767px) {
   .hero {
-   padding: 0 0 0 80px;
-        min-height: 28.125rem;
-  }
-
-  .hero .hero-text {
-    max-width: 720px;
-  }
- .hero .hero-text h2, .hero .hero-text h3 {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-
-}
-
-@media (max-width: 768px) {
-  .hero {
-    min-height: 220px;
-    padding: 32px 16px;
+    min-height: 320px;
+    padding: 24px 16px;
+    align-items: flex-start;
   }
 
   .hero img {
+    opacity: 1;
     object-position: right center;
-    opacity: 0.45;
   }
 
   .hero .hero-text {
-    max-width: 100%;
+    max-width: 55%;
   }
 
-  .hero .hero-text h2, .hero .hero-text h3 {
-    font-size: 22px;
-    margin: 0 0 10px;
+  .hero .hero-text h2,
+  .hero .hero-text h3 {
+    font-size: 24px;
+    margin: 0 0 12px;
   }
 
   .hero p {

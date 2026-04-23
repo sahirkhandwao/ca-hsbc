@@ -2,6 +2,77 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const INITIAL_VISIBLE = 5;
 const STEP = 5;
+const DURATION = 350;
+
+function measure(body) {
+  const cs = getComputedStyle(body);
+  return {
+    paddingTop: cs.paddingTop,
+    paddingBottom: cs.paddingBottom,
+    height: body.scrollHeight,
+  };
+}
+
+function animateOpen(details, body) {
+  details.setAttribute('open', '');
+  const { paddingTop, paddingBottom, height } = measure(body);
+  body.style.overflow = 'hidden';
+  body.style.transition = 'none';
+  body.style.maxHeight = '0px';
+  body.style.paddingTop = '0px';
+  body.style.paddingBottom = '0px';
+  void body.offsetHeight;
+  body.style.transition = `max-height ${DURATION}ms ease, padding ${DURATION}ms ease`;
+  body.style.maxHeight = `${height}px`;
+  body.style.paddingTop = paddingTop;
+  body.style.paddingBottom = paddingBottom;
+  const done = (e) => {
+    if (e.target !== body || e.propertyName !== 'max-height') return;
+    body.style.transition = '';
+    body.style.maxHeight = '';
+    body.style.overflow = '';
+    body.style.paddingTop = '';
+    body.style.paddingBottom = '';
+    body.removeEventListener('transitionend', done);
+  };
+  body.addEventListener('transitionend', done);
+}
+
+function animateClose(details, body) {
+  const { paddingTop, paddingBottom, height } = measure(body);
+  body.style.overflow = 'hidden';
+  body.style.transition = 'none';
+  body.style.maxHeight = `${height}px`;
+  body.style.paddingTop = paddingTop;
+  body.style.paddingBottom = paddingBottom;
+  void body.offsetHeight;
+  body.style.transition = `max-height ${DURATION}ms ease, padding ${DURATION}ms ease`;
+  body.style.maxHeight = '0px';
+  body.style.paddingTop = '0px';
+  body.style.paddingBottom = '0px';
+  const done = (e) => {
+    if (e.target !== body || e.propertyName !== 'max-height') return;
+    details.removeAttribute('open');
+    body.style.transition = '';
+    body.style.maxHeight = '';
+    body.style.overflow = '';
+    body.style.paddingTop = '';
+    body.style.paddingBottom = '';
+    body.removeEventListener('transitionend', done);
+  };
+  body.addEventListener('transitionend', done);
+}
+
+function wireAnimation(details) {
+  const summary = details.querySelector('summary');
+  const body = details.querySelector('.accordion-item-body');
+  if (!summary || !body) return;
+  summary.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (details.hasAttribute('open')) animateClose(details, body);
+    else animateOpen(details, body);
+  });
+}
 
 export default function decorate(block) {
   [...block.children].forEach((row) => {
@@ -21,6 +92,8 @@ export default function decorate(block) {
     details.append(summary, body);
     row.replaceWith(details);
   });
+
+  block.querySelectorAll('.accordion-item').forEach(wireAnimation);
 
   const items = [...block.querySelectorAll('.accordion-item')];
   if (items.length <= INITIAL_VISIBLE) return;

@@ -283,9 +283,7 @@ main > .section:first-of-type {
     margin-top: 0;
 }
 
-.section.text-center .default-content-wrapper h2 {
-    text-align: center;
-}
+
 .section.no-margin-top{
   margin-top: 0!important;
 }
@@ -295,16 +293,11 @@ main > .section:first-of-type {
 /* By default it is left aligned */
 .section.title-heading .default-content-wrapper h2 {
     font-family: Helvetica;
-    font-size: 1.375rem;
+    font-size: 28px;
     font-weight: 700;
     line-height: 120%;
     position: relative;
     margin: 10px 0 45px;
-}
-.section.title-heading.text-center .default-content-wrapper h2:after{
-  top: 25px;
-left: 50%;
-transform: translateX(-50%);
 }
 .section.title-heading .default-content-wrapper h2:after {
     position: absolute;
@@ -322,7 +315,15 @@ transform: translateX(-50%);
     margin-top: 0.625rem;
     width: 10.5rem;
     left: 0;
-    top: 25px;
+        bottom: -15px;
+}
+.section.text-center .default-content-wrapper h2 {
+    text-align: center;
+}
+.section.title-heading.text-center .default-content-wrapper h2:after{
+  bottom: -13px;
+left: 50%;
+transform: translateX(-50%);
 }
 /* section metadata */
 main .section.light,
@@ -435,5 +436,8 @@ main > .section.glossary li {
         margin: 72px auto 0;
         padding: 0 20px;
     }
-   
-}
+   .section.title-heading .default-content-wrapper h2{
+    font-size: 22px;
+        margin: 10px 0 35px;
+   }
+  }

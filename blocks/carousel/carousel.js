@@ -17,6 +17,8 @@ const META_HTML = `
   </div>
 `;
 
+const MOBILE_QUERY = '(max-width: 767px)';
+
 function parseSlide(row) {
   const picture = row.querySelector('picture');
   const h = row.querySelector('h1, h2, h3, h4, h5, h6');
@@ -33,17 +35,30 @@ function parseSlide(row) {
   };
 }
 
+function isMobile() {
+  return window.matchMedia(MOBILE_QUERY).matches;
+}
+
 function setActive(block, index) {
-  const slides = block.querySelectorAll('.carousel-slide');
+  const slides = [...block.querySelectorAll('.carousel-slide')];
   const thumbs = block.querySelectorAll('.carousel-thumb');
   if (!slides.length) return;
-  const i = (index + slides.length) % slides.length;
+  const i = ((index % slides.length) + slides.length) % slides.length;
   slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
   thumbs.forEach((t, idx) => {
     t.classList.toggle('is-active', idx === i);
     t.setAttribute('aria-current', idx === i ? 'true' : 'false');
   });
   block.dataset.activeSlide = i;
+
+  if (isMobile()) {
+    const container = block.querySelector('.carousel-slides');
+    const active = slides[i];
+    if (container && active) {
+      const target = active.offsetLeft - (container.clientWidth - active.offsetWidth) / 2;
+      container.scrollTo({ left: target, behavior: 'smooth' });
+    }
+  }
 }
 
 export default function decorate(block) {
@@ -74,12 +89,12 @@ export default function decorate(block) {
       <div class="carousel-slides">${slidesHtml}</div>
       <button type="button" class="carousel-nav carousel-prev" aria-label="Previous Slide">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M15.5 5 8.75 11.25a1.06 1.06 0 0 0 0 1.5L15.5 19" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14.5 7 10 12l4.5 5" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       <button type="button" class="carousel-nav carousel-next" aria-label="Next Slide">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M8.5 5l6.75 6.25a1.06 1.06 0 0 1 0 1.5L8.5 19" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9.5 7 14 12l-4.5 5" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </div>
@@ -102,6 +117,7 @@ export default function decorate(block) {
       }
     });
   });
+
   block.querySelector('.carousel-prev').addEventListener('click', () => {
     setActive(block, parseInt(block.dataset.activeSlide || 0, 10) - 1);
   });
@@ -110,6 +126,37 @@ export default function decorate(block) {
   });
 
   block.dataset.activeSlide = 0;
+
+  // Track active slide from scroll position on mobile (swipe support)
+  const container = block.querySelector('.carousel-slides');
+  if (container) {
+    let scrollTimer;
+    container.addEventListener('scroll', () => {
+      if (!isMobile()) return;
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const slides = [...block.querySelectorAll('.carousel-slide')];
+        const centerX = container.scrollLeft + container.clientWidth / 2;
+        let closest = 0;
+        let minDist = Infinity;
+        slides.forEach((s, idx) => {
+          const mid = s.offsetLeft + s.offsetWidth / 2;
+          const dist = Math.abs(mid - centerX);
+          if (dist < minDist) { minDist = dist; closest = idx; }
+        });
+        const current = parseInt(block.dataset.activeSlide || 0, 10);
+        if (closest !== current) {
+          const thumbs = block.querySelectorAll('.carousel-thumb');
+          slides.forEach((s, idx) => s.classList.toggle('is-active', idx === closest));
+          thumbs.forEach((t, idx) => {
+            t.classList.toggle('is-active', idx === closest);
+            t.setAttribute('aria-current', idx === closest ? 'true' : 'false');
+          });
+          block.dataset.activeSlide = closest;
+        }
+      }, 120);
+    });
+  }
 
   import('../../scripts/aem.js').then(({ decorateIcons }) => decorateIcons(block));
 }

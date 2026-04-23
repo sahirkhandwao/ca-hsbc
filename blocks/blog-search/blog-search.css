@@ -1,31 +1,39 @@
-.blog-search{
- padding: 24px 0 90px;
+.blog-search {
+  padding: 24px 0 90px;
 }
-.blog-search-row{
+
+.blog-search-row {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1.5rem;
+  justify-content: space-between;
 }
-.blog-search-field{
+
+.blog-search-field {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.blog-search-field--input{
-  flex: 1 1 auto;
+
+.blog-search-field--input {
+  flex: 0 0 49.3%;
 }
-.blog-search-field--year{
-  flex: 0 0 auto;
-  width: 100%;
+
+.blog-search-field--year {
+  flex: 0 0 15.5%;
+  width: auto;
 }
-.blog-search-label{
+
+.blog-search-label {
   color: #323232;
   font-family: Satoshi, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.2;
 }
-.blog-search-input-wrap{
+
+.blog-search-input-wrap {
   position: relative;
   display: flex;
   align-items: center;
@@ -33,7 +41,8 @@
   border-radius: 0;
   background: #fff;
 }
-.blog-search-input{
+
+.blog-search-input {
   flex: 1 1 auto;
   border: 0;
   background: transparent;
@@ -44,10 +53,12 @@
   padding: 18px 16px;
   outline: none;
 }
-.blog-search-input::placeholder{
+
+.blog-search-input::placeholder {
   color: #a7a7a7;
 }
-.blog-search-submit{
+
+.blog-search-submit {
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -56,17 +67,20 @@
   justify-content: center;
   padding: 0.5rem 1rem;
 }
-.blog-search-submit:hover{
+
+.blog-search-submit:hover {
   opacity: 0.8;
 }
-.blog-search-select-wrap{
+
+.blog-search-select-wrap {
   position: relative;
   display: flex;
   align-items: center;
   border: 1px solid #00adef;
   background: #fff;
 }
-.blog-search-select-wrap::after{
+
+.blog-search-select-wrap::after {
   content: '';
   position: absolute;
   right: 1rem;
@@ -78,7 +92,8 @@
   transform: translateY(-75%) rotate(45deg);
   pointer-events: none;
 }
-.blog-search-select{
+
+.blog-search-select {
   appearance: none;
   flex: 1 1 auto;
   border: 0;
@@ -91,40 +106,78 @@
   padding: 18px 36px 18px 16px;
   outline: none;
 }
+
 .blog-search-select:focus,
-.blog-search-input:focus{
+.blog-search-input:focus {
   outline: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .blog-search {
     margin: 1rem 0;
-    padding: 0 16px;
+    padding: 16px 0 24px;
   }
 
-  .blog-search-input,
-  .blog-search-select {
-    font-size: 0.9375rem;
-    padding: 0.75rem 2.25rem 0.75rem 0.875rem;
+  .blog-search-row {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .blog-search-field--input {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .blog-search-field--year {
+    flex: 0 0 56px;
+    width: 56px;
   }
 
   .blog-search-label {
+    display: none;
+  }
+
+  .blog-search-input {
     font-size: 0.9375rem;
   }
+.blog-search-wrapper{
+  margin-bottom: 70px;
 }
+  .blog-search-submit {
+    padding: 0.5rem 0.75rem;
+  }
 
-@media (width >= 900px) {
-  .blog-search-row{
-    flex-direction: row;
-    align-items: flex-end;
-    gap: 1.5rem;
-    justify-content: space-between;
+  .blog-search-select-wrap {
+    width: 56px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
-  .blog-search-field--input{
-    flex: 0 0 49.3%;
+
+  .blog-search-select-wrap::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: 16px;
+    transform: translate(-50%, -50%);
+    border: 0;
+    background: #00adef;
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" fill="none"><circle cx="7" cy="3" r="2.2" fill="%23000"/><circle cx="17" cy="9" r="2.2" fill="%23000"/><circle cx="7" cy="15" r="2.2" fill="%23000"/><path d="M3 3h2M9.5 3H21M3 9h11.5M19.5 9H21M3 15h2M9.5 15H21" stroke="%23000" stroke-width="1.6" stroke-linecap="round"/></svg>') no-repeat center / 22px 16px;
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" fill="none"><circle cx="7" cy="3" r="2.2" fill="%23000"/><circle cx="17" cy="9" r="2.2" fill="%23000"/><circle cx="7" cy="15" r="2.2" fill="%23000"/><path d="M3 3h2M9.5 3H21M3 9h11.5M19.5 9H21M3 15h2M9.5 15H21" stroke="%23000" stroke-width="1.6" stroke-linecap="round"/></svg>') no-repeat center / 22px 16px;
   }
-  .blog-search-field--year{
-    flex: 0 0 15.5%;
-    width: auto;
+
+  .blog-search-select {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    font-size: 0;
+    color: transparent;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    background: transparent;
   }
 }
