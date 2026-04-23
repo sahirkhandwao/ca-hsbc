@@ -156,6 +156,14 @@
           {
             "name": "No Margin Bottom",
             "value": "no-margin-bottom"
+          },
+          {
+            "name": "Article Overview",
+            "value": "article-overview"
+          },
+          {
+            "name": "Text Heading",
+            "value": "text-heading"
           }
         ]
       }
