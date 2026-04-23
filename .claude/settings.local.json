@@ -12,7 +12,11 @@
       "Bash(curl -sSL -A 'Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/123.0.0.0 Safari/537.36' -H 'Accept: image/svg+xml,*/*' -H 'Referer: https://www.canarahsbclife.com/' -o icons/partners/canara-bank-logo.svg https://www.canarahsbclife.com/content/dam/chli/images/home-page/logo/canara-bank-logo.svg)",
       "Bash(curl -sSL -A 'Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/123.0.0.0 Safari/537.36' -H 'Accept: image/svg+xml,*/*' -H 'Referer: https://www.canarahsbclife.com/' -o icons/partners/__TRACKED_VAR__.svg https://www.canarahsbclife.com/content/dam/chli/images/home-page/logo/__TRACKED_VAR__.svg)",
       "Bash(curl -sSL -A 'Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 Chrome/123.0.0.0' -H 'Referer: https://www.canarahsbclife.com/' -o /tmp/canara-base.css https://www.canarahsbclife.com/etc.clientlibs/chli/clientlibs/clientlib-base.lc-9b2adfa68b2042d7f3dc5acb90941a69-lc.css)",
-      "Bash(curl -sSL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 Chrome/123.0.0.0\" -o /tmp/trust.html \"https://www.canarahsbclife.com/blog/life-insurance/trust-in-life-insurance\")"
+      "Bash(curl -sSL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 Chrome/123.0.0.0\" -o /tmp/trust.html \"https://www.canarahsbclife.com/blog/life-insurance/trust-in-life-insurance\")",
+      "Bash(node -e ' *)",
+      "Bash(mkdir -p \"/c/Users/Sapna/Desktop/social-icons\")",
+      "Bash(cp icons/social/linkedin.svg icons/social/youtube.svg icons/social/twitter.svg icons/social/whatsapp.svg \"/c/Users/Sapna/Desktop/social-icons/\")",
+      "Read(//c/Users/Sapna/Desktop/**)"
     ]
   }
 }

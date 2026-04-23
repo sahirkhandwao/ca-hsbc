@@ -25,13 +25,13 @@ export default function decorate(block) {
 
   itemRows.forEach((row) => {
     const cells = [...row.children];
-    const iconCell = cells[0];
-    const iconAltCell = cells[1];
+    const imageCell = cells[0];
+    const imageAltCell = cells[1];
     const labelCell = cells[2];
     const linkCell = cells[3];
 
-    const picture = iconCell?.querySelector('picture');
-    const iconAlt = iconAltCell?.textContent?.trim() || '';
+    const picture = imageCell?.querySelector('picture');
+    const imageAlt = imageAltCell?.textContent?.trim() || '';
     const label = labelCell?.textContent?.trim() || '';
     const href = linkCell?.querySelector('a')?.getAttribute('href')
       || linkCell?.textContent?.trim()
@@ -46,13 +46,13 @@ export default function decorate(block) {
     a.href = href;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
-    a.setAttribute('aria-label', label || iconAlt || 'Social link');
+    a.setAttribute('aria-label', label || imageAlt || 'Social link');
 
     const iconWrap = document.createElement('span');
     iconWrap.className = 'social-media-link-icon';
     if (picture) {
       const img = picture.querySelector('img');
-      if (img && iconAlt) img.alt = iconAlt;
+      if (img && imageAlt) img.alt = imageAlt;
       iconWrap.append(picture);
     }
     a.append(iconWrap);
