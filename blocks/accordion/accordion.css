@@ -1,41 +1,62 @@
+.accordion {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0;
+}
+
 .accordion details {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: var(--background-color);
+  border: 1px solid #d0d0d0;
+  border-radius: 5px 5px 0 0;
+  background-color: #fff;
+  transition: background-color 0.35s ease, border-color 0.35s ease;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
-  margin-top: 16px;
+  margin-top: 18px;
+}
+
+.accordion details.is-hidden {
+  display: none;
 }
 
 .accordion details p {
-  margin-bottom: 0.8em;
-  font-size: 15px;
-  color: #444;
-  line-height: 1.6;
+     margin:0;
+    line-height: 1.6;
+    font-family: Satoshi, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
 }
 
 .accordion details summary {
   position: relative;
-  padding: 16px 20px;
-  padding-right: 50px;
+  padding: 20px 64px 20px 24px;
   cursor: pointer;
   list-style: none;
-  overflow: auto;
   transition: background-color 0.2s;
+  font-family: Satoshi, sans-serif;
   font-size: 16px;
   font-weight: 500;
-  color: #111;
+  color: #323232;
+  line-height: 1.4;
+}
+.accordion details summary p{
+  font-size: 20px;
+}
+.accordion details[open] {
+  background-color: #eaf6fb;
+  border-color: #7dd1f1;
 }
 
 .accordion details[open] summary {
-  background-color: var(--background-color);
+  background-color: transparent;
+  color: #0a0a0a;
 }
 
-.accordion details summary:focus,
-.accordion details summary:hover {
-  background-color: #f9f9f9;
+.accordion details summary:focus-visible {
+  outline: 2px solid #00adef;
+  outline-offset: -2px;
 }
 
 .accordion details summary::-webkit-details-marker {
@@ -47,40 +68,106 @@
   position: absolute;
   top: 50%;
   right: 20px;
-  transform: translateY(-50%) rotate(135deg);
-  width: 8px;
-  height: 8px;
-  border: 2px solid var(--link-color);
-  border-width: 2px 2px 0 0;
-  transition: transform 0.2s;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  background-color: #00adef;
+  mask: url('/icons/canara-sprite/drop-down-caret.svg') no-repeat center / contain;
+  -webkit-mask: url('/icons/canara-sprite/drop-down-caret.svg') no-repeat center / contain;
+  transition: transform 0.35s ease;
 }
 
 .accordion details[open] summary::after {
-  transform: translateY(-50%) rotate(-45deg);
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .accordion details .accordion-item-body {
-  padding: 0 20px 16px;
+  padding: 0 24px 20px;
 }
 
 .accordion details[open] .accordion-item-body {
-  border-top: 1px solid #e8e8e8;
-  background-color: var(--background-color);
+  padding-top: 0;
+  background-color: transparent;
+  color: #5a5a5a;
+  font-family: Satoshi, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-/* Blue accent bar under FAQ heading */
-.accordion-container h2 {
-  text-align: center;
-  position: relative;
-  padding-bottom: 16px;
+.accordion details[open] .accordion-item-body p {
+  color: #5a5a5a;
+  margin: 0 0 0.8em;
 }
 
-.accordion-container h2::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 3px;
-  background-color: var(--link-color);
-  margin: 12px auto 0;
+.accordion details[open] .accordion-item-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* load more */
+.accordion-loadmore-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.accordion-loadmore-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.6875rem;
+  background: transparent;
+  border: 1px solid #00adef;
   border-radius: 2px;
+  color: #00adef;
+  font-family: Satoshi, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.accordion-loadmore-btn:hover,
+.accordion-loadmore-btn:focus-visible {
+      background-color: #0067b1;
+    border: 1px solid #0067b1;
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+  .accordion {
+    padding: 0;
+  }
+
+  .accordion details summary {
+    padding: 16px 52px 16px 16px;
+    font-size: 15px;
+  }
+
+  .accordion details summary p {
+    font-size: 15px;
+  }
+
+  .accordion details summary::after {
+    right: 14px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .accordion details .accordion-item-body {
+    padding: 0 16px 16px;
+  }
+
+  .accordion details p {
+    font-size: 14px;
+  }
+
+  .accordion details[open] .accordion-item-body {
+    padding-top: 12px;
+    font-size: 14px;
+  }
+
+  .accordion-loadmore-btn {
+    width: 100%;
+  }
 }

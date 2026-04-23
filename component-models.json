@@ -140,6 +140,34 @@
           {
             "name": "Title Heading",
             "value": "title-heading"
+          },
+          {
+            "name": "Title Heading Center",
+            "value": "text-center"
+          },
+          {
+            "name": "Full Width Section",
+            "value": "full-width"
+          },
+          {
+            "name": "No Margin Top",
+            "value": "no-margin-top"
+          },
+          {
+            "name": "No Margin Bottom",
+            "value": "no-margin-bottom"
+          },
+          {
+            "name": "Article Overview",
+            "value": "article-overview"
+          },
+          {
+            "name": "Text Heading",
+            "value": "text-heading"
+          },
+          {
+            "name": "Default List",
+            "value": "default-list"
           }
         ]
       }
@@ -159,6 +187,52 @@
         "name": "body",
         "value": "",
         "label": "Answer"
+      }
+    ]
+  },
+  {
+    "id": "blog-search",
+    "fields": [
+      {
+        "component": "text",
+        "name": "searchLabel",
+        "value": "Search",
+        "label": "Search Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "searchPlaceholder",
+        "value": "Search by name, category, author",
+        "label": "Search Placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "yearLabel",
+        "value": "Select Year",
+        "label": "Year Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "years",
+        "value": "2026,2025,2024,2023",
+        "label": "Years",
+        "description": "Comma-separated list of years for the dropdown",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Items",
+        "description": "Add a list of breadcrumb items. Link the ones that should navigate; leave the last (current page) as plain text.",
+        "valueType": "string"
       }
     ]
   },

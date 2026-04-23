@@ -7,8 +7,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 280px;
-  padding: 40px 24px;
+  min-height: 28.125rem;
+  padding: 0 0 0 80px;
   overflow: hidden;
 }
 
@@ -29,43 +29,50 @@
 .hero .hero-text {
   position: relative;
   z-index: 1;
-  max-width: 500px;
+  max-width: 720px;
   text-align: left;
 }
 
-.hero h1 {
-  color: #1a2a4a;
-  font-family: Satoshi, sans-serif;
+.hero .hero-text h2,
+.hero .hero-text h3 {
+  color: #0a0a0a;
   font-size: 28px;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 12px;
+  margin: 0 0 20px;
 }
 
 .hero p {
-  color: #323232;
   font-family: Satoshi, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   margin: 0;
 }
 
-@media (width >= 900px) {
+@media (max-width: 767px) {
   .hero {
-    padding: 60px 80px;
-    min-height: 420px;
+    min-height: 320px;
+    padding: 24px 16px;
+    align-items: flex-start;
+  }
+
+  .hero img {
+    opacity: 1;
+    object-position: right center;
   }
 
   .hero .hero-text {
-    max-width: 540px;
+    max-width: 55%;
   }
 
-  .hero h1 {
-    font-size: 40px;
-    margin-bottom: 16px;
+  .hero .hero-text h2,
+  .hero .hero-text h3 {
+    font-size: 24px;
+    margin: 0 0 12px;
   }
 
   .hero p {
-    font-size: 18px;
+    font-size: 14px;
+    line-height: 1.5;
   }
 }
