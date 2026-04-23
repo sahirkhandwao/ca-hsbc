@@ -34,6 +34,7 @@ function readHref(cell) {
 export default function decorate(block) {
   const rows = [...block.children].map(readCell);
   const [
+    textCell,
     prevImgCell,
     prevAltCell,
     prevTitleCell,
@@ -44,6 +45,7 @@ export default function decorate(block) {
     nextLinkCell,
   ] = rows;
 
+  const text = readText(textCell);
   const prev = {
     picture: readPicture(prevImgCell),
     alt: readText(prevAltCell),
@@ -90,6 +92,13 @@ export default function decorate(block) {
   };
 
   block.textContent = '';
+
+  if (text) {
+    const textEl = document.createElement('div');
+    textEl.className = 'policy-details-text-top';
+    textEl.textContent = text;
+    block.append(textEl);
+  }
 
   const wrap = document.createElement('div');
   wrap.className = 'policy-details-wrap';

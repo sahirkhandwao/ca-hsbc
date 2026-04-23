@@ -1,15 +1,18 @@
 .social-media-links {
-  background: #f4f4f4;
-  border-radius: 4px;
-  padding: 20px 24px;
+  display: flex;
+  justify-content: center;
   font-family: Satoshi, sans-serif;
 }
 
 .social-media-links .social-media-links-wrap {
-  display: flex;
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 16px 28px;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  max-width: 100%;
 }
 
 .social-media-links .social-media-links-title {
@@ -27,15 +30,22 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  align-items: center;
+  display: inline-flex;
+  align-items: stretch;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 32px;
+  gap: 0;
 }
 
 .social-media-links .social-media-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
+  padding: 0 24px;
+}
+
+.social-media-links .social-media-link + .social-media-link {
+  border-left: 1px solid #d0d0d0;
 }
 
 .social-media-links .social-media-link-anchor {
@@ -58,16 +68,16 @@
 }
 
 .social-media-links .social-media-link-icon {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
 .social-media-links .social-media-link-icon img {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
@@ -79,22 +89,22 @@
 }
 
 @media (max-width: 767px) {
-  .social-media-links {
-    padding: 16px 12px;
+  .social-media-links .social-media-links-wrap {
+    padding: 14px 16px;
   }
 
-  .social-media-links .social-media-links-list {
-    gap: 20px;
+  .social-media-links .social-media-link {
+    padding: 0 14px;
   }
 
   .social-media-links .social-media-link-icon {
-    width: 34px;
-    height: 34px;
+    width: 28px;
+    height: 28px;
   }
 
   .social-media-links .social-media-link-icon img {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
   }
 
   .social-media-links .social-media-link-label {
