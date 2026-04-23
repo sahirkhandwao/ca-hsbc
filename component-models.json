@@ -350,6 +350,24 @@
     ]
   },
   {
+    "id": "glossary",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Items",
+        "description": "Numbered list. Use **Term:** then definition for each item.",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {

@@ -1,0 +1,126 @@
+.glossary {
+  position: relative;
+  background: #eaf6fb;
+  border: 1px solid #9cd6ee;
+  border-radius: 4px;
+  padding: 32px 40px 32px 40px;
+  font-family: Satoshi, sans-serif;
+  overflow: visible;
+}
+
+.glossary .glossary-icon {
+  position: absolute;
+  top: -20px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 6%);
+}
+
+.glossary .glossary-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.glossary .glossary-title {
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  color: #00adef;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.glossary .glossary-title h1,
+.glossary .glossary-title h2,
+.glossary .glossary-title h3,
+.glossary .glossary-title h4,
+.glossary .glossary-title p {
+  color: #00adef;
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.glossary .glossary-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 56px;
+  height: 2px;
+  background: #00adef;
+}
+
+.glossary .glossary-items ol {
+  list-style: decimal;
+  padding-left: 22px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.glossary .glossary-items ol li {
+  color: #323232;
+  font-family: Satoshi, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: 4px;
+}
+
+.glossary .glossary-items ol li::marker {
+  color: #323232;
+  font-weight: 500;
+}
+
+.glossary .glossary-items strong,
+.glossary .glossary-items b {
+  color: #0a0a0a;
+  font-weight: 700;
+}
+
+.glossary .glossary-items p {
+  margin: 0;
+  color: #323232;
+  font-family: Satoshi, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+@media (max-width: 767px) {
+  .glossary {
+    padding: 24px 20px 20px;
+  }
+
+  .glossary .glossary-icon {
+    width: 40px;
+    height: 40px;
+    top: -18px;
+    right: 16px;
+  }
+
+  .glossary .glossary-title,
+  .glossary .glossary-title p {
+    font-size: 18px;
+  }
+
+  .glossary .glossary-items ol li,
+  .glossary .glossary-items p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .glossary .glossary-items ol {
+    padding-left: 18px;
+    gap: 10px;
+  }
+}
