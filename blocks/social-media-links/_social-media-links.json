@@ -1,0 +1,87 @@
+{
+  "definitions": [
+    {
+      "title": "Social Media Links",
+      "id": "social-media-links",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Social Media Links",
+              "model": "social-media-links",
+              "filter": "social-media-links"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social Media Link",
+      "id": "social-media-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Social Media Link",
+              "model": "social-media-link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "social-media-links",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "title",
+          "label": "Title",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-media-link",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "icon",
+          "label": "Icon",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "iconAlt",
+          "label": "Icon Alt",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "label",
+          "label": "Label",
+          "value": ""
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "social-media-links",
+      "components": [
+        "social-media-link"
+      ]
+    }
+  ]
+}

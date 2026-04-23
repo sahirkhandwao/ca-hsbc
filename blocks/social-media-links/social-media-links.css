@@ -1,0 +1,103 @@
+.social-media-links {
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 20px 24px;
+  font-family: Satoshi, sans-serif;
+}
+
+.social-media-links .social-media-links-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-media-links .social-media-links-title {
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+}
+
+.social-media-links .social-media-links-title p {
+  margin: 0;
+}
+
+.social-media-links .social-media-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.social-media-links .social-media-link {
+  margin: 0;
+}
+
+.social-media-links .social-media-link-anchor {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #00adef;
+  font-family: Satoshi, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.social-media-links .social-media-link-anchor:hover,
+.social-media-links .social-media-link-anchor:focus-visible {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.social-media-links .social-media-link-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-media-links .social-media-link-icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.social-media-links .social-media-link-label {
+  color: #00adef;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@media (max-width: 767px) {
+  .social-media-links {
+    padding: 16px 12px;
+  }
+
+  .social-media-links .social-media-links-list {
+    gap: 20px;
+  }
+
+  .social-media-links .social-media-link-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .social-media-links .social-media-link-icon img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .social-media-links .social-media-link-label {
+    font-size: 12px;
+  }
+}

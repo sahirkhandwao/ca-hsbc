@@ -140,23 +140,32 @@
 @media (max-width: 767px) {
   .glossary .glossary-layout {
     grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
+    gap: 20px;
   }
 
   .glossary .glossary-icon {
-    top: -18px;
-    right: 16px;
+    top: -22px;
+    right: 20px;
     width: 44px;
     height: 44px;
   }
 
   .glossary .glossary-main {
-    padding: 24px 20px 20px;
+    padding: 22px 18px 22px;
   }
 
   .glossary .glossary-title,
   .glossary .glossary-title p {
     font-size: 18px;
+  }
+
+  .glossary .glossary-title::after {
+    width: 48px;
+  }
+
+  .glossary .glossary-items ol {
+    padding-left: 20px;
+    gap: 12px;
   }
 
   .glossary .glossary-items ol li,
@@ -165,12 +174,14 @@
     line-height: 1.5;
   }
 
-  .glossary .glossary-items ol {
-    padding-left: 18px;
-    gap: 10px;
+  .glossary .glossary-aside {
+    min-height: 0;
   }
 
-  .glossary .glossary-aside {
-    min-height: 180px;
+  .glossary .glossary-aside img {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: center;
   }
 }
