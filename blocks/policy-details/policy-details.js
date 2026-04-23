@@ -19,45 +19,49 @@ function readCell(row) {
   return row.querySelector(':scope > div') || row;
 }
 
-function readPicture(cell) {
-  return cell?.querySelector('picture') || null;
-}
-
-function readText(cell) {
+function cellText(cell) {
   return cell?.textContent?.trim() || '';
 }
 
-function readHref(cell) {
-  return cell?.querySelector('a')?.getAttribute('href') || readText(cell) || '#';
+function cellHref(cell) {
+  if (!cell) return '';
+  const a = cell.querySelector('a');
+  if (a) return a.getAttribute('href') || '';
+  const t = cellText(cell);
+  return /^(https?:|\/|#|mailto:|tel:)/.test(t) ? t : '';
+}
+
+function parseGroup(cells) {
+  // cells: 4 rows for one side (image / alt / title / link) — any order
+  const pictureCell = cells.find((c) => c?.querySelector('picture'));
+  const linkCell = cells.find((c) => c && c !== pictureCell && cellHref(c));
+  const textCells = cells.filter((c) => c && c !== pictureCell && c !== linkCell);
+  return {
+    picture: pictureCell?.querySelector('picture') || null,
+    alt: cellText(textCells[0]),
+    title: cellText(textCells[1]) || cellText(textCells[0]),
+    href: cellHref(linkCell) || '#',
+  };
 }
 
 export default function decorate(block) {
-  const rows = [...block.children].map(readCell);
-  const [
-    textCell,
-    prevImgCell,
-    prevAltCell,
-    prevTitleCell,
-    prevLinkCell,
-    nextImgCell,
-    nextAltCell,
-    nextTitleCell,
-    nextLinkCell,
-  ] = rows;
+  const allRows = [...block.children].map(readCell);
 
-  const text = readText(textCell);
-  const prev = {
-    picture: readPicture(prevImgCell),
-    alt: readText(prevAltCell),
-    title: readText(prevTitleCell),
-    href: readHref(prevLinkCell),
-  };
-  const next = {
-    picture: readPicture(nextImgCell),
-    alt: readText(nextAltCell),
-    title: readText(nextTitleCell),
-    href: readHref(nextLinkCell),
-  };
+  // If there are 9 rows, first is the optional text field.
+  let textCell = null;
+  let groupRows = allRows;
+  if (allRows.length >= 9) {
+    textCell = allRows[0];
+    groupRows = allRows.slice(1);
+  }
+
+  const text = cellText(textCell);
+  const prev = parseGroup(groupRows.slice(0, 4));
+  const next = parseGroup(groupRows.slice(4, 8));
+
+  // If the prev group has only alt (no title), promote alt to title.
+  if (!prev.title && prev.alt) prev.title = prev.alt;
+  if (!next.title && next.alt) next.title = next.alt;
 
   const buildCard = (data, variant) => {
     const a = document.createElement('a');
@@ -72,9 +76,9 @@ export default function decorate(block) {
       thumb.append(data.picture);
     }
 
-    const text = document.createElement('span');
-    text.className = 'policy-details-text';
-    text.innerHTML = `
+    const textEl = document.createElement('span');
+    textEl.className = 'policy-details-text';
+    textEl.innerHTML = `
       <span class="policy-details-label">
         ${variant === 'prev' ? PREV_ICON : ''}
         <span>${variant === 'prev' ? 'Previous' : 'Next'}</span>
@@ -84,9 +88,9 @@ export default function decorate(block) {
     `;
 
     if (variant === 'prev') {
-      a.append(thumb, text);
+      a.append(thumb, textEl);
     } else {
-      a.append(text, thumb);
+      a.append(textEl, thumb);
     }
     return a;
   };
@@ -94,10 +98,10 @@ export default function decorate(block) {
   block.textContent = '';
 
   if (text) {
-    const textEl = document.createElement('div');
-    textEl.className = 'policy-details-text-top';
-    textEl.textContent = text;
-    block.append(textEl);
+    const topEl = document.createElement('div');
+    topEl.className = 'policy-details-text-top';
+    topEl.textContent = text;
+    block.append(topEl);
   }
 
   const wrap = document.createElement('div');
@@ -107,7 +111,6 @@ export default function decorate(block) {
 
   block.append(wrap);
 
-  // restore instrumentation on each half-row to keep author edit hooks intact
-  if (rows[0]) moveInstrumentation(rows[0], wrap.querySelector('.policy-details-card--prev') || wrap);
-  if (rows[4]) moveInstrumentation(rows[4], wrap.querySelector('.policy-details-card--next') || wrap);
+  if (allRows[1]) moveInstrumentation(allRows[1], wrap.querySelector('.policy-details-card--prev') || wrap);
+  if (allRows[5]) moveInstrumentation(allRows[5], wrap.querySelector('.policy-details-card--next') || wrap);
 }
