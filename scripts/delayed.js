@@ -1,25 +1,39 @@
 /**
- * delayed.js — Third-party integrations for Canara HSBC Life Insurance EDS project.
+ * delayed.js — Performance-optimised third-party integrations.
  *
- * Loaded ~3 seconds after page load (see scripts.js: loadDelayed).
- * All integrations mirror those found on www.canarahsbclife.com.
+ * This file is imported ~3 s after page load (scripts.js → loadDelayed).
+ * Scripts are further tiered so heavy SDKs never compete with each other
+ * or with the browser's own post-load work.
  *
- * Integrations:
- *  1. Google Tag Manager (GTM-5G46XDD) — tag container (already in <head>, noscript fallback here)
- *  2. Google Analytics 4 (G-51XFB89N2W)
- *  3. Google Ads Conversion Tracking (AW-701979898, AW-823498124, AW-761894235)
- *  4. Google Floodlight / Display & Video 360 (DC-15253010)
- *  5. Meta (Facebook) Pixel (447481009564934)
- *  6. Microsoft Clarity (3xk6k0dj9y)
- *  7. Microsoft Advertising / Bing UET (17437402)
- *  8. Hotjar (1132371)
- *  9. Netcore SmartTech (ADGMOT35CHFLVDHBJNIG50K968KCH9AE37ADIBJU4V7HKR4G6JVG)
- * 10. Adobe Launch / Experience Platform Tags
+ * Loading strategy
+ * ────────────────
+ * Tier 1 (idle callback, no extra delay)
+ *   GTM — tag container; needed by ad/analytics pixels
+ *   GA4 + Google Ads + Floodlight — lightweight gtag configs
+ *   Meta Pixel — standard marketing pixel
+ *   Microsoft Clarity — lightweight snippet
+ *   Adobe Launch — required tag management
+ *
+ * Tier 2 (idle callback + 2 s extra delay)
+ *   Bing UET — heavier ad SDK
+ *   Netcore SmartTech — marketing automation SDK
+ *
+ * Tier 3 (idle callback + 4 s extra delay)
+ *   Hotjar — session recording; most CPU-intensive, load last
+ *
+ * All scripts use async loading. requestIdleCallback (with a 2 s timeout
+ * fallback) ensures they only execute when the main thread is free.
  */
 
 // ---------------------------------------------------------------------------
-// Helper: load an external script asynchronously
+// Utilities
 // ---------------------------------------------------------------------------
+
+/**
+ * Append an async <script> to <head>.
+ * @param {string} src
+ * @param {Object} [attrs] — extra attributes, e.g. { defer: '' }
+ */
 function loadScript(src, attrs = {}) {
   const s = document.createElement('script');
   s.src = src;
@@ -28,111 +42,109 @@ function loadScript(src, attrs = {}) {
   document.head.appendChild(s);
 }
 
-// ---------------------------------------------------------------------------
-// Helper: inject raw HTML into <body> (for noscript / pixel iframes)
-// ---------------------------------------------------------------------------
-function injectHTML(html) {
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = html;
-  document.body.appendChild(wrapper);
+/**
+ * Schedule work during browser idle time.
+ * Falls back to setTimeout when rIC is unavailable (e.g. Safari < 16).
+ * @param {Function} fn
+ * @param {number} [timeout=2000] — deadline before forced execution (ms)
+ */
+function onIdle(fn, timeout = 2000) {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(fn, { timeout });
+  } else {
+    setTimeout(fn, timeout);
+  }
+}
+
+/**
+ * Schedule work at idle time after an additional delay.
+ * @param {Function} fn
+ * @param {number} delay — extra ms to wait before scheduling idle callback
+ */
+function onIdleAfter(fn, delay) {
+  setTimeout(() => onIdle(fn), delay);
 }
 
 // ---------------------------------------------------------------------------
-// 1. GTM noscript fallback
-//    (The JS snippet is already in head.html; this covers no-JS environments)
+// Tier 1 — fire at first idle slot (no extra delay beyond the 3 s from loadDelayed)
 // ---------------------------------------------------------------------------
-injectHTML(`<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G46XDD"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`);
+onIdle(() => {
+  // ── 1. Google Tag Manager (GTM-5G46XDD) ──────────────────────────────────
+  // Inline snippet + noscript fallback. GTM must be first so its tags fire.
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+  loadScript('https://www.googletagmanager.com/gtm.js?id=GTM-5G46XDD');
 
-// ---------------------------------------------------------------------------
-// 2 & 3 & 4. Google gtag.js — GA4 + Google Ads + Floodlight
-//    Load the gtag library once, then configure each property.
-// ---------------------------------------------------------------------------
-window.dataLayer = window.dataLayer || [];
-// eslint-disable-next-line prefer-rest-params
-function gtag() { window.dataLayer.push(arguments); }
-window.gtag = gtag;
-gtag('js', new Date());
+  // noscript fallback (harmless in JS context; browsers ignore <noscript> here)
+  const ns = document.createElement('noscript');
+  ns.innerHTML = '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G46XDD" height="0" width="0" style="display:none;visibility:hidden"></iframe>';
+  document.body.prepend(ns);
 
-// GA4
-gtag('config', 'G-51XFB89N2W');
+  // ── 2–4. GA4 + Google Ads + Floodlight (single gtag.js library) ──────────
+  // eslint-disable-next-line prefer-rest-params
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', 'G-51XFB89N2W');   // GA4
+  gtag('config', 'AW-701979898');   // Google Ads
+  gtag('config', 'AW-823498124');   // Google Ads
+  gtag('config', 'AW-761894235');   // Google Ads
+  gtag('config', 'DC-15253010');    // Floodlight / DV360
+  loadScript('https://www.googletagmanager.com/gtag/js?id=G-51XFB89N2W');
 
-// Google Ads conversion tracking
-gtag('config', 'AW-701979898');
-gtag('config', 'AW-823498124');
-gtag('config', 'AW-761894235');
+  // ── 5. Meta (Facebook) Pixel — 447481009564934 ───────────────────────────
+  /* eslint-disable */
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+  (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  window.fbq('init','447481009564934');
+  window.fbq('track','PageView');
+  /* eslint-enable */
 
-// Floodlight / Display & Video 360
-gtag('config', 'DC-15253010');
-
-// Load the gtag.js library (uses first property as the gtag ID)
-loadScript('https://www.googletagmanager.com/gtag/js?id=G-51XFB89N2W');
-
-// ---------------------------------------------------------------------------
-// 5. Meta (Facebook) Pixel — ID: 447481009564934
-// ---------------------------------------------------------------------------
-/* eslint-disable */
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-window.fbq('init', '447481009564934');
-window.fbq('track', 'PageView');
-/* eslint-enable */
-
-injectHTML(`<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=447481009564934&ev=PageView&noscript=1"/></noscript>`);
-
-// ---------------------------------------------------------------------------
-// 6. Microsoft Clarity — Project ID: 3xk6k0dj9y
-// ---------------------------------------------------------------------------
-/* eslint-disable */
-(function(c,l,a,r,i,t,y){
-  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  // ── 6. Microsoft Clarity — 3xk6k0dj9y ────────────────────────────────────
+  /* eslint-disable */
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-})(window,document,"clarity","script","3xk6k0dj9y");
-/* eslint-enable */
+  })(window,document,'clarity','script','3xk6k0dj9y');
+  /* eslint-enable */
+
+  // ── 10. Adobe Launch — 0585812b25b8/c7a388058a71 ─────────────────────────
+  loadScript('https://assets.adobedtm.com/0585812b25b8/c7a388058a71/launch-cd2dbe81961b.min.js');
+});
 
 // ---------------------------------------------------------------------------
-// 7. Microsoft Advertising / Bing UET — Tag ID: 17437402
+// Tier 2 — idle callback after an additional 2 s
 // ---------------------------------------------------------------------------
-/* eslint-disable */
-(function(w,d,t,r,u){
-  var f,n,i;
-  w[u]=w[u]||[],f=function(){var o={ti:'17437402',enableAutoSpaTracking:true};
-  o.q=w[u],w[u]=new UET(o),w[u].push('pageLoad')};
-  n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){
-  var s=this.readyState;s&&s!=='loaded'&&s!=='complete'||(f(),n.onload=n.onreadystatechange=null)};
-  i=d.getElementsByTagName(t)[0];i.parentNode.insertBefore(n,i)
-})(window,document,'script','https://bat.bing.com/bat.js','uetq');
-/* eslint-enable */
+onIdleAfter(() => {
+  // ── 7. Microsoft Advertising / Bing UET — 17437402 ───────────────────────
+  /* eslint-disable */
+  (function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[];
+  f=function(){var o={ti:'17437402',enableAutoSpaTracking:true};o.q=w[u];
+  w[u]=new UET(o);w[u].push('pageLoad')};n=d.createElement(t);n.src=r;n.async=1;
+  n.onload=n.onreadystatechange=function(){var s=this.readyState;
+  s&&s!=='loaded'&&s!=='complete'||(f(),n.onload=n.onreadystatechange=null)};
+  i=d.getElementsByTagName(t)[0];i.parentNode.insertBefore(n,i);
+  })(window,document,'script','https://bat.bing.com/bat.js','uetq');
+  /* eslint-enable */
+
+  // ── 9. Netcore SmartTech ─────────────────────────────────────────────────
+  // Client key: ADGMOT35CHFLVDHBJNIG50K968KCH9AE37ADIBJU4V7HKR4G6JVG
+  loadScript('https://cdnt.netcoresmartech.com/smartechclient.js');
+}, 2000);
 
 // ---------------------------------------------------------------------------
-// 8. Hotjar — Site ID: 1132371
+// Tier 3 — idle callback after an additional 4 s (Hotjar is CPU-heavy)
 // ---------------------------------------------------------------------------
-/* eslint-disable */
-(function(h,o,t,j,a,r){
-  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-  h._hjSettings={hjid:1132371,hjsv:6};
-  a=o.getElementsByTagName('head')[0];
+onIdleAfter(() => {
+  // ── 8. Hotjar — 1132371 ───────────────────────────────────────────────────
+  /* eslint-disable */
+  (function(h,o,t,j,a,r){h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+  h._hjSettings={hjid:1132371,hjsv:6};a=o.getElementsByTagName('head')[0];
   r=o.createElement('script');r.async=1;
-  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-  a.appendChild(r);
-})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-/* eslint-enable */
-
-// ---------------------------------------------------------------------------
-// 9. Netcore SmartTech — Client Key: ADGMOT35CHFLVDHBJNIG50K968KCH9AE37ADIBJU4V7HKR4G6JVG
-//    Loads the main SmartTech client SDK.
-// ---------------------------------------------------------------------------
-loadScript('https://cdnt.netcoresmartech.com/smartechclient.js');
-
-// ---------------------------------------------------------------------------
-// 10. Adobe Launch / Experience Platform Tags
-//     Property: 0585812b25b8/c7a388058a71
-// ---------------------------------------------------------------------------
-loadScript('https://assets.adobedtm.com/0585812b25b8/c7a388058a71/launch-cd2dbe81961b.min.js');
+  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  /* eslint-enable */
+}, 4000);
