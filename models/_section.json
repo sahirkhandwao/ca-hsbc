@@ -85,7 +85,9 @@
         "fragment",
         "blog-search",
         "breadcrumb",
-        "glossary"
+        "glossary",
+        "social-media-links",
+        "policy-details"
       ]
     }
   ]

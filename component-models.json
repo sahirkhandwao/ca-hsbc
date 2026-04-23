@@ -413,6 +413,63 @@
     ]
   },
   {
+    "id": "policy-details",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "prevImage",
+        "label": "Previous Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "prevImageAlt",
+        "label": "Previous Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "prevTitle",
+        "label": "Previous Title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "prevLink",
+        "label": "Previous Link"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "nextImage",
+        "label": "Next Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nextImageAlt",
+        "label": "Next Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nextTitle",
+        "label": "Next Title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "nextLink",
+        "label": "Next Link"
+      }
+    ]
+  },
+  {
     "id": "popular-searches",
     "fields": [
       {
