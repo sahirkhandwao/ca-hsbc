@@ -364,6 +364,25 @@
         "label": "Items",
         "description": "Numbered list. Use **Term:** then definition for each item.",
         "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Right Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Right Image Alt",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "imageLink",
+        "label": "Right Image Link"
       }
     ]
   },
