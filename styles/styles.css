@@ -208,6 +208,13 @@ p{
     line-height: 24px;
     margin: 1.25rem 0;
 }
+
+/* make <br> tags create visible spacing instead of collapsing */
+main .default-content-wrapper br {
+  content: '';
+  display: block;
+  margin-top: 16px;
+}
 /* buttons */
 a.button:any-link,
 button {
@@ -282,7 +289,7 @@ main > .section {
     max-width: 1438px;
     padding: 0 80px;
 }
-main > .section{
+main > .section.margin-sixty-top-bottom{
   margin: 60px auto;
 }
  main > .section.full-width {
@@ -335,6 +342,10 @@ main > .section:first-of-type {
   bottom: -13px;
 left: 50%;
 transform: translateX(-50%);
+}
+.section.disclaimer-text .default-content-wrapper p{ 
+    line-height: 16px;
+    font-size: 14px;
 }
 /* section metadata */
 main .section.light,

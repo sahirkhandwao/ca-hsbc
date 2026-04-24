@@ -69,6 +69,10 @@
             {
               "name": "Default List",
               "value": "default-list"
+            },
+            {
+              "name": "Disclaimer Text",
+              "value": "disclaimer-text"
             }
           ]
         }
