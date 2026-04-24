@@ -50,6 +50,10 @@
             {
               "name": "Blog Card",
               "value": "blog-card"
+            },
+            {
+              "name": "Top Selling Plans",
+              "value": "top-selling-plans"
             }
           ]
         }

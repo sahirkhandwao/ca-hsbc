@@ -154,8 +154,16 @@
             "value": "no-margin-top"
           },
           {
-            "name": "No Margin Bottom",
-            "value": "no-margin-bottom"
+            "name": "No Margin Top Bottom",
+            "value": "no-margin-top-bottom"
+          },
+          {
+            "name": "No Margin Top",
+            "value": "no-margin-top"
+          },
+          {
+            "name": "Section Margin 60",
+            "value": "margin-sixty-top-bottom"
           },
           {
             "name": "Article Overview",
@@ -168,6 +176,10 @@
           {
             "name": "Default List",
             "value": "default-list"
+          },
+          {
+            "name": "Disclaimer Text",
+            "value": "disclaimer-text"
           }
         ]
       }
@@ -253,6 +265,10 @@
           {
             "name": "Blog Card",
             "value": "blog-card"
+          },
+          {
+            "name": "Top Selling Plans",
+            "value": "top-selling-plans"
           }
         ]
       }
@@ -350,6 +366,43 @@
     ]
   },
   {
+    "id": "glossary",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Items",
+        "description": "Numbered list. Use **Term:** then definition for each item.",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Right Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Right Image Alt",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "imageLink",
+        "label": "Right Image Link"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -376,6 +429,70 @@
     ]
   },
   {
+    "id": "policy-details",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "text",
+        "label": "Text",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "prevImage",
+        "label": "Previous Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "prevImageAlt",
+        "label": "Previous Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "prevTitle",
+        "label": "Previous Title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "prevLink",
+        "label": "Previous Link"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "nextImage",
+        "label": "Next Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nextImageAlt",
+        "label": "Next Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nextTitle",
+        "label": "Next Title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "nextLink",
+        "label": "Next Link"
+      }
+    ]
+  },
+  {
     "id": "popular-searches",
     "fields": [
       {
@@ -389,6 +506,48 @@
         "name": "links",
         "label": "Links",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-media-links",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-media-link",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Icon Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Label",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
       }
     ]
   }

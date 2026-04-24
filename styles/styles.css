@@ -173,10 +173,10 @@ pre {
     overflow-x: auto;
     white-space: pre;
 }
-
+/* 
 main > div {
     margin: 40px 16px;
-}
+} */
 
 input,
 textarea,
@@ -207,6 +207,13 @@ p{
     font-weight: 400;
     line-height: 24px;
     margin: 1.25rem 0;
+}
+
+/* make <br> tags create visible spacing instead of collapsing */
+main .default-content-wrapper br {
+  content: '';
+  display: block;
+  margin-top: 16px;
 }
 /* buttons */
 a.button:any-link,
@@ -282,6 +289,9 @@ main > .section {
     max-width: 1438px;
     padding: 0 80px;
 }
+main > .section.margin-sixty-top-bottom{
+  margin: 60px auto;
+}
  main > .section.full-width {
         max-width: 100%;
     padding: 0;
@@ -293,10 +303,14 @@ main > .section:first-of-type {
 
 
 .section.no-margin-top{
-  margin-top: 0!important;
+  margin-top: 0;
 }
 .section.no-margin-bottom{
-  margin-bottom: 0!important;
+  margin-bottom: 0;
+}
+.section.no-margin-top-bottom{
+  margin-top: 0;
+  margin-bottom: 0;
 }
 /* By default it is left aligned */
 .section.title-heading .default-content-wrapper h2 {
@@ -332,6 +346,10 @@ main > .section:first-of-type {
   bottom: -13px;
 left: 50%;
 transform: translateX(-50%);
+}
+.section.disclaimer-text .default-content-wrapper p{ 
+    line-height: 16px;
+    font-size: 14px;
 }
 /* section metadata */
 main .section.light,
@@ -432,12 +450,111 @@ main > .section.glossary li {
     line-height: 1.6;
 }
 
-/* Article body H2 styling - blue left accent */
-/* main > .section > .default-content-wrapper h2 {
-  padding-bottom: 8px;
-  border-bottom: 2px solid #eee;
-  margin-bottom: 16px;
-} */
+
+/* custom text styling written here */
+
+.section.article-overview .default-content-wrapper p strong{
+font-size: 20px;
+}
+
+/* article meta row: date | views | read time | share */
+.section.article-overview .default-content-wrapper ul {
+  list-style: none;
+  padding: 14px 20px 14px 0;
+  margin: 12px 0 24px;
+  border-radius: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  font-family: Satoshi, sans-serif;
+}
+
+.section.article-overview .default-content-wrapper ul li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  color: #7a7a7a;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.section.article-overview .default-content-wrapper ul li:first-child {
+  padding-left: 0;
+}
+
+.section.article-overview .default-content-wrapper ul li + li {
+  border-left: 1px solid #c8c8c8;
+}
+
+.section.article-overview .default-content-wrapper ul li::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background-color: #7a7a7a;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.section.article-overview .default-content-wrapper ul li:nth-child(1)::before {
+  mask-image: url('/icons/calendar.svg');
+  -webkit-mask-image: url('/icons/calendar.svg');
+}
+
+.section.article-overview .default-content-wrapper ul li:nth-child(2)::before {
+  mask-image: url('/icons/eye.svg');
+  -webkit-mask-image: url('/icons/eye.svg');
+}
+
+.section.article-overview .default-content-wrapper ul li:nth-child(3)::before {
+  mask-image: url('/icons/clock.svg');
+  -webkit-mask-image: url('/icons/clock.svg');
+}
+
+.section.article-overview .default-content-wrapper ul li:nth-child(4)::before {
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='18' cy='5' r='3'/><circle cx='6' cy='12' r='3'/><circle cx='18' cy='19' r='3'/><path d='M8.6 13.5l6.8 4M15.4 6.5l-6.8 4'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='18' cy='5' r='3'/><circle cx='6' cy='12' r='3'/><circle cx='18' cy='19' r='3'/><path d='M8.6 13.5l6.8 4M15.4 6.5l-6.8 4'/></svg>");
+}
+.section.default-list .default-content-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section.default-list .default-content-wrapper ul li {
+  position: relative;
+  padding-left: 32px;
+  color: #323232;
+  font-family: Satoshi, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.section.default-list .default-content-wrapper ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 22px;
+  height: 22px;
+  background: url('/icons/check-circle.svg') no-repeat center / contain;
+}
+.section.text-heading .default-content-wrapper h2{
+        color: #00adef;
+    font-family: Helvetica;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 120%;
+}
 
 @media (max-width: 767px) {
     main > .section {
@@ -447,5 +564,20 @@ main > .section.glossary li {
    .section.title-heading .default-content-wrapper h2{
     font-size: 22px;
         margin: 10px 0 35px;
+   }
+
+   .section.article-overview .default-content-wrapper ul {
+     padding: 10px 14px;
+     margin: 10px 0 20px;
+   }
+
+   .section.article-overview .default-content-wrapper ul li {
+     padding: 0 10px;
+     font-size: 12px;
+   }
+
+   .section.article-overview .default-content-wrapper ul li::before {
+     width: 14px;
+     height: 14px;
    }
   }

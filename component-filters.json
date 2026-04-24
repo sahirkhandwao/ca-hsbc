@@ -17,7 +17,10 @@
       "columns",
       "fragment",
       "blog-search",
-      "breadcrumb"
+      "breadcrumb",
+      "glossary",
+      "social-media-links",
+      "policy-details"
     ]
   },
   {
@@ -39,6 +42,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "social-media-links",
+    "components": [
+      "social-media-link"
     ]
   }
 ]

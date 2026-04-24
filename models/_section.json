@@ -51,8 +51,16 @@
               "value": "no-margin-top"
             },
             {
-              "name": "No Margin Bottom",
-              "value": "no-margin-bottom"
+              "name": "No Margin Top Bottom",
+              "value": "no-margin-top-bottom"
+            },
+            {
+              "name": "No Margin Top",
+              "value": "no-margin-top"
+            },
+             {
+              "name": "Section Margin 60",
+              "value": "margin-sixty-top-bottom"
             },
             {
               "name": "Article Overview",
@@ -65,6 +73,10 @@
             {
               "name": "Default List",
               "value": "default-list"
+            },
+            {
+              "name": "Disclaimer Text",
+              "value": "disclaimer-text"
             }
           ]
         }
@@ -84,7 +96,10 @@
         "columns",
         "fragment",
         "blog-search",
-        "breadcrumb"
+        "breadcrumb",
+        "glossary",
+        "social-media-links",
+        "policy-details"
       ]
     }
   ]
