@@ -303,10 +303,14 @@ main > .section:first-of-type {
 
 
 .section.no-margin-top{
-  margin-top: 0!important;
+  margin-top: 0;
 }
 .section.no-margin-bottom{
-  margin-bottom: 0!important;
+  margin-bottom: 0;
+}
+.section.no-margin-top-bottom{
+  margin-top: 0;
+  margin-bottom: 0;
 }
 /* By default it is left aligned */
 .section.title-heading .default-content-wrapper h2 {
