@@ -54,6 +54,10 @@
               "name": "No Margin Bottom",
               "value": "no-margin-bottom"
             },
+             {
+              "name": "Section Margin 60",
+              "value": "margin-sixty-top-bottom"
+            },
             {
               "name": "Article Overview",
               "value": "article-overview"

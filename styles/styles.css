@@ -173,10 +173,10 @@ pre {
     overflow-x: auto;
     white-space: pre;
 }
-
+/* 
 main > div {
     margin: 40px 16px;
-}
+} */
 
 input,
 textarea,
@@ -281,6 +281,9 @@ main > .section {
     margin: 96px auto;
     max-width: 1438px;
     padding: 0 80px;
+}
+main > .section{
+  margin: 60px auto;
 }
  main > .section.full-width {
         max-width: 100%;
@@ -506,7 +509,7 @@ font-size: 20px;
 .section.default-list .default-content-wrapper ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 1rem;
+  margin: 0 0 60px;
   display: flex;
   flex-direction: column;
   gap: 14px;
