@@ -152,11 +152,11 @@
   }
 
   .glossary .glossary-main::after {
-    top: -22px;
+    /* top: -22px;
     right: 20px;
     width: 44px;
     height: 44px;
-    background-size: 34px 34px;
+    background-size: 34px 34px; */
   }
 
   .glossary .glossary-main {
@@ -165,7 +165,7 @@
 
   .glossary .glossary-title,
   .glossary .glossary-title p {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .glossary .glossary-title::after {
@@ -173,8 +173,8 @@
   }
 
   .glossary .glossary-items ol {
-    padding-left: 20px;
-    gap: 12px;
+    /* padding-left: 20px;
+    gap: 12px; */
   }
 
   .glossary .glossary-items ol li,

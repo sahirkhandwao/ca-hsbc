@@ -289,8 +289,12 @@ main > .section {
     max-width: 1438px;
     padding: 0 80px;
 }
+main > .section:last-child{
+  margin-bottom: 0;
+  padding-bottom: 96px;
+}
 main > .section.margin-sixty-top-bottom{
-  margin: 60px auto;
+  margin: 50px auto;
 }
  main > .section.full-width {
         max-width: 100%;
@@ -339,7 +343,14 @@ main > .section:first-of-type {
     left: 0;
         bottom: -15px;
 }
-.section.text-center .default-content-wrapper h2 {
+.section.text-center .default-content-wrapper h2,
+.section.text-center .default-content-wrapper h3,
+.section.text-center .default-content-wrapper h4 {
+    text-align: center;
+}
+
+/* Only center paragraphs when they sit alongside a centered heading */
+.section.text-center .default-content-wrapper:has(h1, h2, h3, h4, h5, h6) p {
     text-align: center;
 }
 .section.title-heading.text-center .default-content-wrapper h2:after{
@@ -350,6 +361,7 @@ transform: translateX(-50%);
 .section.disclaimer-text .default-content-wrapper p{ 
     line-height: 16px;
     font-size: 14px;
+    padding: 0 22px;
 }
 /* section metadata */
 main .section.light,
@@ -524,7 +536,7 @@ font-size: 20px;
 .section.default-list .default-content-wrapper ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 60px;
+  /* margin: 0 0 60px; */
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -548,12 +560,15 @@ font-size: 20px;
   height: 22px;
   background: url('/icons/check-circle.svg') no-repeat center / contain;
 }
-.section.text-heading .default-content-wrapper h2{
+/* heading for core text components */
+.section.text-heading .default-content-wrapper h2, 
+.section.text-heading .default-content-wrapper h3{
         color: #00adef;
     font-family: Helvetica;
     font-size: 1.75rem;
     font-weight: 700;
     line-height: 120%;
+    margin-top: 46px;
 }
 
 @media (max-width: 767px) {
@@ -567,17 +582,34 @@ font-size: 20px;
    }
 
    .section.article-overview .default-content-wrapper ul {
-     padding: 10px 14px;
+     padding: 0;
      margin: 10px 0 20px;
+        gap: 25px 10px;
    }
 
    .section.article-overview .default-content-wrapper ul li {
-     padding: 0 10px;
-     font-size: 12px;
+     padding: 0 15px;
+     font-size: 14px;
+     color: #323232;
    }
 
    .section.article-overview .default-content-wrapper ul li::before {
      width: 14px;
      height: 14px;
+   }
+   .section.article-overview .default-content-wrapper p strong{
+    font-size: 14px;
+    font-weight: 400;
+   }
+   .section.text-heading .default-content-wrapper h2{
+    font-size: 22px;
+   }
+   .section.default-list .default-content-wrapper ul li::before{
+    width: 15px;
+    height: 15px;
+            top: 6px;
+   }
+   .section.default-list .default-content-wrapper ul li{
+    padding-left: 28px;
    }
   }

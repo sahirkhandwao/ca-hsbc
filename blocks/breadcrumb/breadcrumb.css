@@ -8,7 +8,7 @@
 }
 
 .section.breadcrumb-container {
-  padding: 32px 0 32px 80px;
+  padding: 32px 0 32px 48px;
 }
 
 .breadcrumb .breadcrumb-list {
@@ -53,7 +53,7 @@
 
 @media (max-width: 767px) {
   .section.breadcrumb-container {
-    padding:32px 20px;
+    padding:32px 20px 5px;
   }
 
   .breadcrumb {
@@ -62,7 +62,7 @@
 
   .breadcrumb .breadcrumb-list {
     font-size: 14px;
-    gap: 8px;
+    gap: 0 8px;
   }
 
   .breadcrumb .breadcrumb-item {
