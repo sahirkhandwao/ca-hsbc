@@ -541,7 +541,13 @@ font-size: 20px;
   flex-direction: column;
   gap: 14px;
 }
-
+.section.bg-default-list .default-content-wrapper{
+      border: 1px solid #00adef;
+    border-radius: 1rem;
+    display: block;
+    margin: .0625rem;
+    overflow: hidden;
+}
 .section.default-list .default-content-wrapper ul li {
   position: relative;
   padding-left: 32px;

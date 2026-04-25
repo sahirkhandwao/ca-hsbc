@@ -16,13 +16,17 @@ export default function decorate(block) {
   const main = document.createElement('div');
   main.className = 'glossary-main';
 
-  // Authorable icon: read from row, expose URL via CSS custom property
-  const iconImg = iconRow?.querySelector('img');
-  const iconSrc = iconImg?.getAttribute('src');
-  if (iconSrc) {
-    main.style.setProperty('--glossary-icon-url', `url("${iconSrc}")`);
+  // Authorable icon: render as a real DOM element so styling/instrumentation work
+  const iconPicture = iconRow?.querySelector('picture');
+  if (iconPicture) {
+    const iconWrap = document.createElement('div');
+    iconWrap.className = 'glossary-icon';
     const iconAlt = iconAltRow?.textContent?.trim();
-    if (iconAlt) main.setAttribute('data-icon-alt', iconAlt);
+    const iconImg = iconPicture.querySelector('img');
+    if (iconImg && iconAlt) iconImg.alt = iconAlt;
+    iconWrap.append(iconPicture);
+    moveInstrumentation(iconRow, iconWrap);
+    main.append(iconWrap);
   }
 
   if (titleRow) {
