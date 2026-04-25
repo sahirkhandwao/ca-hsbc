@@ -15,9 +15,7 @@
   z-index: 2;
   width: 56px;
   height: 56px;
-  background: #fff;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +59,6 @@
   line-height: 1.2;
 }
 
-.glossary .glossary-title h1,
 .glossary .glossary-title h2,
 .glossary .glossary-title h3,
 .glossary .glossary-title h4,
@@ -156,7 +153,49 @@
 .glossary:not(.has-aside) .glossary-main .glossary-icon {
   right: 24px;
 }
+/* Variation: Text Black ====================================== */
+.glossary.text-black .glossary-main {
+      background: #fff;
+    border: 5px solid #00adef;
+    border-radius: 16px;
+    padding: 20px;
+}
 
+
+.glossary.text-black .glossary-title h2,
+.glossary.text-black .glossary-title h3 {
+  color: #0a0a0a;
+  font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 120%;
+}
+
+.glossary.text-black .glossary-title::after {
+  background: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li,
+.glossary.text-black .glossary-items p {
+  color: #0a0a0a;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.glossary.text-black .glossary-items strong,
+.glossary.text-black .glossary-items b {
+  color: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li::marker {
+  color: #0a0a0a;
+}
+.glossary.text-black .glossary-main .glossary-icon{
+top: -42px;
+    right: -28px;
+    width: unset;
+    height: unset;
+}
 @media (max-width: 767px) {
   .glossary .glossary-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -205,37 +244,13 @@
     object-fit: cover;
     object-position: center;
   }
+  .glossary.text-black .glossary-items ol li, .glossary.text-black .glossary-items p{
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .glossary.text-black .glossary-title h2, .glossary.text-black .glossary-title h3{
+    font-size: 22px;
+  }
 }
 
-/* Variation: Text Black ====================================== */
-.glossary.text-black .glossary-main {
-  background: #fff;
-  border-color: #d0d0d0;
-}
 
-.glossary.text-black .glossary-title,
-.glossary.text-black .glossary-title h1,
-.glossary.text-black .glossary-title h2,
-.glossary.text-black .glossary-title h3,
-.glossary.text-black .glossary-title h4,
-.glossary.text-black .glossary-title p {
-  color: #0a0a0a;
-}
-
-.glossary.text-black .glossary-title::after {
-  background: #0a0a0a;
-}
-
-.glossary.text-black .glossary-items ol li,
-.glossary.text-black .glossary-items p {
-  color: #0a0a0a;
-}
-
-.glossary.text-black .glossary-items strong,
-.glossary.text-black .glossary-items b {
-  color: #0a0a0a;
-}
-
-.glossary.text-black .glossary-items ol li::marker {
-  color: #0a0a0a;
-}
