@@ -39,7 +39,6 @@
 }
 
 .policy-details .policy-details-card--next {
-  padding: 12px 12px 12px 20px;
   justify-content: flex-end;
 }
 
@@ -118,26 +117,27 @@
 
   .policy-details .policy-details-wrap {
     flex-direction: column;
-    gap: 12px;
+    gap: 50px;
+    padding: 0;
+    flex-direction: row;
   }
 
   .policy-details .policy-details-card,
   .policy-details .policy-details-card--next {
     width: 100%;
     max-width: 100%;
-    padding: 10px 14px 10px 10px;
+    flex: 1 1 100%;
+    padding: 10px 14px 10px 0;
   }
-
-  .policy-details .policy-details-card--next {
-    padding: 10px 10px 10px 14px;
+  .policy-details .policy-details-card--next{
+     padding: 10px 0 10px 14px;
   }
 
   .policy-details .policy-details-thumb {
-    width: 54px;
-    height: 54px;
+   display: none;
   }
 
-  .policy-details .policy-details-title {
-    font-size: 14px;
+  .policy-details .policy-details-title,.policy-details .policy-details-label {
+    font-size: 12px;
   }
 }
