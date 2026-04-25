@@ -8,22 +8,32 @@
   position: relative;
 }
 
-.glossary .glossary-main::after {
-  content: '';
+.glossary .glossary-main .glossary-icon {
   position: absolute;
   top: -22px;
   right: 18px;
   z-index: 2;
   width: 56px;
   height: 56px;
-  background: #fff url('/icons/Glossary.png') no-repeat center / 44px 44px;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.glossary .glossary-main .glossary-icon picture,
+.glossary .glossary-main .glossary-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 
 .glossary .glossary-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.57fr);
   gap: 24px;
   align-items: stretch;
 }
@@ -49,7 +59,6 @@
   line-height: 1.2;
 }
 
-.glossary .glossary-title h1,
 .glossary .glossary-title h2,
 .glossary .glossary-title h3,
 .glossary .glossary-title h4,
@@ -141,22 +150,64 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-.glossary:not(.has-aside) .glossary-main::after {
+.glossary:not(.has-aside) .glossary-main .glossary-icon {
   right: 24px;
 }
+/* Variation: Text Black ====================================== */
+.glossary.text-black .glossary-main {
+      background: #fff;
+    border: 5px solid #00adef;
+    border-radius: 16px;
+    padding: 20px;
+}
 
+
+.glossary.text-black .glossary-title h2,
+.glossary.text-black .glossary-title h3 {
+  color: #0a0a0a;
+  font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 120%;
+}
+
+.glossary.text-black .glossary-title::after {
+  background: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li,
+.glossary.text-black .glossary-items p {
+  color: #0a0a0a;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.glossary.text-black .glossary-items strong,
+.glossary.text-black .glossary-items b {
+  color: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li::marker {
+  color: #0a0a0a;
+}
+.glossary.text-black .glossary-main .glossary-icon{
+top: -42px;
+    right: -28px;
+    width: unset;
+    height: unset;
+}
 @media (max-width: 767px) {
   .glossary .glossary-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;
   }
 
-  .glossary .glossary-main::after {
-    /* top: -22px;
+  .glossary .glossary-main .glossary-icon {
+    top: -22px;
     right: 20px;
     width: 44px;
     height: 44px;
-    background-size: 34px 34px; */
+    padding: 4px;
   }
 
   .glossary .glossary-main {
@@ -193,4 +244,13 @@
     object-fit: cover;
     object-position: center;
   }
+  .glossary.text-black .glossary-items ol li, .glossary.text-black .glossary-items p{
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .glossary.text-black .glossary-title h2, .glossary.text-black .glossary-title h3{
+    font-size: 22px;
+  }
 }
+
+

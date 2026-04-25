@@ -353,10 +353,17 @@
     box-sizing: border-box;
 }
 
+.cards.top-selling-plans > ul > li {
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transform-origin: center;
+    will-change: transform;
+}
+
 .cards.top-selling-plans > ul > li:hover {
     background-color: #323232 !important;
-    box-shadow: none;
-    transform: none;
+    box-shadow: 0 12px 30px rgb(0 0 0 / 25%);
+    transform: scaleY(1.10);
+    z-index: 2;
     min-height: 0;
     height: auto;
 }
@@ -392,6 +399,7 @@
     border: 1px solid #ffc20e;
     min-height: 23.5rem;
     box-shadow: -6px -6px 24px 0 hsla(0, 0%, 100%, .35);
+    transition: background-color .2s ease-in-out;
 }
 
 .cards.top-selling-plans .cards-card-body h3,
@@ -410,11 +418,11 @@
     margin: 1.25rem 0;
     transition: all 0.2s ease-in-out;
     font-size: 20px;
-    font-family: sans-serif;
+    font-family: Satoshi, sans-serif;
 }
+
 .cards.top-selling-plans > ul > li:hover .cards-card-body h3 {
     display: block;
-    margin: 1.25rem 0;
 }
 .cards.top-selling-plans > ul > li:hover .cards-card-body h4 {
     margin-bottom: 0;
