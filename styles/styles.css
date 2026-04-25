@@ -545,8 +545,9 @@ font-size: 20px;
       border: 1px solid #00adef;
     border-radius: 1rem;
     display: block;
-    margin: .0625rem;
     overflow: hidden;
+    background: #e0f5fd;
+    padding: 20px;
 }
 .section.default-list .default-content-wrapper ul li {
   position: relative;
@@ -568,7 +569,10 @@ font-size: 20px;
 }
 /* heading for core text components */
 .section.text-heading .default-content-wrapper h2, 
-.section.text-heading .default-content-wrapper h3{
+.section.text-heading .default-content-wrapper h3,
+.section.bg-default-list .default-content-wrapper h2,
+.section.bg-default-list .default-content-wrapper h3
+{
         color: #00adef;
     font-family: Helvetica;
     font-size: 1.75rem;
@@ -576,7 +580,10 @@ font-size: 20px;
     line-height: 120%;
     margin-top: 46px;
 }
-
+.section.bg-default-list .default-content-wrapper h2,
+.section.bg-default-list .default-content-wrapper h3{
+  margin-top: 0;
+}
 @media (max-width: 767px) {
     main > .section {
         margin: 72px auto 0;
@@ -607,15 +614,22 @@ font-size: 20px;
     font-size: 14px;
     font-weight: 400;
    }
-   .section.text-heading .default-content-wrapper h2{
+   .section.text-heading .default-content-wrapper h2,
+   .section.bg-default-list .default-content-wrapper h2,
+.section.bg-default-list .default-content-wrapper h3{
     font-size: 22px;
    }
-   .section.default-list .default-content-wrapper ul li::before{
+   .section.default-list .default-content-wrapper ul li::before, .section.bg-default-list .default-content-wrapper ul li::before{
     width: 15px;
     height: 15px;
             top: 6px;
    }
    .section.default-list .default-content-wrapper ul li{
     padding-left: 28px;
+   }
+   .section.bg-default-list .default-content-wrapper ul li{
+    font-size: 10px;
+    padding-left: 28px;
+    font-weight: 400;
    }
   }

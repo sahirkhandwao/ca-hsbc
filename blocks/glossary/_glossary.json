@@ -21,6 +21,23 @@
       "id": "glossary",
       "fields": [
         {
+          "component": "select",
+          "name": "classes",
+          "value": "",
+          "label": "Variation",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Text Black",
+              "value": "text-black"
+            }
+          ]
+        },
+        {
           "component": "richtext",
           "name": "title",
           "label": "Title",

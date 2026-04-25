@@ -35,7 +35,7 @@
 
 .glossary .glossary-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.57fr);
   gap: 24px;
   align-items: stretch;
 }
@@ -205,4 +205,37 @@
     object-fit: cover;
     object-position: center;
   }
+}
+
+/* Variation: Text Black ====================================== */
+.glossary.text-black .glossary-main {
+  background: #fff;
+  border-color: #d0d0d0;
+}
+
+.glossary.text-black .glossary-title,
+.glossary.text-black .glossary-title h1,
+.glossary.text-black .glossary-title h2,
+.glossary.text-black .glossary-title h3,
+.glossary.text-black .glossary-title h4,
+.glossary.text-black .glossary-title p {
+  color: #0a0a0a;
+}
+
+.glossary.text-black .glossary-title::after {
+  background: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li,
+.glossary.text-black .glossary-items p {
+  color: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items strong,
+.glossary.text-black .glossary-items b {
+  color: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li::marker {
+  color: #0a0a0a;
 }
