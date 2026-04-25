@@ -1,0 +1,256 @@
+.glossary {
+  position: relative;
+  font-family: Satoshi, sans-serif;
+  overflow: visible;
+}
+
+.glossary .glossary-main {
+  position: relative;
+}
+
+.glossary .glossary-main .glossary-icon {
+  position: absolute;
+  top: -22px;
+  right: 18px;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.glossary .glossary-main .glossary-icon picture,
+.glossary .glossary-main .glossary-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.glossary .glossary-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.57fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* left card */
+.glossary .glossary-main {
+      background: #eaf6fb;
+    border: 1px solid #00adef;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.glossary .glossary-title {
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  color: #00adef;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.glossary .glossary-title h2,
+.glossary .glossary-title h3,
+.glossary .glossary-title h4,
+.glossary .glossary-title p {
+  color: #00adef;
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.glossary .glossary-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 90px;
+  height: 4px;
+  background: #00adef;
+}
+
+.glossary .glossary-items ol {
+  list-style: decimal;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.glossary .glossary-items ol li {
+      color: #323232;
+    font-family: Satoshi, sans-serif;
+    line-height: 1.55;
+    padding-left: 4px;
+    left: 1.5rem;
+    list-style-type: unset !important;
+    position: relative;
+    width: 95%;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.glossary .glossary-items ol li::marker {
+  color: #323232;
+  font-weight: 500;
+}
+
+.glossary .glossary-items strong,
+.glossary .glossary-items b {
+  color: #323232;
+  font-weight: 700;
+}
+
+.glossary .glossary-items p {
+  margin: 0;
+  color: #323232;
+  font-family: Satoshi, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* right card / image */
+.glossary .glossary-aside {
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+}
+
+.glossary .glossary-aside .glossary-aside-link,
+.glossary .glossary-aside picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.glossary .glossary-aside img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* single-column fallback when no aside image authored */
+.glossary:not(.has-aside) .glossary-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.glossary:not(.has-aside) .glossary-main .glossary-icon {
+  right: 24px;
+}
+/* Variation: Text Black ====================================== */
+.glossary.text-black .glossary-main {
+      background: #fff;
+    border: 5px solid #00adef;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+
+.glossary.text-black .glossary-title h2,
+.glossary.text-black .glossary-title h3 {
+  color: #0a0a0a;
+  font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 120%;
+}
+
+.glossary.text-black .glossary-title::after {
+  background: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li,
+.glossary.text-black .glossary-items p {
+  color: #0a0a0a;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.glossary.text-black .glossary-items strong,
+.glossary.text-black .glossary-items b {
+  color: #0a0a0a;
+}
+
+.glossary.text-black .glossary-items ol li::marker {
+  color: #0a0a0a;
+}
+.glossary.text-black .glossary-main .glossary-icon{
+top: -42px;
+    right: -28px;
+    width: unset;
+    height: unset;
+}
+@media (max-width: 767px) {
+  .glossary .glossary-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .glossary .glossary-main .glossary-icon {
+    top: -22px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    padding: 4px;
+  }
+
+  .glossary .glossary-main {
+    padding: 22px 18px 22px;
+  }
+
+  .glossary .glossary-title,
+  .glossary .glossary-title p {
+    font-size: 20px;
+  }
+
+  .glossary .glossary-title::after {
+    width: 48px;
+  }
+
+  .glossary .glossary-items ol {
+    /* padding-left: 20px;
+    gap: 12px; */
+  }
+
+  .glossary .glossary-items ol li,
+  .glossary .glossary-items p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .glossary .glossary-aside {
+    min-height: 0;
+  }
+
+  .glossary .glossary-aside img {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: center;
+  }
+  .glossary.text-black .glossary-items ol li, .glossary.text-black .glossary-items p{
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .glossary.text-black .glossary-title h2, .glossary.text-black .glossary-title h3{
+    font-size: 22px;
+  }
+}
+
+

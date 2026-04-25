@@ -33,6 +33,54 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Title Heading",
+              "value": "title-heading"
+            },
+             {
+              "name": "Title Heading Center",
+              "value": "text-center"
+            },
+            {
+              "name": "Full Width Section",
+              "value": "full-width"
+            },
+            {
+              "name": "No Margin Top",
+              "value": "no-margin-top"
+            },
+            {
+              "name": "No Margin Top Bottom",
+              "value": "no-margin-top-bottom"
+            },
+            {
+              "name": "No Margin Top",
+              "value": "no-margin-top"
+            },
+             {
+              "name": "Section Margin 60",
+              "value": "margin-sixty-top-bottom"
+            },
+            {
+              "name": "Article Overview",
+              "value": "article-overview"
+            },
+            {
+              "name": "Text Heading",
+              "value": "text-heading"
+            },
+            {
+              "name": "Default List",
+              "value": "default-list"
+            },
+            {
+              "name": "Default List With Bg",
+              "value": "bg-default-list"
+            },
+            {
+              "name": "Disclaimer Text",
+              "value": "disclaimer-text"
             }
           ]
         }
@@ -50,7 +98,13 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "blog-search",
+        "breadcrumb",
+        "glossary",
+        "social-media-links",
+        "policy-details",
+        "blog-cards"
       ]
     }
   ]

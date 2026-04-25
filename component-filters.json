@@ -16,16 +16,12 @@
       "cards",
       "columns",
       "fragment",
-      "category-links",
-      "popular-searches",
-      "carousel",
-      "accordion"
-    ]
-  },
-  {
-    "id": "accordion",
-    "components": [
-      "accordion-item"
+      "blog-search",
+      "breadcrumb",
+      "glossary",
+      "social-media-links",
+      "policy-details",
+      "blog-cards"
     ]
   },
   {
@@ -50,9 +46,9 @@
     ]
   },
   {
-    "id": "carousel",
+    "id": "social-media-links",
     "components": [
-      "slide"
+      "social-media-link"
     ]
   }
 ]

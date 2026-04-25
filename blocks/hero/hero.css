@@ -5,60 +5,92 @@
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 280px;
   display: flex;
-  align-items: center;
+  min-height: 28.125rem;
+  padding: 0 0 0 80px;
+  overflow: hidden;
 }
 
 .hero picture {
   position: absolute;
-  z-index: -1;
   inset: 0;
+  z-index: 0;
+  line-height: 0;
+}
+
+/* default: show desktop picture only */
+.hero .hero-picture-mobile {
+  display: none;
 }
 
 .hero img {
-  object-fit: cover;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: right center;
 }
 
 .hero .hero-text {
   position: relative;
   z-index: 1;
-  max-width: 500px;
+  max-width: 720px;
+  text-align: left;
+  padding-top: 10%;
 }
 
-.hero h1 {
-  color: #111;
-  font-size: 32px;
+.hero .hero-text h2,
+.hero .hero-text h3 {
+  color: #0a0a0a;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 12px;
+  margin: 0 0 20px;
 }
 
 .hero p {
-  color: #333;
+  font-family: Satoshi, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   margin: 0;
 }
 
-@media (width >= 900px) {
+@media (max-width: 767px) {
   .hero {
-    padding: 60px 80px;
-    min-height: 380px;
+    min-height: 185px;
+        padding: 24px 16px;
+        align-items: flex-start;
+  }
+
+  /* swap to mobile picture if authored; otherwise fall back to desktop */
+  .hero:has(.hero-picture-mobile img) .hero-picture-desktop {
+    display: none;
+  }
+
+  .hero .hero-picture-mobile {
+    display: block;
+  }
+
+  .hero img {
+            opacity: 1;
+        object-position: right center;
+        height: auto;
+        object-fit: fill;
   }
 
   .hero .hero-text {
-    max-width: 550px;
+          max-width: 41%;
+          padding: 0;
   }
 
-  .hero h1 {
-    font-size: 42px;
+  .hero .hero-text h2,
+  .hero .hero-text h3 {
+    font-size: 22px;
+    margin: 0 0 12px;
+    line-height: 120%;
   }
 
   .hero p {
-    font-size: 18px;
+    font-size: 10px;
+    line-height: 1.5;
   }
 }
