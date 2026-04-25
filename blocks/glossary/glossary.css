@@ -16,7 +16,7 @@
   z-index: 2;
   width: 56px;
   height: 56px;
-  background: #fff url('/icons/Glossary.png') no-repeat center / 44px 44px;
+  background: #fff var(--glossary-icon-url, url('/icons/Glossary.png')) no-repeat center / 44px 44px;
   border-radius: 4px;
   box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
 }

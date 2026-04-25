@@ -7,12 +7,23 @@ export default function decorate(block) {
   const imageRow = rows[2];
   const imageAltRow = rows[3];
   const imageLinkRow = rows[4];
+  const iconRow = rows[5];
+  const iconAltRow = rows[6];
 
   const layout = document.createElement('div');
   layout.className = 'glossary-layout';
 
   const main = document.createElement('div');
   main.className = 'glossary-main';
+
+  // Authorable icon: read from row, expose URL via CSS custom property
+  const iconImg = iconRow?.querySelector('img');
+  const iconSrc = iconImg?.getAttribute('src');
+  if (iconSrc) {
+    main.style.setProperty('--glossary-icon-url', `url("${iconSrc}")`);
+    const iconAlt = iconAltRow?.textContent?.trim();
+    if (iconAlt) main.setAttribute('data-icon-alt', iconAlt);
+  }
 
   if (titleRow) {
     const titleEl = document.createElement('div');
