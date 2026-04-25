@@ -203,6 +203,27 @@
     ]
   },
   {
+    "id": "blog-cards",
+    "fields": [
+      {
+        "component": "text",
+        "name": "blogName",
+        "value": "life-insurance",
+        "label": "Blog Category",
+        "description": "The blog category slug used in the API query (e.g. life-insurance, term-insurance, health-insurance).",
+        "valueType": "string"
+      },
+      {
+        "component": "number",
+        "name": "initialCount",
+        "value": 6,
+        "label": "Initial Cards to Show",
+        "description": "Number of cards visible on first load before the Load More button is clicked.",
+        "valueType": "number"
+      }
+    ]
+  },
+  {
     "id": "blog-search",
     "fields": [
       {
@@ -417,6 +438,21 @@
         "valueType": "string",
         "name": "imageAlt",
         "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Mobile Image",
+        "description": "Shown only on screens up to 767px wide. If empty, the desktop image is used.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt",
         "value": ""
       },
       {

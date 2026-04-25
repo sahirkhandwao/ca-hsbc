@@ -1,0 +1,279 @@
+/*
+ * Blog Cards Block
+ *
+ * Renders a 3-column grid of blog article cards fetched from the Canara HSBC
+ * blog listing API. Matches the visual design of the "All About Life Insurance"
+ * section on canarahsbclife.com.
+ */
+
+/* ============================================================
+   Grid layout
+   ============================================================ */
+
+.blog-cards .blog-cards-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px 24px;
+}
+
+/* ============================================================
+   Individual card
+   ============================================================ */
+
+.blog-cards .blog-cards-card {
+  border: 0;
+  overflow: hidden;
+}
+
+.blog-cards .blog-cards-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  height: 100%;
+}
+
+/* ============================================================
+   Card image area
+   ============================================================ */
+
+.blog-cards .blog-cards-card-image {
+  position: relative;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.blog-cards .blog-cards-card-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.blog-cards .blog-cards-card-link:hover .blog-cards-card-image img {
+  transform: scale(1.03);
+}
+
+/* Category badge — absolute top-left of the image */
+.blog-cards .blog-cards-card-tag {
+  background: #ffc20e;
+  color: #323232;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.375rem 0.75rem;
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 1;
+  line-height: 1;
+}
+
+/* ============================================================
+   Card body
+   ============================================================ */
+
+.blog-cards .blog-cards-card-body {
+  border-bottom: 8px solid #ffc20e;
+  border-left: 1px solid #d0d0d0;
+  border-right: 1px solid #d0d0d0;
+  min-height: 16rem;
+  padding: 1.25rem;
+  background: #fff;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hover: body turns yellow, borders darken */
+.blog-cards .blog-cards-card-link:hover .blog-cards-card-body {
+  background: #ffc20e;
+  border-bottom-color: #323232;
+  border-left-color: #ffc20e;
+  border-right-color: #ffc20e;
+}
+
+/* ============================================================
+   Meta row (date / views / duration)
+   ============================================================ */
+
+.blog-cards .blog-cards-meta {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 0.75rem;
+  color: #7a7a7a;
+  font-size: 0.75rem;
+  font-weight: 400;
+  flex-wrap: wrap;
+  transition: color 0.2s ease;
+}
+
+.blog-cards .blog-cards-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding-right: 0.75rem;
+}
+
+/* Vertical separator between meta items */
+.blog-cards .blog-cards-meta-item + .blog-cards-meta-item {
+  padding-left: 0.75rem;
+  border-left: 1px solid #7a7a7a;
+  transition: border-color 0.2s ease;
+}
+
+/* Meta hover states */
+.blog-cards .blog-cards-card-link:hover .blog-cards-meta {
+  color: #323232;
+}
+
+.blog-cards .blog-cards-card-link:hover .blog-cards-meta-item + .blog-cards-meta-item {
+  border-left-color: #323232;
+}
+
+/* ============================================================
+   Card title
+   ============================================================ */
+
+.blog-cards .blog-cards-card-body h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #323232;
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+  /* Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+
+/* ============================================================
+   Card description
+   ============================================================ */
+
+.blog-cards .blog-cards-card-body p {
+  font-size: 0.9375rem;
+  color: #323232;
+  line-height: 1.55;
+  margin: 0 0 0.75rem;
+  flex-grow: 1;
+  /* Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================================
+   "Read More →" link
+   ============================================================ */
+
+.blog-cards .blog-cards-read-more {
+  color: #00adef;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: auto;
+  transition: color 0.2s ease;
+}
+
+.blog-cards .blog-cards-card-link:hover .blog-cards-read-more {
+  color: #323232;
+}
+
+/* ============================================================
+   Load More button
+   ============================================================ */
+
+.blog-cards .blog-cards-loadmore-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.blog-cards .blog-cards-loadmore-btn {
+  border: 1px solid #0067b1;
+  color: #0067b1;
+  background: transparent;
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.blog-cards .blog-cards-loadmore-btn:hover,
+.blog-cards .blog-cards-loadmore-btn:focus-visible {
+  background: #0067b1;
+  color: #fff;
+  outline: none;
+}
+
+/* ============================================================
+   Loading / error states
+   ============================================================ */
+
+.blog-cards .blog-cards-loading,
+.blog-cards .blog-cards-error {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #767676;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   Responsive — tablet (2 columns)
+   ============================================================ */
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .blog-cards .blog-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================================
+   Responsive — mobile (1 column, ≤767px)
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .blog-cards .blog-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .blog-cards .blog-cards-card-body {
+    min-height: auto;
+  }
+
+  .blog-cards .blog-cards-card-tag {
+    font-size: 0.6875rem;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .blog-cards .blog-cards-card-body h3 {
+    font-size: 1rem;
+  }
+
+  /* Hide description on mobile to keep cards compact */
+  .blog-cards .blog-cards-card-body p {
+    display: none;
+  }
+
+  .blog-cards .blog-cards-loadmore-btn {
+    width: 100%;
+    max-width: 320px;
+  }
+}

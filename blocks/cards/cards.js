@@ -39,6 +39,13 @@ export default function decorate(block) {
         div.className = 'cards-card-body';
       }
     });
+
+    // Drop any empty body cells left over from unauthored fields.
+    [...li.querySelectorAll(':scope > .cards-card-body')].forEach((body) => {
+      if (!body.textContent.trim() && !body.querySelector('picture,img,svg,a,button')) {
+        body.remove();
+      }
+    });
     if (isBlogCard) {
       const body = li.querySelector('.cards-card-body');
       if (body) {

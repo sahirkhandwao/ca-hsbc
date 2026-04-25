@@ -457,7 +457,9 @@ footer .footer-copyright {
   font-weight: 400;
   line-height: 1.4;
 }
-
+ footer .footer-inner .footer-content{
+    padding: 20px;
+  }
 @media (width >= 600px) {
   footer .footer-columns {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -488,6 +490,7 @@ footer .footer-copyright {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     padding: 24px 0;
   }
+ 
 }
 
 @media (width >= 900px) {

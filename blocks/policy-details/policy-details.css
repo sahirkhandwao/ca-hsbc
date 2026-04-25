@@ -1,6 +1,6 @@
 .policy-details {
   background: #323232;
-  padding: 16px 24px;
+  padding: 16px 0;
   font-family: Satoshi, sans-serif;
 }
 
@@ -22,15 +22,14 @@
   gap: 24px;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 80px;
 }
 
 .policy-details .policy-details-card {
   display: flex;
   align-items: center;
   gap: 16px;
-  background: #fff;
   border-radius: 2px;
-  padding: 12px 20px 12px 12px;
   text-decoration: none;
   color: #0a0a0a;
   flex: 1 1 46%;
@@ -87,9 +86,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #00adef;
+  color: #fff;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .policy-details .policy-details-icon {
@@ -99,9 +98,9 @@
 }
 
 .policy-details .policy-details-title {
-  color: #0a0a0a;
-  font-size: 15px;
-  font-weight: 500;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
   line-height: 1.35;
   display: -webkit-box;
   -webkit-line-clamp: 2;
