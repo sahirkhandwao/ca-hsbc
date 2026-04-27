@@ -250,9 +250,9 @@
       {
         "component": "text",
         "name": "years",
-        "value": "2026,2025,2024,2023",
-        "label": "Years",
-        "description": "Comma-separated list of years for the dropdown",
+        "value": "",
+        "label": "Years (optional)",
+        "description": "Comma-separated fallback years e.g. 2026,2025,2024. Leave blank to auto-derive from blog cards.",
         "valueType": "string"
       }
     ]
