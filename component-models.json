@@ -178,6 +178,10 @@
             "value": "default-list"
           },
           {
+            "name": "Default List With Bg",
+            "value": "bg-default-list"
+          },
+          {
             "name": "Disclaimer Text",
             "value": "disclaimer-text"
           }
@@ -390,6 +394,23 @@
     "id": "glossary",
     "fields": [
       {
+        "component": "select",
+        "name": "classes",
+        "value": "",
+        "label": "Variation",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Text Black",
+            "value": "text-black"
+          }
+        ]
+      },
+      {
         "component": "richtext",
         "name": "title",
         "label": "Title",
@@ -420,6 +441,21 @@
         "component": "aem-content",
         "name": "imageLink",
         "label": "Right Image Link"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon",
+        "description": "Small icon shown floating at the top-right of the Glossary card.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "iconAlt",
+        "label": "Icon Alt",
+        "value": ""
       }
     ]
   },

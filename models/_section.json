@@ -75,6 +75,10 @@
               "value": "default-list"
             },
             {
+              "name": "Default List With Bg",
+              "value": "bg-default-list"
+            },
+            {
               "name": "Disclaimer Text",
               "value": "disclaimer-text"
             }

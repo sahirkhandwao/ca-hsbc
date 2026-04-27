@@ -56,9 +56,9 @@
 
 @media (max-width: 767px) {
   .hero {
-    min-height: 320px;
-    padding: 24px 16px;
-    align-items: flex-start;
+    min-height: 185px;
+        padding: 24px 16px;
+        align-items: flex-start;
   }
 
   /* swap to mobile picture if authored; otherwise fall back to desktop */
@@ -71,12 +71,15 @@
   }
 
   .hero img {
-    opacity: 1;
-    object-position: right center;
+            opacity: 1;
+        object-position: right center;
+        height: auto;
+        object-fit: fill;
   }
 
   .hero .hero-text {
           max-width: 41%;
+          padding: 0;
   }
 
   .hero .hero-text h2,

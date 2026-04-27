@@ -2,17 +2,34 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const rows = [...block.children];
-  const titleRow = rows[0];
-  const itemsRow = rows[1];
-  const imageRow = rows[2];
-  const imageAltRow = rows[3];
-  const imageLinkRow = rows[4];
+
+  // Find rows that hold picture elements (right image + icon)
+  const pictureRows = rows.filter((r) => r.querySelector('picture'));
+  const [imageRow, iconRow] = pictureRows;
+
+  // Remaining (non-picture) rows in document order:
+  // [title, items, imageAlt, imageLink, iconAlt]
+  const textRows = rows.filter((r) => !r.querySelector('picture'));
+  const [titleRow, itemsRow, imageAltRow, imageLinkRow, iconAltRow] = textRows;
 
   const layout = document.createElement('div');
   layout.className = 'glossary-layout';
 
   const main = document.createElement('div');
   main.className = 'glossary-main';
+
+  // Authorable icon: render only when an Icon image is authored
+  const iconPicture = iconRow?.querySelector('picture');
+  if (iconPicture) {
+    const iconWrap = document.createElement('div');
+    iconWrap.className = 'glossary-icon';
+    const iconAlt = iconAltRow?.textContent?.trim() || '';
+    const iconImg = iconPicture.querySelector('img');
+    if (iconImg && iconAlt) iconImg.alt = iconAlt;
+    iconWrap.append(iconPicture);
+    moveInstrumentation(iconRow, iconWrap);
+    main.append(iconWrap);
+  }
 
   if (titleRow) {
     const titleEl = document.createElement('div');
