@@ -1,0 +1,728 @@
+/* ============================================================
+   CHLI Footer Block — footer.css
+   Mirrors the Canara HSBC Life Insurance site footer.
+   Pure CSS — no Bootstrap JS, no inline styles.
+   ============================================================ */
+
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --footer-top-bg: #ffffff;
+  --footer-bottom-bg: #003366;
+  --footer-bottom-text: #ffffff;
+  --footer-link-color: #1a1a2e;
+  --footer-link-hover: #004990;
+  --footer-border: #e5e7eb;
+  --footer-bottom-border: rgba(255, 255, 255, 0.15);
+  --blue-primary: #004990;
+  --blue-dark: #003366;
+  --blue-accent: #0052cc;
+  --transition-fast: 200ms ease;
+  --transition-med: 280ms ease;
+}
+
+/* ── Loading / error states ─────────────────────────────────── */
+.block.footer.loading {
+  min-height: 300px;
+  background: var(--footer-top-bg);
+}
+
+.block.footer.error::after {
+  content: 'Footer failed to load.';
+  display: block;
+  padding: 1rem;
+  color: #c00;
+  font-size: 0.85rem;
+}
+
+/* ── Root section ───────────────────────────────────────────── */
+section.footer__section {
+  width: 100%;
+}
+
+section.footer__section footer {
+  width: 100%;
+}
+
+/* ── Section container (max-width wrapper) ──────────────────── */
+.section_container--primary {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+/* ── TOP SECTION ────────────────────────────────────────────── */
+.footer__top__section {
+  background: var(--footer-top-bg);
+  padding: 3rem 0 2rem;
+  border-top: 3px solid var(--blue-primary);
+}
+
+.footer__top__section--wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── Row 1: Logo + social icons ─────────────────────────────── */
+.footer__row--first {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer__logo {
+  flex-shrink: 0;
+}
+
+.footer__logo a {
+  display: inline-block;
+}
+
+.footer__logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+/* Social icons */
+.footer__social__wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.footer__social__inner {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer__social__links {
+  display: flex;
+}
+
+.footer__social__links--link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--footer-border);
+  color: var(--blue-primary);
+  text-decoration: none;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.footer__social__links--link:hover {
+  background: var(--blue-primary);
+  border-color: var(--blue-primary);
+  color: #fff;
+}
+
+.footer__social__links--link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ── Row 2: Contact + app download ──────────────────────────── */
+.footer__row--second {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--footer-border);
+}
+
+.footer__contact__section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.footer__contact__col--1,
+.footer__contact__col--2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.info__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.footer__contact__text,
+.info__wrapper p,
+.info__wrapper a {
+  font-size: 0.85rem;
+  color: #444;
+  text-decoration: none;
+  margin: 0;
+}
+
+.info__wrapper a:hover {
+  color: var(--blue-primary);
+  text-decoration: underline;
+}
+
+.footer__contact__badges {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.footer__contact__badges li a img {
+  height: 40px;
+  width: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+/* ── Row 3: Link columns ─────────────────────────────────────── */
+.footer__row--third {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--footer-border);
+}
+
+/* Desktop link list */
+.list__link__section.link__list__desktop {
+  flex: 1 1 160px;
+}
+
+/* Mobile list hidden on desktop */
+.list__link__section.link__list__mob {
+  display: none;
+}
+
+.list__link__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--blue-primary);
+  display: inline-block;
+}
+
+.footer_bar {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.list__link__listing {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.list__link__list {
+  line-height: 1.4;
+}
+
+.list__link {
+  font-size: 0.8rem;
+  color: #555;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  display: inline-block;
+}
+
+.list__link:hover {
+  color: var(--blue-primary);
+  text-decoration: underline;
+}
+
+/* ── Row 4: Popular articles ─────────────────────────────────── */
+.footer__row--fourth {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--footer-border);
+}
+
+/* Popular articles accordion */
+.popular_articl_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.popular_articl_title h2,
+.popular_articl_title .chli_title h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.popular__links__accordion {
+  /* shown by default on desktop */
+}
+
+.popular__article__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+}
+
+.popular__article__accordion--icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--blue-primary);
+  flex-shrink: 0;
+}
+
+.popular__article__text {
+  font-size: 0.82rem;
+  color: #444;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Row 5: Partner logos ticker ─────────────────────────────── */
+.footer__row--fifth {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--footer-border);
+  overflow: hidden;
+}
+
+/* Ticker — CSS animation for partner logos */
+.swiper.ticker-initialized {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  animation: ticker-scroll 30s linear infinite;
+  width: max-content;
+}
+
+.ticker-track--right {
+  animation-direction: reverse;
+}
+
+.swiper.ticker-initialized:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.swiper-slide {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-slide img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.6);
+  transition: filter var(--transition-fast);
+}
+
+.swiper-slide:hover img {
+  filter: none;
+}
+
+/* ── BOTTOM SECTION ──────────────────────────────────────────── */
+.footer__bottom__section {
+  background: var(--footer-bottom-bg);
+  padding: 2rem 0;
+  color: var(--footer-bottom-text);
+}
+
+.footer__bottom__section .section_container--primary {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Quick links ─────────────────────────────────────────────── */
+.quick__links {
+  width: 100%;
+}
+
+.quick__links__heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--footer-bottom-border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.heading_icon_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.quick__links__title,
+.quick__Link__btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1.25rem 0.5rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.quick__links__title:hover,
+.quick__Link__btn:hover {
+  color: #7db8f7;
+}
+
+.quick__link__arrowIcon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.quick__link__arrowIcon svg,
+.quick__Link__btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  transition: transform var(--transition-fast);
+}
+
+.quick__Link__btn:not(.collapsed) .quick__link__arrowIcon svg {
+  transform: rotate(180deg);
+}
+
+.divider {
+  width: 1px;
+  height: 1.2rem;
+  background: var(--footer-bottom-border);
+  margin: 0 0.25rem;
+}
+
+/* Desktop quick links — hide mobile version */
+.quick__links__desktop {
+  display: block;
+}
+
+.quick__links__mob {
+  display: none;
+}
+
+.quick__links__wrapper {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+}
+
+.quick__links__wrapper li {
+  line-height: 1.4;
+}
+
+.quick__links__wrapper a {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.quick__links__wrapper a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Desktop quick links panel — collapse target */
+#quickLinks-collapse-1111406627-1,
+#quickLinks-collapse-1111406627-2,
+#quickLinks-collapse-1111406627-3,
+#quickLinks-collapse-1111406627-4 {
+  /* controlled by JS toggle */
+}
+
+/* ── Disclaimer section ──────────────────────────────────────── */
+.disclaimer__section {
+  border-top: 1px solid var(--footer-bottom-border);
+  padding-top: 1rem;
+}
+
+.disclaimer__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.disclaimer__heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.disclaimer__title .accordion-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.disclaimer__title .accordion-button svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  transition: transform var(--transition-fast);
+}
+
+.disclaimer__title .accordion-button:not(.collapsed) svg {
+  transform: rotate(180deg);
+}
+
+#disclaimer__section .disclaimer__text {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  padding-top: 0.75rem;
+}
+
+#disclaimer__section .disclaimer__text p {
+  margin: 0 0 0.5rem;
+}
+
+#disclaimer__section .disclaimer__text a {
+  color: #7db8f7;
+  text-decoration: underline;
+}
+
+/* ── Warning / IRDAI notices ─────────────────────────────────── */
+.warning__section {
+  border-top: 1px solid var(--footer-bottom-border);
+  padding-top: 1rem;
+}
+
+.warning__section__wrapper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.warning__section__text {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.warning__section__text p {
+  margin: 0 0 0.35rem;
+}
+
+.trade__text__section .warning__section__text {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── Privacy policy strip ────────────────────────────────────── */
+.footer__privacy {
+  background: #001f4d;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer__privacy a {
+  color: #7db8f7;
+  text-decoration: underline;
+}
+
+/* ── Accordion collapse utilities (native, no Bootstrap JS) ─── */
+.accordion-collapse.collapse:not(.show) {
+  display: none;
+}
+
+.accordion-collapse.show {
+  display: block;
+}
+
+/* Animated version (JS adds max-height transition inline) */
+.accordion-collapse {
+  overflow: hidden;
+}
+
+/* Accordion button chevron rotation */
+.accordion-button svg {
+  transition: transform var(--transition-fast);
+}
+
+.accordion-button:not(.collapsed) svg {
+  transform: rotate(180deg);
+}
+
+/* ── Popular link buttons (mobile accordion in link sections) ── */
+.popular__link__btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.6rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  gap: 0.5rem;
+}
+
+.popular__link__btn svg,
+.popular__link__btn .icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.popular__link__btn:not(.collapsed) svg,
+.popular__link__btn:not(.collapsed) .icon {
+  transform: rotate(180deg);
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 991px) {
+  /* Switch to mobile link lists */
+  .list__link__section.link__list__desktop {
+    display: none;
+  }
+
+  .list__link__section.link__list__mob {
+    display: block;
+  }
+
+  .footer__row--third {
+    flex-direction: column;
+  }
+
+  /* Switch quick links to mobile version */
+  .quick__links__desktop {
+    display: none;
+  }
+
+  .quick__links__mob {
+    display: block;
+  }
+
+  .footer__row--first {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__contact__section {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer__top__section {
+    padding: 2rem 0 1.5rem;
+  }
+
+  .footer__row--second {
+    flex-direction: column;
+  }
+
+  .footer__row--fourth .accordion-body {
+    padding: 0.5rem 0;
+  }
+
+  .footer__bottom__section {
+    padding: 1.5rem 0;
+  }
+
+  .ticker-track {
+    animation-duration: 20s;
+  }
+}
+
+@media (max-width: 575px) {
+  .section_container--primary {
+    padding: 0 1rem;
+  }
+
+  .footer__logo img {
+    height: 40px;
+  }
+
+  .quick__links__title,
+  .quick__Link__btn {
+    font-size: 0.8rem;
+  }
+}
+
+/* ── Utility overrides for Bootstrap d-* classes ────────────── */
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-lg-none {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .d-lg-none {
+    display: block !important;
+  }
+}

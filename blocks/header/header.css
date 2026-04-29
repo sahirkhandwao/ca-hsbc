@@ -1,0 +1,680 @@
+/* ============================================================
+   CHLI Header Block — header.css
+   Mirrors the Canara HSBC Life Insurance site header.
+   All layout/interaction state is controlled via classes —
+   no inline styles, no Bootstrap JS dependency.
+   ============================================================ */
+
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --header-bg: #ffffff;
+  --header-border: #e5e7eb;
+  --header-height: 70px;
+  --header-z: 1000;
+  --nav-link-color: #1a1a2e;
+  --nav-link-hover: #004990;
+  --blue-primary: #004990;
+  --blue-dark: #003366;
+  --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+  --transition-fast: 200ms ease;
+  --transition-med: 300ms ease;
+}
+
+/* ── Loading / error states ─────────────────────────────────── */
+.block.header.loading {
+  min-height: var(--header-height);
+  background: var(--header-bg);
+}
+
+.block.header.error::after {
+  content: 'Header failed to load.';
+  display: block;
+  padding: 1rem;
+  color: #c00;
+  font-size: 0.85rem;
+}
+
+/* ── Wrapper ────────────────────────────────────────────────── */
+.header__wrapper {
+  position: relative;
+}
+
+/* ── Main header bar ────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--header-z);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Nav bar row ────────────────────────────────────────────── */
+.header__navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  padding: 0 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  gap: 1rem;
+}
+
+/* ── Logo ───────────────────────────────────────────────────── */
+.header__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 160px;
+  height: 44px;
+  position: relative;
+}
+
+.header__logo--image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
+}
+
+/* ── Nav collapse (desktop shows inline) ───────────────────── */
+.header__navbar--collapse {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Nav list ───────────────────────────────────────────────── */
+.header__navbar--list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── Nav items ──────────────────────────────────────────────── */
+.header__navbar--item {
+  position: static; /* dropdowns use position:fixed */
+}
+
+/* ── Nav links ──────────────────────────────────────────────── */
+.header__navbar--link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  color: var(--nav-link-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: color var(--transition-fast);
+}
+
+.header__navbar--link:hover,
+.header__navbar--item.dropdown-open .header__navbar--link {
+  color: var(--blue-primary);
+}
+
+/* Active underline indicator */
+.header__navbar--item-underline {
+  display: block;
+  height: 2px;
+  width: 0;
+  background: var(--blue-primary);
+  border-radius: 2px;
+  transition: width var(--transition-fast);
+  margin-top: 2px;
+}
+
+.header__navbar--link:hover .header__navbar--item-underline,
+.header__navbar--item.dropdown-open .header__navbar--item-underline {
+  width: 100%;
+}
+
+/* ── Dropdown mega menu ──────────────────────────────────────── */
+.header__navbar--dropdown {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: var(--dropdown-shadow);
+  border-top: 2px solid var(--blue-primary);
+  display: none;
+  padding: 2rem 1.5rem;
+  z-index: calc(var(--header-z) - 1);
+  max-height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+}
+
+.header__navbar--dropdown.show {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.header__navbar--dropdown-column {
+  flex: 1 1 220px;
+  padding: 0 1rem;
+  list-style: none;
+}
+
+/* ── Right-side action icons ────────────────────────────────── */
+.header__actions,
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* ── Search trigger ─────────────────────────────────────────── */
+.header__search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.4rem;
+  color: var(--blue-primary);
+  border-radius: 4px;
+  transition: background var(--transition-fast);
+}
+
+.header__search:hover {
+  background: #f0f4ff;
+}
+
+.header__search svg,
+.header__search--svg-find {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* ── Global search overlay ──────────────────────────────────── */
+.global__search--wrapper {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: calc(var(--header-z) + 10);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.global__search--wrapper.show {
+  display: flex;
+}
+
+.global__search--container {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.close-search {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #333;
+  align-self: flex-end;
+  display: block;
+}
+
+.close-search:hover {
+  color: var(--blue-primary);
+}
+
+.global__search--form {
+  width: 100%;
+}
+
+.global__search__input--wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.global__search--input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--blue-primary);
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  outline: none;
+  background: transparent;
+  color: #1a1a2e;
+}
+
+.global__search__popular--items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.global__search__popular--item {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #333;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.global__search__popular--item:hover {
+  background: var(--blue-primary);
+  color: #fff;
+  border-color: var(--blue-primary);
+}
+
+/* ── Notification trigger & panel ───────────────────────────── */
+.header__notification--trigger {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  color: var(--blue-primary);
+}
+
+.header__notification--trigger-svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.header__notification--trigger-text {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #db0011;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.header__notification--panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 340px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: var(--dropdown-shadow);
+  border: 1px solid #e5e7eb;
+  z-index: calc(var(--header-z) + 5);
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.header__notification--panel.show {
+  display: flex;
+}
+
+.header__notification--item {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.header__notification--item:last-child {
+  border-bottom: none;
+}
+
+.header__notification--item-content {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  align-items: flex-start;
+}
+
+.header__notification--icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__notification--icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.header__notification--content-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0 0 0.25rem;
+}
+
+.header__notification--content-description {
+  font-size: 0.75rem;
+  color: #555;
+  margin: 0;
+}
+
+/* ── Login button ───────────────────────────────────────────── */
+.header__login {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--blue-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border: 1.5px solid var(--blue-primary);
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.header__login:hover {
+  background: var(--blue-primary);
+  color: #fff;
+}
+
+.header__login svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ── Hamburger button ───────────────────────────────────────── */
+.header__hamburger--button {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  color: var(--blue-primary);
+  position: relative;
+  width: 36px;
+  height: 36px;
+}
+
+.header__hamburger--button svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  transition: opacity var(--transition-fast);
+}
+
+/* close icon hidden by default, shown when open */
+.header__hamburger--close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.header--menu-open .header__hamburger--close {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.header--menu-open .header__hamburger--button .header__hamburger--open-icon {
+  opacity: 0;
+}
+
+/* ── Overlay ────────────────────────────────────────────────── */
+.header__overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: calc(var(--header-z) + 1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-med);
+}
+
+.header__overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* d-none utility — override when overlay becomes active */
+.header__overlay:not(.d-none) {
+  display: block !important;
+}
+
+/* ── Hamburger slide-in menu ────────────────────────────────── */
+.header__hamburger--menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(380px, 90vw);
+  background: #fff;
+  z-index: calc(var(--header-z) + 2);
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform var(--transition-med);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  gap: 1rem;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.header__hamburger--menu.open {
+  transform: translateX(0);
+}
+
+.header__hamburger--head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header__hamburger--head-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.header__hamburger--close-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  fill: #333;
+  flex-shrink: 0;
+}
+
+/* ── Mobile accordion (header) ──────────────────────────────── */
+.header__accordion--button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.6rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+.header__accordion--button svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--blue-primary);
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.header__accordion--button:not(.collapsed) svg {
+  transform: rotate(180deg);
+}
+
+.header__accordion--collapse {
+  overflow: hidden;
+  transition: max-height var(--transition-med);
+}
+
+.header__accordion--collapse.collapse:not(.show) {
+  display: none;
+}
+
+.header__accordion--collapse.show {
+  display: block;
+}
+
+/* ── Mobile notification section ────────────────────────────── */
+.header__notification--mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ── Scroll-to-top button ───────────────────────────────────── */
+#scrollTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.5rem;
+  z-index: calc(var(--header-z) - 1);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--blue-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 73, 144, 0.35);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--transition-med), transform var(--transition-med);
+}
+
+#scrollTop.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#scrollTop.d-none {
+  display: none !important;
+}
+
+#scrollTop svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+#scrollTop:hover {
+  background: var(--blue-dark);
+}
+
+/* ── Body padding to avoid content going under fixed header ─── */
+body {
+  padding-top: var(--header-height);
+}
+
+/* ── Responsive breakpoints ─────────────────────────────────── */
+
+/* Tablet / mobile — hide desktop nav, show hamburger */
+@media (max-width: 991px) {
+  .header__navbar--collapse {
+    display: none;
+  }
+
+  .header__hamburger--button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__navbar--dropdown {
+    position: static;
+    box-shadow: none;
+    border: none;
+    padding: 0.5rem 0 0.5rem 1rem;
+    background: #f8f9ff;
+    border-radius: 6px;
+    margin-top: 0.25rem;
+  }
+
+  .header__navbar--dropdown.show {
+    display: block;
+  }
+
+  /* Login text hidden on very small screens */
+  .header__login--text {
+    display: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .header__navbar {
+    padding: 0 1rem;
+  }
+
+  .header__logo {
+    width: 130px;
+  }
+
+  .header__notification--panel {
+    width: calc(100vw - 2rem);
+    right: -0.5rem;
+  }
+}
+
+/* ── Utility overrides for Bootstrap d-* classes ────────────── */
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+/* Prevent scrollbar when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+}
