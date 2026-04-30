@@ -1,0 +1,79 @@
+{
+  "fieldType": "form",
+  "action": "/content/forms/af/ca-hsbc/generic-lead-form",
+  "items": [
+    {
+      "name": "name",
+      "fieldType": "text-input",
+      "label": { "value": "Full Name" },
+      "required": true,
+      "placeholder": "Enter your name"
+    },
+    {
+      "name": "mobileNo",
+      "fieldType": "telephone-input",
+      "label": { "value": "Mobile Number" },
+      "required": true,
+      "placeholder": "Enter your mobile number"
+    },
+    {
+      "name": "emaiID",
+      "fieldType": "email",
+      "label": { "value": "Email" },
+      "required": true,
+      "placeholder": "Enter your email"
+    },
+    {
+      "name": "dob",
+      "fieldType": "date-input",
+      "label": { "value": "Date of Birth" },
+      "required": true
+    },
+    {
+      "name": "annualIncome",
+      "fieldType": "drop-down",
+      "label": { "value": "Annual Income" },
+      "required": true,
+      "placeholder": "Select Annual Income",
+      "enum": ["< 3", "3-5", "5-7", "7-10", "> 10"],
+      "enumNames": ["< 3 Lakhs", "3-5 Lakhs", "5-7 Lakhs", "7-10 Lakhs", "> 10 Lakhs"]
+    },
+    {
+      "name": "consent",
+      "fieldType": "checkbox",
+      "label": { "value": "I agree that even if my contact number is registered with NDNC / NCPR, I would still want the Company to contact me on the given number and email id." },
+      "required": true,
+      "checkedValue": "on"
+    },
+    {
+      "name": "submit",
+      "fieldType": "button",
+      "label": { "value": "Check Your Premium" },
+      "buttonType": "submit"
+    },
+    {
+      "name": "productName",
+      "fieldType": "text-input",
+      "visible": false,
+      "value": "Term"
+    },
+    {
+      "name": "productCategory",
+      "fieldType": "text-input",
+      "visible": false,
+      "value": "Life Insurance"
+    },
+    {
+      "name": "Website_Section_Name",
+      "fieldType": "text-input",
+      "visible": false,
+      "value": "Blogs - Trust in Life Insurance"
+    },
+    {
+      "name": "utmCohort",
+      "fieldType": "text-input",
+      "visible": false,
+      "value": "Organic_Term"
+    }
+  ]
+}
