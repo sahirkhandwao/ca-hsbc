@@ -105,6 +105,8 @@
         "social-media-links",
         "policy-details",
         "blog-cards",
+        "form",
+        "embed-adaptive-form",
         "lead-form"
       ]
     }
