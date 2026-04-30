@@ -121,7 +121,7 @@ function buildCountrySelect() {
 // ---------------------------------------------------------------------------
 // Build one field group (label + input + error span)
 // ---------------------------------------------------------------------------
-function buildFieldGroup({ id, label, required, input, fullWidth = false }) {
+function buildFieldGroup({ id, label, required, input, extraClass = '' }) {
   const labelEl = el('label', { htmlFor: id, className: 'lf-label' },
     label,
     required ? el('span', { className: 'lf-required', 'aria-hidden': 'true' }, '*') : null,
@@ -131,7 +131,7 @@ function buildFieldGroup({ id, label, required, input, fullWidth = false }) {
     'aria-live': 'polite',
     id: `${id}-error`,
   });
-  const groupClass = `lf-field-group${fullWidth ? ' lf-full-width' : ''}`;
+  const groupClass = `lf-field-group${extraClass ? ` ${extraClass}` : ''}`;
   return el('div', { className: groupClass }, labelEl, input, errorEl);
 }
 
@@ -194,7 +194,7 @@ function buildForm(config) {
     autocomplete: 'email',
     'aria-describedby': 'lf-email-error',
   });
-  const emailGroup = buildFieldGroup({ id: 'lf-email', label: 'Email', required: true, input: emailInput, fullWidth: true });
+  const emailGroup = buildFieldGroup({ id: 'lf-email', label: 'Email', required: true, input: emailInput, extraClass: 'lf-email-group' });
 
   // --- Hidden fields ---
   const hiddenFields = [
@@ -248,7 +248,7 @@ function buildForm(config) {
   });
 
   const consentGroup = el('div', {
-    className: 'lf-consent-group lf-full-width',
+    className: 'lf-consent-group',
   }, consentCheckbox, consentBox, consentLabelEl, consentError);
 
   // --- Submit ---
@@ -264,7 +264,7 @@ function buildForm(config) {
       </svg>
     </span>`;
 
-  const submitWrap = el('div', { className: 'lf-submit-wrap lf-full-width' }, submitBtn);
+  const submitWrap = el('div', { className: 'lf-submit-wrap' }, submitBtn);
 
   // --- Assemble <form> ---
   const formAttrs = {
