@@ -1,453 +1,443 @@
 /**
- * Lead Form Block
+ * Lead Form Block — EDS Universal Editor (WYSIWYG)
+ * Pure vanilla JS, no Adaptive Forms / DA Forms dependency.
  *
- * Renders a "Secure Your Family's Future" lead capture form.
- * Fields: Full Name, Mobile Number (with country code), Email
- * Consent checkbox + "Check Your Premium" CTA.
- *
- * Authoring (Google Doc / SharePoint):
- * ┌─────────────────┬──────────────────────────────────────────────────────┐
- * │ Lead Form       │                                                      │
- * ├─────────────────┼──────────────────────────────────────────────────────┤
- * │ heading         │ Secure Your Family's Future with the Right Life ...  │
- * │ cta-text        │ Check Your Premium                                   │
- * │ cta-url         │ https://www.canarahsbclife.com/life-insurance-plans  │
- * │ product-name    │ Term                                                 │
- * │ product-category│ Life Insurance                                       │
- * │ section-name    │ Blogs - Life Insurance                               │
- * └─────────────────┴──────────────────────────────────────────────────────┘
- * Any row not provided falls back to a sensible default.
+ * Authored fields (read via parseConfig):
+ *   heading, cta-text, cta-url, product-name, product-category,
+ *   section-name, servlet-id, utm-cohort, recaptcha
  */
 
+// ---------------------------------------------------------------------------
+// Country-code data
+// ---------------------------------------------------------------------------
 const COUNTRY_CODES = [
-  { code: '+91', label: '+91', default: true },
-  { code: '+1', label: '+1' },
-  { code: '+44', label: '+44' },
-  { code: '+61', label: '+61' },
-  { code: '+971', label: '+971' },
-  { code: '+65', label: '+65' },
-  { code: '+60', label: '+60' },
-  { code: '+49', label: '+49' },
-  { code: '+33', label: '+33' },
-  { code: '+81', label: '+81' },
-  { code: '+86', label: '+86' },
-  { code: '+82', label: '+82' },
-  { code: '+64', label: '+64' },
-  { code: '+34', label: '+34' },
-  { code: '+39', label: '+39' },
-  { code: '+31', label: '+31' },
-  { code: '+46', label: '+46' },
-  { code: '+47', label: '+47' },
-  { code: '+45', label: '+45' },
-  { code: '+358', label: '+358' },
-  { code: '+41', label: '+41' },
-  { code: '+43', label: '+43' },
-  { code: '+32', label: '+32' },
-  { code: '+351', label: '+351' },
-  { code: '+30', label: '+30' },
-  { code: '+48', label: '+48' },
-  { code: '+420', label: '+420' },
-  { code: '+36', label: '+36' },
-  { code: '+40', label: '+40' },
-  { code: '+359', label: '+359' },
-  { code: '+372', label: '+372' },
-  { code: '+371', label: '+371' },
-  { code: '+370', label: '+370' },
-  { code: '+386', label: '+386' },
-  { code: '+421', label: '+421' },
-  { code: '+385', label: '+385' },
-  { code: '+974', label: '+974' },
-  { code: '+968', label: '+968' },
-  { code: '+852', label: '+852' },
-  { code: '+886', label: '+886' },
-  { code: '+54', label: '+54' },
-  { code: '+55', label: '+55' },
-  { code: '+52', label: '+52' },
-  { code: '+57', label: '+57' },
-  { code: '+56', label: '+56' },
-  { code: '+51', label: '+51' },
-  { code: '+58', label: '+58' },
-  { code: '+593', label: '+593' },
-  { code: '+353', label: '+353' },
-  { code: '+354', label: '+354' },
-  { code: '+423', label: '+423' },
-  { code: '+352', label: '+352' },
-  { code: '+356', label: '+356' },
-  { code: '+357', label: '+357' },
-  { code: '+377', label: '+377' },
-  { code: '+379', label: '+379' },
-  { code: '+376', label: '+376' },
+  { code: '+91', label: 'India (+91)', regex: '^(?!([6-9])\\1{9})[6-9](?:(\\d)(?!\\2{9})){9}$', maxLength: 10 },
+  { code: '+1',  label: 'USA/Canada (+1)',  regex: '^\\d{5,15}$', maxLength: 15 },
+  { code: '+44', label: 'UK (+44)',         regex: '^\\d{5,15}$', maxLength: 15 },
+  { code: '+61', label: 'Australia (+61)',  regex: '^\\d{5,15}$', maxLength: 15 },
+  { code: '+971', label: 'UAE (+971)',      regex: '^\\d{5,15}$', maxLength: 15 },
+  { code: '+65', label: 'Singapore (+65)', regex: '^\\d{5,15}$', maxLength: 15 },
+  { code: '+60', label: 'Malaysia (+60)',  regex: '^\\d{5,15}$', maxLength: 15 },
+  { code: '+1-868', label: 'Trinidad (+1-868)', regex: '^\\d{5,15}$', maxLength: 15 },
 ];
 
-/**
- * Parse authoring rows from the block table into a config object.
- * Rows are expected as: [key cell] [value cell]
- */
+const CONSENT_TEXT_FULL = `I hereby authorise Canara HSBC Life Insurance Company Limited and its authorised representatives
+to contact me and send me communications (including via calls/SMS/emails/WhatsApp) regarding
+their products, services and offers, overriding any registration on DNCR/NDNC.
+I have read and agreed to the <a href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+and <a href="/terms-and-conditions" target="_blank" rel="noopener">Terms &amp; Conditions</a>.`;
+
+const CONSENT_TEXT_SHORT = `I authorise Canara HSBC Life Insurance to contact me regarding products &amp; services.
+<a class="lf-read-more" href="#" role="button" aria-expanded="false">Read more</a>`;
+
+// ---------------------------------------------------------------------------
+// Config parser — reads the EDS block table rows into a key/value map
+// ---------------------------------------------------------------------------
 function parseConfig(block) {
   const config = {};
-  block.querySelectorAll(':scope > div').forEach((row) => {
-    const cells = row.querySelectorAll(':scope > div');
+  [...block.children].forEach((row) => {
+    const cells = [...row.children];
     if (cells.length >= 2) {
-      const key = cells[0].textContent.trim().toLowerCase().replace(/\s+/g, '-');
+      const key = cells[0].textContent.trim().toLowerCase();
+      // Preserve inner HTML for rich-text fields (e.g. consent copy)
       config[key] = cells[1].textContent.trim();
     }
   });
   return config;
 }
 
-/**
- * Show an error message on a form group.
- */
-function showError(group, type) {
-  group.querySelectorAll('.lead-form__error').forEach((el) => el.classList.add('hidden'));
-  const target = group.querySelector(`.lead-form__error--${type}`);
-  if (target) target.classList.remove('hidden');
-  group.querySelector('input,select')?.classList.add('has-error');
+// ---------------------------------------------------------------------------
+// DOM helpers
+// ---------------------------------------------------------------------------
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  Object.entries(attrs).forEach(([k, v]) => {
+    if (k === 'className') node.className = v;
+    else if (k.startsWith('data-')) node.setAttribute(k, v);
+    else node[k] = v;
+  });
+  children.flat().forEach((child) => {
+    if (child == null) return;
+    node.append(typeof child === 'string' ? document.createTextNode(child) : child);
+  });
+  return node;
 }
 
-function clearError(group) {
-  group.querySelectorAll('.lead-form__error').forEach((el) => el.classList.add('hidden'));
-  group.querySelector('input,select')?.classList.remove('has-error');
+// ---------------------------------------------------------------------------
+// Build the <form> element from config
+// ---------------------------------------------------------------------------
+function buildForm(config) {
+  // --- Heading ---
+  const heading = el('h2', { className: 'lf-heading' },
+    config.heading || "Secure Your Family's Future with the Right Life Insurance Plan",
+  );
+
+  // --- Full Name ---
+  const nameGroup = buildFieldGroup({
+    id: 'lf-name',
+    label: 'Full Name',
+    required: true,
+    input: el('input', {
+      type: 'text',
+      id: 'lf-name',
+      name: 'fullName',
+      className: 'lf-input',
+      placeholder: 'Enter your full name',
+      required: true,
+      minLength: 3,
+      maxLength: 50,
+      'data-regex': '^[a-zA-Z][a-zA-Z .\'-]{1,48}[a-zA-Z .\'-]$',
+      autocomplete: 'name',
+    }),
+  });
+
+  // --- Mobile Number ---
+  const countrySelect = el('select', {
+    className: 'lf-country-code',
+    name: 'countryCode',
+    id: 'lf-country-code',
+    'aria-label': 'Country code',
+  });
+  COUNTRY_CODES.forEach(({ code, label }) => {
+    const opt = el('option', { value: code }, label);
+    if (code === '+91') opt.selected = true;
+    countrySelect.append(opt);
+  });
+
+  const mobileInput = el('input', {
+    type: 'tel',
+    id: 'lf-mobile',
+    name: 'mobile',
+    className: 'lf-input lf-mobile-input',
+    placeholder: 'Enter mobile number',
+    required: true,
+    maxLength: 10,
+    autocomplete: 'tel-national',
+    'data-regex-in': '^(?!([6-9])\\1{9})[6-9](?:(\\d)(?!\\2{9})){9}$',
+    'data-regex-foreign': '^\\d{5,15}$',
+  });
+
+  const mobileWrapper = el('div', { className: 'lf-mobile-wrapper' }, countrySelect, mobileInput);
+  const mobileGroup = buildFieldGroup({
+    id: 'lf-mobile',
+    label: 'Mobile Number',
+    required: true,
+    input: mobileWrapper,
+  });
+
+  // --- Email ---
+  const emailGroup = buildFieldGroup({
+    id: 'lf-email',
+    label: 'Email Address',
+    required: true,
+    input: el('input', {
+      type: 'email',
+      id: 'lf-email',
+      name: 'email',
+      className: 'lf-input',
+      placeholder: 'Enter your email address',
+      required: true,
+      maxLength: 100,
+      'data-regex': '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
+      autocomplete: 'email',
+    }),
+  });
+
+  // --- Hidden fields ---
+  const hiddenFields = [
+    el('input', { type: 'hidden', name: 'allowUtmParam',         value: 'false' }),
+    el('input', { type: 'hidden', name: 'isISNPRedirection',     value: 'false' }),
+    el('input', { type: 'hidden', name: 'isCLPRedirection',      value: 'false' }),
+    el('input', { type: 'hidden', name: 'productName',           value: config['product-name']     || 'Term' }),
+    el('input', { type: 'hidden', name: 'productCategory',       value: config['product-category'] || 'Life Insurance' }),
+    el('input', { type: 'hidden', name: 'Website_Section_Name',  value: config['section-name']     || 'Blogs - Life Insurance' }),
+    el('input', { type: 'hidden', name: 'utmCohort',             value: config['utm-cohort']       || 'Organic_Term' }),
+  ];
+
+  // --- Consent ---
+  const consentId = 'lf-consent';
+  const consentLabel = el('label', { htmlFor: consentId, className: 'lf-consent-label' });
+  consentLabel.innerHTML = CONSENT_TEXT_SHORT;
+
+  const consentCheckbox = el('input', {
+    type: 'checkbox',
+    id: consentId,
+    name: 'consent',
+    className: 'lf-consent-checkbox',
+    required: true,
+    checked: true,
+  });
+
+  const consentGroup = el('div', { className: 'lf-field-group lf-consent-group' },
+    consentCheckbox,
+    consentLabel,
+    el('span', { className: 'lf-field-error', 'aria-live': 'polite' }),
+  );
+
+  // --- Submit button ---
+  const submitBtn = el('button', {
+    type: 'submit',
+    className: 'lf-submit-btn',
+  }, config['cta-text'] || 'Check Your Premium');
+
+  // --- Build <form> ---
+  const formAttrs = {
+    className: 'lf-form',
+    noValidate: true,
+    'data-servlet-id': config['servlet-id'] || 'digital',
+  };
+  if (config.recaptcha === 'true' || config.recaptcha === true) {
+    formAttrs['data-recaptcha'] = 'true';
+  }
+
+  const form = el('form', formAttrs,
+    nameGroup,
+    mobileGroup,
+    emailGroup,
+    ...hiddenFields,
+    consentGroup,
+    submitBtn,
+  );
+
+  return el('div', { className: 'lf-form-inner' }, heading, form);
 }
 
-/**
- * Validate the entire form. Returns true if valid.
- */
+// ---------------------------------------------------------------------------
+// Field group builder
+// ---------------------------------------------------------------------------
+function buildFieldGroup({ id, label, required, input }) {
+  const labelEl = el('label', { htmlFor: id, className: 'lf-label' },
+    label,
+    required ? el('span', { className: 'lf-required', 'aria-hidden': 'true' }, ' *') : null,
+  );
+  const errorEl = el('span', { className: 'lf-field-error', 'aria-live': 'polite' });
+  return el('div', { className: 'lf-field-group' }, labelEl, input, errorEl);
+}
+
+// ---------------------------------------------------------------------------
+// Validation
+// ---------------------------------------------------------------------------
+function getError(field) {
+  const val = field.value.trim();
+
+  if (field.type === 'checkbox') {
+    return field.checked ? '' : 'Please accept the consent to proceed.';
+  }
+
+  if (!val) return `${getLabelText(field)} is required.`;
+
+  const regex = field.dataset.regex;
+  if (regex && !new RegExp(regex).test(val)) {
+    if (field.name === 'fullName') return 'Please enter a valid full name (3–50 characters, letters only).';
+    if (field.type === 'email') return 'Please enter a valid email address.';
+    return `Please enter a valid ${getLabelText(field).toLowerCase()}.`;
+  }
+
+  // Mobile: pick regex based on selected country code
+  if (field.name === 'mobile') {
+    const form = field.closest('form');
+    const countryCode = form?.querySelector('[name="countryCode"]')?.value || '+91';
+    const isIndia = countryCode === '+91';
+    const mobileRegex = isIndia ? field.dataset.regexIn : field.dataset.regexForeign;
+    if (mobileRegex && !new RegExp(mobileRegex).test(val)) {
+      return 'Please enter a valid mobile number.';
+    }
+  }
+
+  return '';
+}
+
+function getLabelText(field) {
+  const label = field.closest('.lf-field-group')?.querySelector('.lf-label');
+  return label ? label.firstChild.textContent.trim() : 'This field';
+}
+
 function validateForm(form) {
   let valid = true;
+  const fields = [...form.querySelectorAll('input[required], input[name="mobile"]')];
 
-  // Name
-  const nameGroup = form.querySelector('.lead-form__group--name');
-  const nameInput = nameGroup?.querySelector('input');
-  if (nameInput) {
-    const nameRegex = /^[a-zA-Z][a-zA-Z .'-]{1,48}[a-zA-Z .'-]$/;
-    if (!nameInput.value.trim()) {
-      showError(nameGroup, 'empty');
-      valid = false;
-    } else if (!nameRegex.test(nameInput.value.trim())) {
-      showError(nameGroup, 'invalid');
-      valid = false;
-    } else {
-      clearError(nameGroup);
-    }
-  }
-
-  // Mobile
-  const mobileGroup = form.querySelector('.lead-form__group--mobile');
-  const mobileInput = mobileGroup?.querySelector('input[name="mobileNo"]');
-  const countrySelect = mobileGroup?.querySelector('select');
-  if (mobileInput) {
-    const isIndia = !countrySelect || countrySelect.value === '+91';
-    const indiaRegex = /^(?!([6-9])\1{9})[6-9](?:(\d)(?!\2{9})){9}$/;
-    const foreignRegex = /^\d{5,15}$/;
-    const val = mobileInput.value.trim();
-    if (!val) {
-      showError(mobileGroup, 'empty');
-      valid = false;
-    } else if (isIndia && !indiaRegex.test(val)) {
-      showError(mobileGroup, 'invalid');
-      valid = false;
-    } else if (!isIndia && !foreignRegex.test(val)) {
-      showError(mobileGroup, 'invalid');
-      valid = false;
-    } else {
-      clearError(mobileGroup);
-    }
-  }
-
-  // Email
-  const emailGroup = form.querySelector('.lead-form__group--email');
-  const emailInput = emailGroup?.querySelector('input');
-  if (emailInput) {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const val = emailInput.value.trim();
-    if (!val) {
-      showError(emailGroup, 'empty');
-      valid = false;
-    } else if (!emailRegex.test(val)) {
-      showError(emailGroup, 'invalid');
-      valid = false;
-    } else {
-      clearError(emailGroup);
-    }
-  }
-
-  // Consent
-  const consentWrapper = form.querySelector('.lead-form__consent');
-  const consentInput = consentWrapper?.querySelector('input[type="checkbox"]');
-  const consentError = consentWrapper?.querySelector('.lead-form__consent--error');
-  if (consentInput && !consentInput.checked) {
-    if (consentError) consentError.classList.remove('hidden');
-    valid = false;
-  } else if (consentError) {
-    consentError.classList.add('hidden');
-  }
+  fields.forEach((field) => {
+    const error = getError(field);
+    showFieldError(field, error);
+    if (error) valid = false;
+  });
 
   return valid;
 }
 
-/**
- * Show the success state after submission.
- */
-function showSuccess(wrapper) {
-  wrapper.innerHTML = `
-    <div class="lead-form__success" role="alert">
-      <div class="lead-form__success--icon">✓</div>
-      <h3 class="lead-form__success--title">Thank You!</h3>
-      <p class="lead-form__success--msg">We have received your details. Our team will get in touch with you shortly.</p>
-    </div>
-  `;
+function showFieldError(field, message) {
+  const group = field.closest('.lf-field-group, .lf-consent-group');
+  if (!group) return;
+  const errorEl = group.querySelector('.lf-field-error');
+  if (errorEl) errorEl.textContent = message;
+  group.classList.toggle('lf-has-error', !!message);
+  field.setAttribute('aria-invalid', message ? 'true' : 'false');
 }
 
-/**
- * Build and return the country code <select>.
- */
-function buildCountrySelect() {
-  const select = document.createElement('select');
-  select.name = 'countryCode';
-  select.className = 'lead-form__country-select';
-  select.setAttribute('aria-label', 'Country code');
+function clearFieldError(field) {
+  showFieldError(field, '');
+}
 
-  COUNTRY_CODES.forEach(({ code, label, default: isDefault }) => {
-    const opt = document.createElement('option');
-    opt.value = code;
-    opt.textContent = label;
-    if (isDefault) opt.selected = true;
-    select.appendChild(opt);
+// ---------------------------------------------------------------------------
+// Country-code change handler — updates mobile maxlength & placeholder
+// ---------------------------------------------------------------------------
+function onCountryChange(select, mobileInput) {
+  const selected = COUNTRY_CODES.find((c) => c.code === select.value) || COUNTRY_CODES[0];
+  mobileInput.maxLength = selected.maxLength;
+  mobileInput.placeholder = selected.maxLength === 10 ? '10-digit mobile number' : 'Mobile number';
+}
+
+// ---------------------------------------------------------------------------
+// Consent read-more / read-less toggle
+// ---------------------------------------------------------------------------
+function initConsentToggle(wrapper) {
+  wrapper.addEventListener('click', (e) => {
+    const link = e.target.closest('.lf-read-more, .lf-read-less');
+    if (!link) return;
+    e.preventDefault();
+
+    const label = link.closest('.lf-consent-label');
+    if (!label) return;
+
+    const isExpanded = link.classList.contains('lf-read-less');
+
+    if (isExpanded) {
+      label.innerHTML = CONSENT_TEXT_SHORT;
+    } else {
+      label.innerHTML = `${CONSENT_TEXT_FULL} <a class="lf-read-less" href="#" role="button" aria-expanded="true">Read less</a>`;
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Success state
+// ---------------------------------------------------------------------------
+function showSuccess(wrapper) {
+  const inner = wrapper.querySelector('.lf-form-inner');
+  if (!inner) return;
+
+  inner.innerHTML = '';
+  inner.append(
+    el('div', { className: 'lf-success' },
+      el('div', { className: 'lf-success-icon', 'aria-hidden': 'true' }, '✓'),
+      el('h3', { className: 'lf-success-title' }, 'Thank you!'),
+      el('p', { className: 'lf-success-message' },
+        'Your details have been submitted successfully. We will get in touch with you shortly.',
+      ),
+    ),
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Form submission
+// ---------------------------------------------------------------------------
+async function submitForm(form, config) {
+  const servletId = form.dataset.servletId || 'digital';
+  const endpoint = `/bin/canarahsbc/servlet?servletId=${servletId}`;
+
+  const formData = new FormData(form);
+  // Add UTM params from URL if allowUtmParam is true
+  const urlParams = new URLSearchParams(window.location.search);
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
+    if (urlParams.has(key)) formData.set(key, urlParams.get(key));
   });
 
-  return select;
-}
+  const body = new URLSearchParams(formData).toString();
 
-/**
- * Wire up consent "Read more / Read less" toggle.
- */
-function initConsentToggle(consentWrapper) {
-  const label = consentWrapper.querySelector('.lead-form__consent--label');
-  const expandBtn = consentWrapper.querySelector('.lead-form__consent--expand');
-  const collapseBtn = consentWrapper.querySelector('.lead-form__consent--collapse');
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
+    });
 
-  if (expandBtn && collapseBtn && label) {
-    expandBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      label.classList.add('expanded');
-      expandBtn.classList.add('hidden');
-      collapseBtn.classList.remove('hidden');
-    });
-    collapseBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      label.classList.remove('expanded');
-      collapseBtn.classList.add('hidden');
-      expandBtn.classList.remove('hidden');
-    });
-  }
-
-  // Clicking anywhere on consent wrapper toggles checkbox
-  const checkbox = consentWrapper.querySelector('input[type="checkbox"]');
-  const customCheck = consentWrapper.querySelector('.lead-form__consent--checkbox');
-  if (customCheck && checkbox) {
-    customCheck.addEventListener('click', () => {
-      checkbox.checked = !checkbox.checked;
-      customCheck.classList.toggle('checked', checkbox.checked);
-    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return { success: true };
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[lead-form] Submission error:', err);
+    return { success: false, error: err.message };
   }
 }
 
-/**
- * Build the full form HTML structure.
- */
-function buildForm(config) {
-  const heading = config.heading || "Secure Your Family's Future with the Right Life Insurance Plan";
-  const ctaText = config['cta-text'] || 'Check Your Premium';
-  const ctaUrl = config['cta-url'] || 'https://www.canarahsbclife.com/life-insurance-plans';
-  const productName = config['product-name'] || 'Term';
-  const productCategory = config['product-category'] || 'Life Insurance';
-  const sectionName = config['section-name'] || 'Blogs - Life Insurance';
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'lead-form__wrapper';
-
-  wrapper.innerHTML = `
-    <div class="lead-form__container">
-      <div class="lead-form__main">
-        <div class="lead-form__content">
-          <h3 class="lead-form__heading">${heading}</h3>
-          <form class="lead-form__form" novalidate>
-
-            <!-- Hidden fields -->
-            <input type="hidden" name="allowUtmParam" value="false"/>
-            <input type="hidden" name="isISNPRedirection" value="false"/>
-            <input type="hidden" name="isCLPRedirection" value="false"/>
-            <input type="hidden" name="productName" value="${productName}"/>
-            <input type="hidden" name="productCategory" value="${productCategory}"/>
-            <input type="hidden" name="Website_Section_Name" value="${sectionName}"/>
-            <input type="hidden" name="utmCohort" value="Organic_Term"/>
-
-            <!-- Full Name -->
-            <div class="lead-form__group lead-form__group--name">
-              <label class="lead-form__label" for="lf-name">
-                Full Name<span class="lead-form__required" aria-hidden="true">*</span>
-              </label>
-              <input
-                type="text"
-                id="lf-name"
-                class="lead-form__input"
-                placeholder="Enter your name"
-                name="name"
-                minlength="3"
-                maxlength="50"
-                autocomplete="name"
-                required
-              />
-              <span class="lead-form__error lead-form__error--invalid hidden" aria-live="polite">Please enter correct name</span>
-              <span class="lead-form__error lead-form__error--empty hidden" aria-live="polite">Please enter the Full name</span>
-            </div>
-
-            <!-- Mobile Number -->
-            <div class="lead-form__group lead-form__group--mobile">
-              <label class="lead-form__label" for="lf-mobile">
-                Mobile Number<span class="lead-form__required" aria-hidden="true">*</span>
-              </label>
-              <div class="lead-form__mobile-row">
-                <div class="lead-form__country-wrapper"></div>
-                <input
-                  type="tel"
-                  id="lf-mobile"
-                  class="lead-form__input lead-form__input--mobile"
-                  placeholder="Enter your mobile number"
-                  name="mobileNo"
-                  maxlength="15"
-                  autocomplete="tel-national"
-                  required
-                />
-              </div>
-              <span class="lead-form__error lead-form__error--invalid hidden" aria-live="polite">Please enter valid mobile number</span>
-              <span class="lead-form__error lead-form__error--empty hidden" aria-live="polite">Please enter Mobile Number</span>
-            </div>
-
-            <!-- Email -->
-            <div class="lead-form__group lead-form__group--email lead-form__group--full">
-              <label class="lead-form__label" for="lf-email">
-                Email<span class="lead-form__required" aria-hidden="true">*</span>
-              </label>
-              <input
-                type="email"
-                id="lf-email"
-                class="lead-form__input"
-                placeholder="Enter your email"
-                name="emaiID"
-                autocomplete="email"
-                required
-              />
-              <span class="lead-form__error lead-form__error--invalid hidden" aria-live="polite">Please enter valid email</span>
-              <span class="lead-form__error lead-form__error--empty hidden" aria-live="polite">Please enter Email</span>
-            </div>
-
-            <!-- Consent -->
-            <div class="lead-form__consent lead-form__group--full">
-              <input
-                type="checkbox"
-                class="lead-form__consent--input"
-                id="lf-consent"
-                name="consent"
-                checked
-                required
-              />
-              <div class="lead-form__consent--checkbox checked" role="checkbox" aria-checked="true" aria-labelledby="lf-consent-label" tabindex="0">
-                <svg class="lead-form__consent--check-icon" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <label class="lead-form__consent--label" id="lf-consent-label">
-                <span class="lead-form__consent--text">I agree that even if my contact number is registered with NDNC / NCPR, I would still want the Company to contact me on the given number and email id for the clarifications/product information sought by me and agree that I have read and understood the Privacy Policy and agree to abide by the same.</span>
-                <button type="button" class="lead-form__consent--expand">...&nbsp;<span class="lead-form__consent--expand-text">Read more</span></button>
-                <button type="button" class="lead-form__consent--collapse hidden">...&nbsp;<span>Read less</span></button>
-              </label>
-              <span class="lead-form__consent--error hidden" aria-live="polite">Consent is required</span>
-            </div>
-
-            <!-- Submit -->
-            <div class="lead-form__submit-wrapper lead-form__group--full">
-              <button type="submit" class="lead-form__submit">
-                <a href="${ctaUrl}" class="lead-form__submit--link" target="_self" rel="noopener noreferrer" data-url="${ctaUrl}">
-                  <span class="lead-form__submit--text">${ctaText}</span>
-                  <span class="lead-form__submit--icon" aria-hidden="true">
-                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </span>
-                </a>
-              </button>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    </div>
-  `;
-
-  // Inject country code select
-  const countryWrapper = wrapper.querySelector('.lead-form__country-wrapper');
-  countryWrapper.appendChild(buildCountrySelect());
-
-  return wrapper;
-}
-
-/**
- * Wire up form interactions.
- */
-function initFormInteractions(wrapper) {
-  const form = wrapper.querySelector('.lead-form__form');
+// ---------------------------------------------------------------------------
+// Wire up all interactions
+// ---------------------------------------------------------------------------
+function initFormInteractions(wrapper, config) {
+  const form = wrapper.querySelector('.lf-form');
   if (!form) return;
 
-  // Consent toggle
-  initConsentToggle(wrapper.querySelector('.lead-form__consent'));
+  const countrySelect = form.querySelector('[name="countryCode"]');
+  const mobileInput = form.querySelector('[name="mobile"]');
 
-  // Real-time clear errors on input
-  form.querySelectorAll('.lead-form__input').forEach((input) => {
-    input.addEventListener('input', () => {
-      clearError(input.closest('.lead-form__group'));
-    });
-  });
-
-  // Country code change — re-evaluate mobile regex
-  const countrySelect = form.querySelector('.lead-form__country-select');
-  if (countrySelect) {
-    countrySelect.addEventListener('change', () => {
-      const mobileGroup = form.querySelector('.lead-form__group--mobile');
-      clearError(mobileGroup);
-    });
+  // Country-code change
+  if (countrySelect && mobileInput) {
+    countrySelect.addEventListener('change', () => onCountryChange(countrySelect, mobileInput));
   }
 
-  // Submit
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const valid = validateForm(form);
-    if (!valid) return;
-
-    // Get redirect URL from the link inside submit button
-    const redirectLink = form.querySelector('.lead-form__submit--link');
-    const redirectUrl = redirectLink?.dataset.url || redirectLink?.href || '#';
-
-    // Show success state
-    showSuccess(wrapper);
-
-    // Redirect after a short delay
-    setTimeout(() => {
-      window.location.href = redirectUrl;
-    }, 800);
+  // Real-time validation — clear errors on input/change
+  form.querySelectorAll('input[required], input[name="mobile"]').forEach((field) => {
+    field.addEventListener('input', () => {
+      if (field.closest('.lf-field-group')?.classList.contains('lf-has-error')) {
+        clearFieldError(field);
+      }
+    });
+    field.addEventListener('blur', () => {
+      const error = getError(field);
+      if (error) showFieldError(field, error);
+    });
   });
+
+  // Submit
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!validateForm(form)) return;
+
+    const submitBtn = form.querySelector('.lf-submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Please wait…';
+
+    const { success } = await submitForm(form, config);
+
+    if (success) {
+      showSuccess(wrapper);
+      const ctaUrl = config['cta-url'] || 'https://www.canarahsbclife.com/life-insurance-plans';
+      // Redirect after brief delay so user sees the success message
+      setTimeout(() => { window.location.href = ctaUrl; }, 2000);
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      // Show a generic inline error
+      let errorBanner = form.querySelector('.lf-submit-error');
+      if (!errorBanner) {
+        errorBanner = el('p', { className: 'lf-submit-error', role: 'alert' });
+        submitBtn.insertAdjacentElement('beforebegin', errorBanner);
+      }
+      errorBanner.textContent = 'Something went wrong. Please try again in a moment.';
+    }
+  });
+
+  // Consent read-more toggle
+  initConsentToggle(wrapper);
 }
 
+// ---------------------------------------------------------------------------
+// EDS block entry point
+// ---------------------------------------------------------------------------
 export default function decorate(block) {
   // Parse authoring config from block table rows
   const config = parseConfig(block);
 
-  // Clear the block and inject the form
-  block.innerHTML = '';
-  const formWrapper = buildForm(config);
-  block.appendChild(formWrapper);
+  // Build form HTML
+  const formWrapper = el('div', { className: 'lf-wrapper' });
+  formWrapper.append(buildForm(config));
 
-  // Wire up interactions
-  initFormInteractions(block);
+  // Replace block content with rendered form
+  block.innerHTML = '';
+  block.append(formWrapper);
+
+  // Wire interactions
+  initFormInteractions(formWrapper, config);
 }

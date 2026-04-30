@@ -2615,11 +2615,11 @@
           },
           {
             "name": "$1,234.21",
-            "value": "¤#,##0.00"
+            "value": "\u00a4#,##0.00"
           },
           {
             "name": "$1234.21",
-            "value": "¤####0.00"
+            "value": "\u00a4####0.00"
           },
           {
             "name": "1,234.210",
@@ -5328,6 +5328,74 @@
         "component": "aem-content",
         "name": "link",
         "label": "Link"
+      }
+    ]
+  },
+  {
+    "id": "lead-form",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Form Heading",
+        "valueType": "string",
+        "value": "Secure Your Family's Future with the Right Life Insurance Plan"
+      },
+      {
+        "component": "text",
+        "name": "cta-text",
+        "label": "Submit Button Label",
+        "valueType": "string",
+        "value": "Check Your Premium"
+      },
+      {
+        "component": "text",
+        "name": "cta-url",
+        "label": "Redirect URL (after submit)",
+        "valueType": "string",
+        "value": "https://www.canarahsbclife.com/life-insurance-plans"
+      },
+      {
+        "component": "text",
+        "name": "product-name",
+        "label": "Product Name (hidden field)",
+        "valueType": "string",
+        "value": "Term"
+      },
+      {
+        "component": "text",
+        "name": "product-category",
+        "label": "Product Category (hidden field)",
+        "valueType": "string",
+        "value": "Life Insurance"
+      },
+      {
+        "component": "text",
+        "name": "section-name",
+        "label": "Website Section Name (hidden field)",
+        "valueType": "string",
+        "value": "Blogs - Life Insurance"
+      },
+      {
+        "component": "text",
+        "name": "servlet-id",
+        "label": "Servlet ID (form endpoint)",
+        "valueType": "string",
+        "value": "digital"
+      },
+      {
+        "component": "text",
+        "name": "utm-cohort",
+        "label": "UTM Cohort (hidden field)",
+        "valueType": "string",
+        "value": "Organic_Term"
+      },
+      {
+        "component": "checkbox",
+        "name": "recaptcha",
+        "label": "Enable reCAPTCHA",
+        "valueType": "boolean",
+        "value": false
       }
     ]
   }
