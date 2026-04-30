@@ -622,5 +622,58 @@
         "label": "Link"
       }
     ]
+  },
+  {
+    "id": "lead-form",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "value": "Secure Your Family's Future with the Right Life Insurance Plan",
+        "description": "Main heading displayed above the form."
+      },
+      {
+        "component": "text",
+        "name": "cta-text",
+        "label": "Button Text",
+        "valueType": "string",
+        "value": "Check Your Premium",
+        "description": "Label for the submit button."
+      },
+      {
+        "component": "text",
+        "name": "cta-url",
+        "label": "Button URL",
+        "valueType": "string",
+        "value": "https://www.canarahsbclife.com/life-insurance-plans",
+        "description": "URL the user is redirected to after successful submission."
+      },
+      {
+        "component": "text",
+        "name": "product-name",
+        "label": "Product Name",
+        "valueType": "string",
+        "value": "Term",
+        "description": "Hidden field value sent with the form (e.g. Term, ULIP, Savings)."
+      },
+      {
+        "component": "text",
+        "name": "product-category",
+        "label": "Product Category",
+        "valueType": "string",
+        "value": "Life Insurance",
+        "description": "Hidden field value for product category."
+      },
+      {
+        "component": "text",
+        "name": "section-name",
+        "label": "Website Section Name",
+        "valueType": "string",
+        "value": "Blogs - Life Insurance",
+        "description": "Hidden tracking field for which section the form is on."
+      }
+    ]
   }
 ]
