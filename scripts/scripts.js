@@ -13,7 +13,7 @@ import {
 } from './aem.js';
 
 /**
- * Moves all the attributes from a given elmenet to another given element.
+ * Moves all the attributes from a given element to another given element.
  * @param {Element} from the element to copy attributes from
  * @param {Element} to the element to copy attributes to
  */
@@ -127,6 +127,12 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // ── Analytics — wire all block-level tracking after blocks are loaded ──
+  // dataLayer is initialised by delayed.js (GTM); we initialise it early
+  // so events fired before GTM loads are queued and replayed.
+  window.dataLayer = window.dataLayer || [];
+  import('./analytics.js').then(({ initAnalytics }) => initAnalytics()).catch(() => {});
 }
 
 /**

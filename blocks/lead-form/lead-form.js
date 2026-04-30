@@ -523,6 +523,21 @@ function initFormInteractions(wrapper, config) {
     const success = await submitLead(form);
 
     if (success) {
+      // Dispatch analytics event before showing success state
+      const nameVal = form.querySelector('[name="name"]')?.value?.trim() || '';
+      const emailVal = form.querySelector('[name="emaiID"]')?.value?.trim() || '';
+      const mobileVal = form.querySelector('[name="mobileNo"]')?.value?.trim() || '';
+      document.dispatchEvent(new CustomEvent('lead-form:submitted', {
+        detail: {
+          name: nameVal,
+          email: emailVal,
+          mobile: mobileVal,
+          leadId: '',
+          productName: config['product-name'] || 'Term',
+          productCategory: config['product-category'] || 'Life Insurance',
+        },
+      }));
+
       showSuccess(wrapper);
       setTimeout(() => { window.location.href = ctaUrl; }, 2000);
     } else {
