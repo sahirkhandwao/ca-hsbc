@@ -11,11 +11,12 @@ function toggleCollapse(btn, panel) {
   const isOpen = panel.classList.contains('show');
 
   if (isOpen) {
-    // Animate close
-    panel.style.maxHeight = `${panel.scrollHeight}px`;
-    panel.offsetHeight; // force reflow
-    panel.style.maxHeight = '0';
+    // Animate close — transition must be set before maxHeight changes
+    panel.style.transition = 'max-height 300ms ease';
     panel.style.overflow = 'hidden';
+    panel.style.maxHeight = `${panel.scrollHeight}px`;
+    panel.offsetHeight; // force reflow so browser registers the start value
+    panel.style.maxHeight = '0';
 
     const onEnd = () => {
       panel.classList.remove('show');
@@ -31,10 +32,10 @@ function toggleCollapse(btn, panel) {
     panel.classList.remove('collapse');
     panel.classList.add('show');
     panel.style.overflow = 'hidden';
-    panel.style.maxHeight = '0';
-    panel.offsetHeight; // force reflow
-    panel.style.maxHeight = `${panel.scrollHeight}px`;
     panel.style.transition = 'max-height 300ms ease';
+    panel.style.maxHeight = '0';
+    panel.offsetHeight; // force reflow so browser registers the start value
+    panel.style.maxHeight = `${panel.scrollHeight}px`;
 
     const onEnd = () => {
       panel.removeAttribute('style');
@@ -47,14 +48,68 @@ function toggleCollapse(btn, panel) {
 }
 
 /**
- * Wire up all elements with [data-bs-toggle="collapse"][data-bs-target]
- * within a root element.
+ * Wire up desktop quick links as tabs — one panel open at a time.
+ * First tab is open by default on load.
+ * @param {Element} root
+ */
+function initQuickLinksTabs(root) {
+  const desktopEl = root.querySelector('.quick__links__desktop');
+  if (!desktopEl) return;
+
+  const buttons = Array.from(desktopEl.querySelectorAll('.quick__Link__btn[data-bs-target]'));
+
+  const getPanel = (btn) => {
+    const id = btn.getAttribute('data-bs-target').slice(1);
+    return root.querySelector(`[id="${id}"]`);
+  };
+
+  const closeTab = (btn, panel) => {
+    if (!panel) return;
+    panel.classList.remove('show');
+    panel.classList.add('collapse');
+    btn.classList.add('collapsed');
+    btn.setAttribute('aria-expanded', 'false');
+  };
+
+  const openTab = (btn, panel) => {
+    if (!panel) return;
+    panel.classList.remove('collapse');
+    panel.classList.add('show');
+    btn.classList.remove('collapsed');
+    btn.setAttribute('aria-expanded', 'true');
+  };
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const panel = getPanel(btn);
+      const isOpen = panel && panel.classList.contains('show');
+
+      // Close all tabs
+      buttons.forEach((b) => closeTab(b, getPanel(b)));
+
+      // If this tab was closed, open it; if it was already open, leave all closed
+      if (!isOpen) openTab(btn, panel);
+    });
+  });
+
+  // Open first tab by default on load
+  if (buttons.length > 0) openTab(buttons[0], getPanel(buttons[0]));
+}
+
+/**
+ * Wire up all non-quick-links collapse triggers within a root element.
  * @param {Element} root
  */
 function initAllCollapses(root) {
   const triggers = root.querySelectorAll('[data-bs-toggle="collapse"][data-bs-target]');
 
   triggers.forEach((trigger) => {
+    // Quick links desktop tabs are handled by initQuickLinksTabs
+    if (trigger.closest('.quick__links__desktop')) return;
+
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
       const targetSelector = trigger.getAttribute('data-bs-target');
@@ -112,15 +167,14 @@ function initTicker(swiperEl) {
 /* ─── Footer interactions ──────────────────────────────────────────────────── */
 
 function initFooterInteractions(block) {
-  // ── 1–4. All accordion/collapse triggers (Bootstrap data-api pattern) ────
-  // This handles:
-  //   - Popular articles (#popular__article__section)
-  //   - Disclaimer (#disclaimer__section)
-  //   - Quick links (data-bs-target="#quickLinks-collapse-*")
-  //   - Mobile link list (.popular__link__btn)
+  // ── Quick links desktop: tab switching (one panel open at a time) ─────────
+  initQuickLinksTabs(block);
+
+  // ── All other accordion/collapse triggers ─────────────────────────────────
+  // Handles: popular articles, disclaimer, mobile quick links
   initAllCollapses(block);
 
-  // ── 5. Partner logo ticker ────────────────────────────────────────────────
+  // ── Partner logo ticker ────────────────────────────────────────────────────
   const tickers = block.querySelectorAll('.swiper[data-ticker-direction]');
   tickers.forEach(initTicker);
 }

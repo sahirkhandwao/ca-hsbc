@@ -73,8 +73,19 @@ function initHeaderInteractions(block) {
     }
   }
 
-  // ── 2. Overlay click closes menu ─────────────────────────────────────────
-  if (overlay) overlay.addEventListener('click', closeMenu);
+  // ── 2. Overlay click closes menu and any open dropdowns ──────────────────
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      closeMenu();
+      navItems.forEach((n) => {
+        n.classList.remove('dropdown-open');
+        const drop = n.querySelector('.header__navbar--dropdown');
+        if (drop) drop.classList.remove('active');
+      });
+      overlay.classList.remove('active');
+      overlay.classList.add('d-none');
+    });
+  }
 
   // ── 3. Desktop dropdown nav (hover + click) ──────────────────────────────
   const navItems = block.querySelectorAll('.header__navbar--item');
@@ -97,12 +108,23 @@ function initHeaderInteractions(block) {
       });
       item.classList.add('dropdown-open');
       dropdown.classList.add('active');
+      // Show overlay behind the page content (header stays above)
+      if (overlay) {
+        overlay.classList.remove('d-none');
+        overlay.classList.add('active');
+      }
     });
 
     item.addEventListener('mouseleave', () => {
       hoverTimer = setTimeout(() => {
         item.classList.remove('dropdown-open');
         dropdown.classList.remove('active');
+        // Hide overlay only if no other dropdown is open
+        const anyOpen = Array.from(navItems).some((n) => n.classList.contains('dropdown-open'));
+        if (!anyOpen && overlay) {
+          overlay.classList.remove('active');
+          overlay.classList.add('d-none');
+        }
       }, 150);
     });
 

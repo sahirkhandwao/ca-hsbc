@@ -38,7 +38,6 @@
 /* ── Wrapper ────────────────────────────────────────────────── */
 .header__wrapper {
   position: relative;
-  display: none;
 }
 
 /* ── Main header bar ────────────────────────────────────────── */
@@ -84,7 +83,27 @@
   object-position: left center;
   display: block;
 }
+.header .sticky-header {
+    position: fixed;
+    top: 0;
+    -webkit-transition: top .3s ease;
+    transition: top .3s ease;
+    width: 100%
+}
 
+.header__overlay {
+    height: 100vh;
+    margin: 0 auto;
+    max-width: 90pc;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    width: 100vw;
+    z-index: 98
+}
+
+.header__overlay--active {
+    display: block!important
+}
 /* ── Nav collapse (desktop shows inline) ───────────────────── */
 .header__navbar--collapse {
   flex: 1;
@@ -176,7 +195,7 @@
   border-top: 2px solid var(--blue-primary);
   display: none;
   padding: 2rem 1.5rem;
-  z-index: calc(var(--header-z) - 1);
+  z-index: calc(var(--header-z) + 5);
   max-height: calc(100vh - var(--header-height));
   overflow-y: auto;
 }
@@ -473,12 +492,15 @@
   opacity: 0;
 }
 
-/* ── Overlay ────────────────────────────────────────────────── */
+/* ── Overlay — sits below the header bar, covers only page content ── */
 .header__overlay {
   position: fixed;
-  inset: 0;
-  /* background: var(--overlay-bg); */
-  z-index: calc(var(--header-z) + 1);
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-bg);
+  z-index: calc(var(--header-z) - 2);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-med);
@@ -764,8 +786,9 @@ body.menu-open {
     margin: 0 auto;
     max-width: 90pc;
     z-index: 100;
-            border-left: 1px solid #d0d0d0 !important;
-        border-right: 1px solid #d0d0d0 !important;
+    background: #ffffff !important;
+    border-left: 1px solid #d0d0d0 !important;
+    border-right: 1px solid #d0d0d0 !important;
 }
 
 .header .sticky-header {
@@ -1399,10 +1422,40 @@ body.menu-open {
     }
 
     .header__navbar--dropdown .seasonal__banner--image {
-        max-width: 100%;
+        max-width: 80%;
         height: auto;
-        border-radius: 8px;
+        border-radius: none;
     }
+
+    /* Make swiper display correctly without Swiper.js being initialised */
+    .header__navbar--dropdown .swiper-wrapper {
+        display: flex !important;
+        width: 100%;
+    }
+
+    .header__navbar--dropdown .swiper-slide {
+        width: 100% !important;
+        flex-shrink: 0;
+    }
+
+    .header__navbar--dropdown .seasonal__banner--image {
+       width: 80%;
+        height: auto;
+        display: block;
+        border-radius: 0;
+        object-fit: contain;
+    }
+
+    .header__navbar--dropdown .swiper-container,
+    .header__navbar--dropdown .seasonal__banner--slider {
+        width: 100%;
+        overflow: hidden;
+    }
+}
+
+/* Fix column opacity — columns should be visible when dropdown is active */
+.header__navbar--dropdown.active .header__navbar--dropdown-column {
+    opacity: 1;
 }
 
 .header__navbar--link {

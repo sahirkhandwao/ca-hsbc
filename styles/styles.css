@@ -584,6 +584,12 @@ font-size: 20px;
 .section.bg-default-list .default-content-wrapper h3{
   margin-top: 0;
 }
+.justify-content-between {
+    justify-content: space-between !important;
+}
+.w-100 {
+    width: 100% !important;
+}
 @media (max-width: 767px) {
     main > .section {
         margin: 72px auto 0;
