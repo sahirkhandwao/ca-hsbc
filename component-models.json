@@ -5300,6 +5300,7 @@
         "component": "select",
         "name": "icon",
         "label": "Icon",
+        "valueType": "string",
         "options": [
           {
             "name": "Location",
@@ -5326,17 +5327,20 @@
       {
         "component": "text",
         "name": "label",
-        "label": "Label"
+        "label": "Label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "name": "href",
-        "label": "URL"
+        "label": "URL",
+        "valueType": "string"
       },
       {
         "component": "select",
         "name": "target",
         "label": "Target",
+        "valueType": "string",
         "options": [
           {
             "name": "Same Window",
