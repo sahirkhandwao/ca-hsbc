@@ -45,7 +45,7 @@ section.footer__section footer {
 
 /* ── Section container (max-width wrapper) ──────────────────── */
 .section_container--primary {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 1.5rem;
   box-sizing: border-box;
