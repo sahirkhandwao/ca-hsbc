@@ -80,6 +80,12 @@
     ]
   },
   {
+    "id": "quick-links",
+    "components": [
+      "quick-link"
+    ]
+  },
+  {
     "id": "social-media-links",
     "components": [
       "social-media-link"

@@ -5290,6 +5290,68 @@
     ]
   },
   {
+    "id": "quick-links",
+    "fields": []
+  },
+  {
+    "id": "quick-link",
+    "fields": [
+      {
+        "component": "select",
+        "name": "icon",
+        "label": "Icon",
+        "options": [
+          {
+            "name": "Location",
+            "value": "location"
+          },
+          {
+            "name": "Resume Journey",
+            "value": "resume-journey"
+          },
+          {
+            "name": "Pay Premium",
+            "value": "pay-premium"
+          },
+          {
+            "name": "Contact",
+            "value": "contact"
+          },
+          {
+            "name": "Calculator",
+            "value": "calculator"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label"
+      },
+      {
+        "component": "aem-content",
+        "name": "href",
+        "label": "URL"
+      },
+      {
+        "component": "select",
+        "name": "target",
+        "label": "Target",
+        "options": [
+          {
+            "name": "Same Window",
+            "value": "_self"
+          },
+          {
+            "name": "New Window",
+            "value": "_blank"
+          }
+        ],
+        "value": "_blank"
+      }
+    ]
+  },
+  {
     "id": "social-media-links",
     "fields": [
       {
