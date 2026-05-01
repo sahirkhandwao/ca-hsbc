@@ -476,13 +476,13 @@
    ──────────────────────────────────────────────────────────── */
 @media (min-width: 1024px) {
   .lead-form .lf-field-group {
-    flex: 1 1 0;
+    flex: 1;
     max-width: none;
     min-width: 0;
   }
 
   .lead-form .lf-field-group.lf-email-group {
-    flex: 0 0 100%;
+    flex: 1;
     max-width: 100%;
   }
 
