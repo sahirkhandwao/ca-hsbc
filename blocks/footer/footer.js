@@ -142,6 +142,29 @@ export default async function decorate(block) {
     const footerSection = doc.querySelector('section.footer__section');
     if (!footerSection) throw new Error('Could not find section.footer__section in source HTML');
 
+
+    // Prepend domain to relative paths
+    const domain = 'https://www.canarahsbclife.com';
+    const attrs = ['src', 'href', 'xlink:href', 'srcset'];
+    footerSection.querySelectorAll(attrs.map((attr) => `[${attr.replace(':', '\\:')}]`).join(', ')).forEach((el) => {
+      attrs.forEach((attr) => {
+        if (el.hasAttribute(attr)) {
+          const val = el.getAttribute(attr);
+          if (attr === 'srcset') {
+            const newVal = val.split(',').map((part) => {
+              const [url, ...rest] = part.trim().split(/\s+/);
+              return (url.startsWith('/') && !url.startsWith('//'))
+                ? [`${domain}${url}`, ...rest].join(' ')
+                : part.trim();
+            }).join(', ');
+            el.setAttribute(attr, newVal);
+          } else if (val.startsWith('/') && !val.startsWith('//')) {
+            el.setAttribute(attr, `${domain}${val}`);
+          }
+        }
+      });
+    });
+
     block.innerHTML = '';
     block.appendChild(footerSection);
 
