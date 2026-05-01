@@ -211,7 +211,7 @@ function initHeaderInteractions(block) {
 
   if (searchTrigger && searchWrapper) {
     searchTrigger.addEventListener('click', () => {
-      searchWrapper.classList.add('show');
+      searchWrapper.classList.toggle('show');
       if (searchInput) searchInput.focus();
     });
   }
