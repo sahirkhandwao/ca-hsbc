@@ -8,15 +8,13 @@ const SOURCE = '/static-html/header.html';
  * @param {Element} panel - the `.accordion-collapse` panel
  */
 function toggleCollapse(btn, panel) {
-  const isOpen = !panel.classList.contains('collapse') || panel.classList.contains('show');
+  const isClosing = panel.classList.contains('show');
 
-  if (isOpen) {
+  if (isClosing) {
     panel.classList.remove('show');
-    panel.classList.add('collapse');
     btn.classList.add('collapsed');
     btn.setAttribute('aria-expanded', 'false');
   } else {
-    panel.classList.remove('collapse');
     panel.classList.add('show');
     btn.classList.remove('collapsed');
     btn.setAttribute('aria-expanded', 'true');
@@ -35,8 +33,9 @@ function initHeaderInteractions(block) {
 
   function openMenu() {
     header.classList.add('header--menu-open');
+    if (hamburgerBtn) hamburgerBtn.classList.add('active');
     if (hamburgerMenu) {
-      hamburgerMenu.classList.add('open');
+      hamburgerMenu.classList.add('active');
       hamburgerMenu.removeAttribute('hidden');
     }
     if (overlay) {
@@ -48,8 +47,9 @@ function initHeaderInteractions(block) {
 
   function closeMenu() {
     header.classList.remove('header--menu-open');
+    if (hamburgerBtn) hamburgerBtn.classList.remove('active');
     if (hamburgerMenu) {
-      hamburgerMenu.classList.remove('open');
+      hamburgerMenu.classList.remove('active');
     }
     if (overlay) {
       overlay.classList.add('d-none');
@@ -140,16 +140,35 @@ function initHeaderInteractions(block) {
   });
 
   // ── 4. Mobile accordion (header_arrow_icon) ───────────────────────────────
-  const accordionTriggers = block.querySelectorAll('.header_arrow_icon[data-bs-target]');
+  const accordionItems = block.querySelectorAll('.header__accordion--item');
 
-  accordionTriggers.forEach((trigger) => {
-    trigger.addEventListener('click', () => {
+  accordionItems.forEach((item) => {
+    const btn = item.querySelector('.header__accordion--button');
+    const trigger = item.querySelector('.header_arrow_icon[data-bs-target]');
+    if (!trigger) return;
+
+    // Helper to perform the toggle
+    const handleToggle = (e) => {
+      // If clicking a real link inside the button, let it through
+      if (e.target.tagName === 'A' && e.target.getAttribute('href') && e.target.getAttribute('href') !== '#' && e.target.getAttribute('href') !== '') {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
       const targetId = trigger.getAttribute('data-bs-target');
       if (!targetId) return;
       const panel = block.querySelector(targetId);
       if (!panel) return;
+
       toggleCollapse(trigger, panel);
-    });
+    };
+
+    // Listen on the main button/link
+    if (btn) btn.addEventListener('click', handleToggle);
+    // Also listen on the arrow specifically if it's not the same element
+    if (trigger && trigger !== btn) trigger.addEventListener('click', handleToggle);
   });
 
   // ── 5. Notification bell ──────────────────────────────────────────────────

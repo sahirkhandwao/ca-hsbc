@@ -61,15 +61,21 @@ function initAllCollapses(root) {
   const triggers = root.querySelectorAll('[data-bs-toggle="collapse"][data-bs-target]');
 
   triggers.forEach((trigger) => {
-    trigger.addEventListener('click', () => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
       const targetSelector = trigger.getAttribute('data-bs-target');
       if (!targetSelector) return;
 
-      // Support both #id and .class selectors
-      const panel = root.querySelector(targetSelector)
-        || document.querySelector(targetSelector);
-      if (!panel) return;
+      // Robust ID selection, especially for numeric IDs like #1, #2
+      let panel;
+      if (targetSelector.startsWith('#')) {
+        const id = targetSelector.slice(1);
+        panel = root.querySelector(`[id="${id}"]`) || document.getElementById(id);
+      } else {
+        panel = root.querySelector(targetSelector) || document.querySelector(targetSelector);
+      }
 
+      if (!panel) return;
       toggleCollapse(trigger, panel);
     });
   });
