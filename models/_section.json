@@ -104,7 +104,11 @@
         "glossary",
         "social-media-links",
         "policy-details",
-        "blog-cards"
+        "blog-cards",
+        "form",
+        "embed-adaptive-form",
+        "lead-form",
+        "quick-links"
       ]
     }
   ]

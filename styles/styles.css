@@ -104,13 +104,13 @@ body.appear {
 }
 
 header {
-    height: var(--nav-height);
-    display: none;
+    /* height: var(--nav-height); */
+    /* display: none; */
 }
 
 header .header,
 footer .footer {
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 
 header .header[data-block-status="loaded"],
@@ -240,13 +240,13 @@ button {
     margin: 0;
 }
 
-a.button:hover,
+/* a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
     background-color: var(--link-hover-color);
     cursor: pointer;
-}
+} */
 
 button:disabled,
 button:disabled:hover {
@@ -583,6 +583,12 @@ font-size: 20px;
 .section.bg-default-list .default-content-wrapper h2,
 .section.bg-default-list .default-content-wrapper h3{
   margin-top: 0;
+}
+.justify-content-between {
+    justify-content: space-between !important;
+}
+.w-100 {
+    width: 100% !important;
 }
 @media (max-width: 767px) {
     main > .section {
