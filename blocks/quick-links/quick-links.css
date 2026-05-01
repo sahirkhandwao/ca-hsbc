@@ -23,7 +23,8 @@
 
   width: 66px;
   padding: 20px 10px;
-  gap: 0; /* gaps handled by divider elements */
+  gap: 0;
+  /* gaps handled by divider elements */
 
   background: #f1fbfe;
   border: 1px solid #d0d0d0;
@@ -44,8 +45,8 @@
 /* ─── Divider ─────────────────────────────────────────────────── */
 .quick-links-divider {
   display: block;
-  width: 1px;
-  height: 2.625rem; /* 42px */
+  width: 100%;
+  height: 1px;
   background: #c8c8c8;
   margin: 0 auto;
   flex-shrink: 0;
