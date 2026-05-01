@@ -1,0 +1,494 @@
+/*
+ * Lead Form Block — pixel-accurate replication of .genericForm on canarahsbclife.com
+ *
+ * Key layout facts (measured from source at 1280px):
+ *   - .generic-form__main: flex row, 1 child (.content), padding 16px, col-gap 86px, align center
+ *   - .generic-form__content: display:block, flex: 1 1 auto (full width)
+ *   - h3: full-width block inside content, sits ABOVE the form fields
+ *   - .generic-form__frame: flex row wrap, gap 16px 20px, margin-top 16px, full width
+ *   - field groups: flex:1 1 0, no max-width → 3 equal columns in one row
+ *   - consent: full width (w-100)
+ *   - submit wrapper: flex:0 1 auto → shrinks to button content width (~235px)
+ *   - submit button: width:100% inside its wrapper
+ *   - Input bg: #F5F5F5, border: 1px transparent, border-radius: 0, padding: 16px
+ *   - Primary blue: #00ADEF, text: #323232, error: #DB0011
+ *   - Shadow on container: rgba(0,0,0,0.06) 4px 4px 10px 0px
+ */
+
+/* ── Design tokens ───────────────────────────────────────────── */
+.lead-form {
+  --lf-blue:        #00ADEF;
+  --lf-blue-dark:   #0166B1;
+  --lf-blue-light:  #F1FBFE;
+  --lf-red:         #DB0011;
+  --lf-text:        #323232;
+  --lf-text-muted:  #A7A7A7;
+  --lf-input-bg:    #F5F5F5;
+  --lf-white:       #FFFFFF;
+  --lf-shadow:      rgba(0, 0, 0, 0.06) 4px 4px 10px 0px;
+  --lf-font-family: Satoshi, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ── Outer wrapper ───────────────────────────────────────────── */
+.lead-form .lf-wrapper {
+  width: 100%;
+}
+
+/* ── Card container ──────────────────────────────────────────── */
+.lead-form .lf-form-inner {
+  background-color: var(--lf-white);
+  border: 1px solid transparent;
+  box-shadow: var(--lf-shadow);
+  width: 100%;
+}
+
+/* ── Main: single content child, padding matches source 16px ─── */
+.lead-form .lf-main {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Heading: full-width block above the form ────────────────── */
+.lead-form .lf-heading {
+  font-family: var(--lf-font-family);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--lf-blue);
+  margin: 0 0 16px 0;   /* 16px gap between heading and first row of fields (frame margin-top) */
+  display: block;
+  width: 100%;
+}
+
+/* ── Form: flex row wrap, gap 16px/20px — matches .generic-form__frame ── */
+.lead-form .lf-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 16px;
+  column-gap: 20px;
+  width: 100%;
+  margin: 0;
+}
+
+/* ── Field groups: flex:1 1 0, equal 3-column split ─────────── */
+.lead-form .lf-field-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  /* Reserve space for absolute error text so fields don't jump */
+  padding-bottom: 18px;
+}
+
+/* Full-width groups: consent */
+.lead-form .lf-field-group.lf-full-width,
+.lead-form .lf-consent-group {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Email also full width on all screens */
+.lead-form .lf-field-group.lf-email-group {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ── Labels ──────────────────────────────────────────────────── */
+.lead-form .lf-label {
+  font-family: var(--lf-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--lf-text);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.lead-form .lf-required {
+  color: var(--lf-red);
+  margin-left: 2px;
+}
+
+/* ── Inputs ──────────────────────────────────────────────────── */
+.lead-form .lf-input {
+  font-family: var(--lf-font-family);
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--lf-text);
+  background-color: var(--lf-input-bg);
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+.lead-form .lf-input::-webkit-outer-spin-button,
+.lead-form .lf-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.lead-form .lf-input::placeholder {
+  color: var(--lf-text-muted);
+  font-family: var(--lf-font-family);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.lead-form .lf-input:focus {
+  border-color: var(--lf-blue);
+  outline: none;
+}
+
+/* Error state on inputs */
+.lead-form .lf-has-error .lf-input,
+.lead-form .lf-has-error .lf-mobile-input,
+.lead-form .lf-has-error .lf-country-code {
+  border-color: var(--lf-red);
+}
+
+/* Capitalize name field */
+.lead-form .lf-input[name="name"] {
+  text-transform: capitalize;
+}
+
+/* ── Mobile number row ───────────────────────────────────────── */
+.lead-form .lf-mobile-wrapper {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+/* Country code: absolutely positioned inside the input area (matches source) */
+.lead-form .lf-country-code {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 70px;
+  padding: 0 8px 0 8px;
+  font-family: var(--lf-font-family);
+  font-size: 14px;
+  color: var(--lf-text);
+  background-color: transparent;
+  border: none;
+  border-right: 1px solid #d0d0d0;
+  border-radius: 0;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  /* Blue chevron arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%2300ADEF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 12px 12px;
+  padding-right: 20px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Mobile input: pad left to clear the country code */
+.lead-form .lf-mobile-input {
+  padding-left: 70px !important;
+  flex: 1;
+  width: 100%;
+}
+
+/* ── Error messages: absolute below field ────────────────────── */
+.lead-form .lf-field-error {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  font-family: var(--lf-font-family);
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--lf-red);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ── Consent ─────────────────────────────────────────────────── */
+.lead-form .lf-consent-group {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+  /* no padding-bottom override here — error sits below */
+  padding-bottom: 14px;
+}
+
+/* Hide native checkbox */
+.lead-form .lf-consent-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Custom checkbox: matches source exactly — #F1FBFE bg, 1px #00ADEF border, 4px radius */
+.lead-form .lf-consent-box {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background-color: var(--lf-blue-light);
+  border: 1px solid var(--lf-blue);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  margin-top: 1px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.lead-form .lf-consent-box svg {
+  width: 11px;
+  height: 8px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  color: var(--lf-white);
+}
+
+.lead-form .lf-consent-box.is-checked {
+  background-color: var(--lf-blue);
+  border-color: var(--lf-blue);
+}
+
+.lead-form .lf-consent-box.is-checked svg {
+  opacity: 1;
+}
+
+/* Consent label: 9px as measured on source */
+.lead-form .lf-consent-label {
+  font-family: var(--lf-font-family);
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--lf-text);
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+  min-width: 0;
+}
+
+/* Collapsed: 1 line clamp (matches source .expanded-false) */
+.lead-form .lf-consent-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 13px;
+}
+
+.lead-form .lf-consent-label.is-expanded .lf-consent-text {
+  display: block;
+  overflow: visible;
+  height: auto;
+  -webkit-line-clamp: unset;
+}
+
+.lead-form .lf-read-more,
+.lead-form .lf-read-less {
+  color: var(--lf-blue);
+  font-weight: 700;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 9px;
+  font-family: var(--lf-font-family);
+  display: inline;
+  line-height: inherit;
+}
+
+.lead-form .lf-consent-group .lf-field-error {
+  bottom: 0;
+  left: 32px;
+}
+
+/* ── Submit wrapper: flex:0 1 auto — shrinks to content, NOT full width ── */
+.lead-form .lf-submit-wrap {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  /* No width: 100% — matches source submit div behavior */
+}
+
+/* Submit button itself: width 100% of its auto-sized wrapper */
+.lead-form .lf-submit-btn {
+  font-family: var(--lf-font-family);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--lf-white);
+  background-color: var(--lf-blue);
+  border: none;
+  border-radius: 0;
+  padding: 16px 27px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.lead-form .lf-submit-btn:hover:not(:disabled) {
+  background-color: var(--lf-blue-dark);
+}
+
+.lead-form .lf-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.lead-form .lf-submit-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.lead-form .lf-submit-icon svg {
+  width: 15px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Submit error banner ─────────────────────────────────────── */
+.lead-form .lf-submit-error {
+  font-family: var(--lf-font-family);
+  font-size: 12px;
+  color: var(--lf-red);
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+/* ── Success state ───────────────────────────────────────────── */
+.lead-form .lf-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+  gap: 12px;
+}
+
+.lead-form .lf-success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--lf-blue);
+  color: var(--lf-white);
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.lead-form .lf-success-title {
+  font-family: var(--lf-font-family);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--lf-blue);
+  margin: 0;
+}
+
+.lead-form .lf-success-message {
+  font-family: var(--lf-font-family);
+  font-size: 16px;
+  color: var(--lf-text);
+  margin: 0;
+  max-width: 380px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE  < 768px  — stack all fields vertically
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .lead-form .lf-heading {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .lead-form .lf-form {
+    flex-direction: column;
+  }
+
+  .lead-form .lf-field-group,
+  .lead-form .lf-field-group.lf-email-group {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Submit full width on mobile */
+  .lead-form .lf-submit-wrap {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TABLET  768px – 1023px  — 2-column fields
+   ──────────────────────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .lead-form .lf-field-group {
+    flex: 1 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+
+  .lead-form .lf-field-group.lf-email-group {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DESKTOP  ≥ 1024px — 3-column fields in one row, heading above
+   Matches source: frame width ~1019px, 3 groups × 326px with 20px gaps
+   ──────────────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .lead-form .lf-field-group {
+    flex: 1 1 0;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .lead-form .lf-field-group.lf-email-group {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Submit: auto-width (shrink-to-fit), matching source */
+  .lead-form .lf-submit-wrap {
+    flex: 0 1 auto;
+    width: auto;
+  }
+}

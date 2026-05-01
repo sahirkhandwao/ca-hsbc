@@ -1,364 +1,235 @@
-const CONTACT = {
-  address: 'Corporate Office: 35th Floor, M3M IFC, Sec 66, Gurugram — 122002',
-  email: 'customerservice@canarahsbclife.in',
-  phones: ['1800-103-0003', '1800-891-0003'],
-};
+const SOURCE = '/static-html/footer.html';
 
-const SOCIAL = [
-  { label: 'Facebook', href: 'https://www.facebook.com/canarahsbclifeinsurance', icon: '/icons/canara-sprite/facebook.svg' },
-  { label: 'YouTube', href: 'https://www.youtube.com/@canarahsbclife', icon: '/icons/canara-sprite/youtube.svg' },
-  { label: 'Instagram', href: 'https://www.instagram.com/canarahsbclife', icon: '/icons/canara-sprite/instagram.svg' },
-  { label: 'X', href: 'https://twitter.com/canarahsbclife', icon: '/icons/canara-sprite/xlogo.svg' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/canara-hsbc-life-insurance', icon: '/icons/canara-sprite/linkedin.svg' },
-];
+/* ─── Accordion / Collapse helper ─────────────────────────────────────────── */
 
-const COLUMNS = [
-  {
-    title: 'Learn About Insurance',
-    links: [
-      { label: '5 Crore Term Insurance', href: '/term-insurance/5-crore' },
-      { label: 'Tax Saving Plans', href: '/tax-saving-plans' },
-      { label: 'Term Insurance Tax Benefits', href: '/term-insurance/tax-benefits' },
-      { label: 'Health Insurance', href: '/health-insurance' },
-      { label: 'Section 80C Tax Saving Options', href: '/tax-saving/80c' },
-      { label: 'Child Money Back Plans', href: '/child-insurance/money-back' },
-      { label: 'Financial Planning', href: '/financial-planning' },
-      { label: 'Whole Life Insurance', href: '/whole-life-insurance' },
-      { label: 'Disability Insurance', href: '/disability-insurance' },
-      { label: 'What is Term Insurance', href: '/term-insurance/what-is' },
-      { label: 'Term Insurance for NRI', href: '/term-insurance/nri' },
-      { label: 'Term Insurance for Seniors', href: '/term-insurance/seniors' },
-      { label: 'What is ULIP', href: '/ulip/what-is' },
-      { label: 'How to File Income Tax?', href: '/tax/how-to-file' },
-    ],
-  },
-  {
-    title: 'Insurance Plans',
-    links: [
-      { label: 'Term Insurance', href: '/term-insurance' },
-      { label: 'Life Insurance Plans', href: '/life-insurance' },
-      { label: 'Saving & Investment Plans', href: '/saving-investment-plans' },
-      { label: 'Child Insurance', href: '/child-insurance' },
-      { label: 'Retirement Plans', href: '/retirement-plans' },
-      { label: 'Financial Planning', href: '/financial-planning' },
-      { label: 'Group Insurance', href: '/group-insurance' },
-      { label: 'Health Insurance', href: '/health-insurance' },
-      { label: 'Pension Scheme', href: '/pension-scheme' },
-      { label: 'ULIP Insurance Plans', href: '/ulip-insurance-plans' },
-      { label: 'Accidental Benefit Rider', href: '/insurance-riders/accidental-benefit' },
-      { label: '1 Crore Term Plan', href: '/term-insurance/1-crore' },
-      { label: '2 crore Term Plan', href: '/term-insurance/2-crore' },
-      { label: 'Types of ULIP Plan', href: '/ulip/types' },
-    ],
-  },
-  {
-    title: 'Tools and Calculators',
-    links: [
-      { label: 'Calculate Premium', href: '/tools/premium-calculator' },
-      { label: 'Suitability Calculator', href: '/tools/suitability-calculator' },
-      { label: 'Term Insurance Calculator', href: '/tools/term-insurance-calculator' },
-      { label: 'Income Tax Calculator', href: '/tools/income-tax-calculator' },
-      { label: 'Other Calculators', href: '/tools' },
-      { label: 'ULIP Calculator', href: '/tools/ulip-calculator' },
-      { label: 'Child Calculator', href: '/tools/child-calculator' },
-    ],
-    subtitle: 'Important Links',
-    subtitleLinks: [
-      { label: 'Sitemap', href: '/sitemap' },
-      { label: 'Fund Performance', href: '/fund-performance' },
-    ],
-  },
-  {
-    title: 'Customer Service',
-    links: [
-      { label: 'Contact Us', href: '/customer-service/contact-us' },
-      { label: 'Grievance Redressal', href: '/customer-service/grievance-redressal' },
-      { label: 'Claims', href: '/customer-service/claims' },
-      { label: 'Customer Awareness', href: '/customer-service/awareness' },
-      { label: 'Life Insurance Fraud Awareness', href: '/customer-service/fraud-awareness' },
-      { label: 'Track Application', href: '/customer-service/track-application' },
-      { label: 'Renewal/Pay Premium', href: '/customer-service/pay-premium' },
-      { label: 'Print Premium Receipt', href: '/customer-service/premium-receipt' },
-    ],
-  },
-  {
-    title: 'About Us',
-    links: [
-      { label: 'Overview', href: '/about-us' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Our Leaders', href: '/about-us/leadership' },
-      { label: 'News & Press Release', href: '/about-us/news' },
-      { label: 'Locate a Branch', href: '/locate-branch' },
-      { label: 'Public Disclosures', href: '/investor-relations/public-disclosure' },
-      { label: 'Account Aggregator', href: '/account-aggregator' },
-    ],
-  },
-];
+/**
+ * Toggle a Bootstrap-style collapse panel natively (no Bootstrap JS needed).
+ * @param {Element} btn   - the trigger button / span
+ * @param {Element} panel - the target `.accordion-collapse` element
+ */
+function toggleCollapse(btn, panel) {
+  const isOpen = panel.classList.contains('show');
 
-const RECOMMENDED = [
-  { label: 'How to Apply for a Minor PAN Card for Your Child?', href: '#' },
-  { label: 'Post Office Monthly Income Scheme (POMIS)', href: '#' },
-  { label: 'TDS on Rent: Step-by-Step Guide to Calculation and Compliance', href: '#' },
-  { label: 'Section 194J: TDS Rate on Fees for Professional & Technical Services', href: '#' },
-  { label: 'What is Insurance? Definition, Types and Benefits', href: '#' },
-  { label: 'Budget 2026 Tax Slabs: Impact on Salaried & Self-Employed', href: '#' },
-  { label: 'ULIP Tax Benefits 2026: Save Tax Under Section 80C & 10(10D)', href: '#' },
-  { label: 'New Labour Codes 2025: Key Changes, Benefits & PDF', href: '#' },
-  { label: 'Senior Citizen Card: How to Apply for it Online?', href: '#' },
-  { label: 'Will Budget 2026 Allow Joint Taxation for Married Couples?', href: '#' },
-  { label: '7 Principles of Insurance in India Every Policyholder Should Know', href: '#' },
-  { label: 'Income From Salary Explained: Components, Calculation, Allowances', href: '#' },
-  { label: 'What is Salary Protection Insurance?', href: '#' },
-];
+  if (isOpen) {
+    // Animate close — transition must be set before maxHeight changes
+    panel.style.transition = 'max-height 300ms ease';
+    panel.style.overflow = 'hidden';
+    panel.style.maxHeight = `${panel.scrollHeight}px`;
+    panel.offsetHeight; // force reflow so browser registers the start value
+    panel.style.maxHeight = '0';
 
-const PARTNERS = [
-  { label: 'Canara Bank', src: '/icons/partners/canara-bank-logo.svg' },
-  { label: 'HSBC', src: '/icons/partners/hsbc-logo.svg' },
-  { label: 'Tamil Nadu Grama Bank', src: '/icons/partners/tngb-logo.svg' },
-  { label: 'Dhanlaxmi Bank', src: '/icons/partners/dhanlaxmi-bank-logo.svg' },
-  { label: 'Kerala Gramin Bank', src: '/icons/partners/kgb-logo.svg' },
-  { label: 'Can Fin Homes Ltd', src: '/icons/partners/can-fin-homes-logo.svg' },
-];
+    const onEnd = () => {
+      panel.classList.remove('show');
+      panel.classList.add('collapse');
+      panel.removeAttribute('style');
+      btn.classList.add('collapsed');
+      btn.setAttribute('aria-expanded', 'false');
+      panel.removeEventListener('transitionend', onEnd);
+    };
+    panel.addEventListener('transitionend', onEnd);
+  } else {
+    // Animate open
+    panel.classList.remove('collapse');
+    panel.classList.add('show');
+    panel.style.overflow = 'hidden';
+    panel.style.transition = 'max-height 300ms ease';
+    panel.style.maxHeight = '0';
+    panel.offsetHeight; // force reflow so browser registers the start value
+    panel.style.maxHeight = `${panel.scrollHeight}px`;
 
-const SECONDARY = [
-  {
-    title: 'Quick Links',
-    links: [
-      { label: 'Bima Bharosa', href: '/bima-bharosa' },
-      { label: 'Central KYC Registory', href: '/central-kyc-registory' },
-      { label: 'Claims Paying Ability Rating', href: '/claims-paying-ability-rating' },
-      { label: 'Disclaimer', href: '/disclaimer' },
-      { label: 'Do not Call', href: '/do-not-call' },
-      { label: 'Equal Opportunity Policy', href: '/equal-opportunity-policy' },
-    ],
-  },
-  {
-    title: 'Funds & NAV',
-    links: [
-      { label: 'HIV and AIDS Non Discrimination Policy', href: '/hiv-aids-policy' },
-      { label: 'Hyperlink Policy', href: '/hyperlink-policy' },
-      { label: 'List of Corporate Agent', href: '/list-of-corporate-agent' },
-      { label: 'List of Insurance Agent', href: '/list-of-insurance-agent' },
-      { label: 'List of Authorised Distributors', href: '/list-of-authorised-distributors' },
-      { label: 'List of Products', href: '/list-of-products' },
-    ],
-  },
-  {
-    title: 'Download Center',
-    links: [
-      { label: 'Ombudsman Procedure', href: '/ombudsman-procedure' },
-      { label: 'Privacy Policy', href: '/privacy-policy' },
-      { label: 'Public Disclosures', href: '/public-disclosures' },
-      { label: 'Quality Policy', href: '/quality-policy' },
-      { label: 'Prevention of Sexual Harassment Policy', href: '/prevention-sexual-harassment-policy' },
-      { label: 'Site Map', href: '/sitemap' },
-    ],
-  },
-  {
-    title: 'Proposal Form',
-    links: [
-      { label: 'Tender & Notices', href: '/tender-notices' },
-      { label: 'Term of Use', href: '/term-of-use' },
-      { label: 'WPC Disclosure FY 23-24', href: '/wpc-disclosure-23-24' },
-      { label: 'WPC Disclosure FY 24-25', href: '/wpc-disclosure-24-25' },
-    ],
-  },
-];
+    const onEnd = () => {
+      panel.removeAttribute('style');
+      btn.classList.remove('collapsed');
+      btn.setAttribute('aria-expanded', 'true');
+      panel.removeEventListener('transitionend', onEnd);
+    };
+    panel.addEventListener('transitionend', onEnd);
+  }
+}
 
-const DISCLAIMER_TEXT = 'IRDAI is not involved in activities like selling insurance policies, announcing bonus or investment of premiums. Public receiving such phone calls are requested to lodge a police complaint.';
-const FRAUD_HEADING = 'BEWARE OF SPURIOUS / FRAUD PHONE CALLS!';
-const COPYRIGHT = '&copy; 2019-2024 Canara HSBC Life Insurance Co. Ltd.';
+/**
+ * Wire up desktop quick links as tabs — one panel open at a time.
+ * First tab is open by default on load.
+ * @param {Element} root
+ */
+function initQuickLinksTabs(root) {
+  const desktopEl = root.querySelector('.quick__links__desktop');
+  if (!desktopEl) return;
 
-const renderLinkList = (links) => links.map((l) => `<li><a href="${l.href}">${l.label}</a></li>`).join('');
+  const buttons = Array.from(desktopEl.querySelectorAll('.quick__Link__btn[data-bs-target]'));
 
-const renderColumn = (col) => `
-  <div class="footer-col">
-    <div class="footer-col-title">${col.title}</div>
-    <ul class="footer-col-list">${renderLinkList(col.links)}</ul>
-    ${col.subtitle ? `
-      <div class="footer-col-title footer-col-title--sub">${col.subtitle}</div>
-      <ul class="footer-col-list">${renderLinkList(col.subtitleLinks)}</ul>
-    ` : ''}
-  </div>
-`;
+  const getPanel = (btn) => {
+    const id = btn.getAttribute('data-bs-target').slice(1);
+    return root.querySelector(`[id="${id}"]`);
+  };
 
-const renderSocial = () => SOCIAL.map((s) => `
-  <a class="footer-social-link" href="${s.href}" aria-label="${s.label}" target="_blank" rel="noopener noreferrer">
-    <img src="${s.icon}" alt="" aria-hidden="true">
-  </a>
-`).join('');
+  const closeTab = (btn, panel) => {
+    if (!panel) return;
+    panel.classList.remove('show');
+    panel.classList.add('collapse');
+    btn.classList.add('collapsed');
+    btn.setAttribute('aria-expanded', 'false');
+  };
 
-const renderRecommended = () => `
-  <div class="footer-recommended">
-    <div role="button" tabindex="0" class="footer-recommended-toggle" aria-expanded="true" aria-controls="footer-recommended-list">
-      <span>Recommended Articles</span>
-      <img class="footer-recommended-caret" src="/icons/canara-sprite/down-arrow.svg" alt="" aria-hidden="true">
-    </div>
-    <ul class="footer-recommended-list" id="footer-recommended-list">
-      ${RECOMMENDED.map((r) => `
-        <li>
-          <img class="footer-recommended-icon" src="/icons/canara-sprite/article.svg" alt="" aria-hidden="true">
-          <a href="${r.href}">${r.label}</a>
-        </li>
-      `).join('')}
-    </ul>
-  </div>
-`;
+  const openTab = (btn, panel) => {
+    if (!panel) return;
+    panel.classList.remove('collapse');
+    panel.classList.add('show');
+    btn.classList.remove('collapsed');
+    btn.setAttribute('aria-expanded', 'true');
+  };
 
-const renderPartners = () => `
-  <div class="footer-partners">
-    <div class="footer-partners-label">Our Partners</div>
-    <div class="footer-partners-strip">
-      ${PARTNERS.map((p) => `
-        <div class="footer-partner">${p.src ? `<img src="${p.src}" alt="${p.label}" loading="lazy">` : `<span class="footer-partner-text">${p.label}</span>`}</div>
-      `).join('')}
-    </div>
-  </div>
-`;
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-const renderSecondary = () => `
-  <div class="footer-secondary">
-    <div class="footer-secondary-tabs" role="tablist">
-      ${SECONDARY.map((col, i) => `
-        <div role="tab" tabindex="0" class="footer-secondary-tab"
-          id="footer-tab-${i}" aria-controls="footer-panel-${i}" aria-expanded="false" aria-selected="false">
-          <span>${col.title}</span>
-          <img class="footer-secondary-caret" src="/icons/canara-sprite/down-arrow.svg" alt="" aria-hidden="true">
-        </div>
-      `).join('')}
-    </div>
-    <div class="footer-secondary-panels">
-      ${SECONDARY.map((col, i) => `
-        <ul class="footer-secondary-panel" id="footer-panel-${i}" role="tabpanel"
-          aria-labelledby="footer-tab-${i}" hidden>
-          ${col.links.map((l) => `<li><a href="${l.href}">${l.label}</a></li>`).join('')}
-        </ul>
-      `).join('')}
-    </div>
+      const panel = getPanel(btn);
+      const isOpen = panel && panel.classList.contains('show');
 
-    <div class="footer-disclaimer">
-      <div role="button" tabindex="0" class="footer-disclaimer-toggle" aria-expanded="false" aria-controls="footer-disclaimer-body">
-        <span>Disclaimer</span>
-        <img class="footer-secondary-caret" src="/icons/canara-sprite/down-arrow.svg" alt="" aria-hidden="true">
-      </div>
-      <div class="footer-disclaimer-body" id="footer-disclaimer-body" hidden>
-        <p>Canara HSBC Life Insurance Company Limited is a joint venture between Canara Bank and HSBC Insurance (Asia Pacific) Holdings Limited (HIAPH). Regulated by the Insurance Regulatory and Development Authority of India (IRDAI).</p>
-      </div>
-    </div>
+      // Close all tabs
+      buttons.forEach((b) => closeTab(b, getPanel(b)));
 
-    <div class="footer-fraud">
-      <div class="footer-fraud-heading">${FRAUD_HEADING}</div>
-      <p class="footer-fraud-text">${DISCLAIMER_TEXT}</p>
-    </div>
+      // If this tab was closed, open it; if it was already open, leave all closed
+      if (!isOpen) openTab(btn, panel);
+    });
+  });
 
-    <div class="footer-copyright">${COPYRIGHT}</div>
-  </div>
-`;
+  // Open first tab by default on load
+  if (buttons.length > 0) openTab(buttons[0], getPanel(buttons[0]));
+}
+
+/**
+ * Wire up all non-quick-links collapse triggers within a root element.
+ * @param {Element} root
+ */
+function initAllCollapses(root) {
+  const triggers = root.querySelectorAll('[data-bs-toggle="collapse"][data-bs-target]');
+
+  triggers.forEach((trigger) => {
+    // Quick links desktop tabs are handled by initQuickLinksTabs
+    if (trigger.closest('.quick__links__desktop')) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetSelector = trigger.getAttribute('data-bs-target');
+      if (!targetSelector) return;
+
+      // Robust ID selection, especially for numeric IDs like #1, #2
+      let panel;
+      if (targetSelector.startsWith('#')) {
+        const id = targetSelector.slice(1);
+        panel = root.querySelector(`[id="${id}"]`) || document.getElementById(id);
+      } else {
+        panel = root.querySelector(targetSelector) || document.querySelector(targetSelector);
+      }
+
+      if (!panel) return;
+      toggleCollapse(trigger, panel);
+    });
+  });
+}
+
+/* ─── Partner logo ticker ──────────────────────────────────────────────────── */
+
+/**
+ * Creates a pure CSS-driven infinite ticker for partner logos.
+ * Clones the swiper-wrapper content so the scroll loops seamlessly.
+ * @param {Element} swiperEl - `.swiper[data-ticker-direction]`
+ */
+function initTicker(swiperEl) {
+  const direction = swiperEl.getAttribute('data-ticker-direction') || 'left';
+  const wrapper = swiperEl.querySelector('.swiper-wrapper');
+  if (!wrapper) return;
+
+  // Clone slides for seamless loop
+  const slides = Array.from(wrapper.querySelectorAll('.swiper-slide'));
+  if (!slides.length) return;
+
+  slides.forEach((slide) => {
+    const clone = slide.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    wrapper.appendChild(clone);
+  });
+
+  // Mark for CSS animation
+  swiperEl.classList.add('ticker-initialized');
+  swiperEl.setAttribute('data-direction', direction);
+
+  // Total width = number of original slides × slide width (approximate)
+  // CSS animation uses translateX(-50%) to scroll one "set" of slides
+  wrapper.classList.add('ticker-track');
+  if (direction === 'right') {
+    wrapper.classList.add('ticker-track--right');
+  }
+}
+
+/* ─── Footer interactions ──────────────────────────────────────────────────── */
+
+function initFooterInteractions(block) {
+  // ── Quick links desktop: tab switching (one panel open at a time) ─────────
+  initQuickLinksTabs(block);
+
+  // ── All other accordion/collapse triggers ─────────────────────────────────
+  // Handles: popular articles, disclaimer, mobile quick links
+  initAllCollapses(block);
+
+  // ── Partner logo ticker ────────────────────────────────────────────────────
+  const tickers = block.querySelectorAll('.swiper[data-ticker-direction]');
+  tickers.forEach(initTicker);
+}
+
+/* ─── Block entry point ────────────────────────────────────────────────────── */
 
 export default async function decorate(block) {
-  block.textContent = '';
+  block.classList.add('loading');
 
-  const phonesHtml = CONTACT.phones.map((p) => `<a href="tel:${p.replace(/-/g, '')}">${p}</a>`).join(' | ');
+  try {
+    const resp = await fetch(SOURCE, { cache: 'force-cache' });
+    if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
 
-  block.innerHTML = `
-    <div class="footer-inner">
-      <div class="footer-content">
-      <div class="footer-top">
-        <a class="footer-brand" href="/" aria-label="Canara HSBC Life Insurance">
-          <img src="/icons/canara-hsbc-life-insurance-logo.svg" alt="Canara HSBC Life Insurance">
-        </a>
-        <div class="footer-social">${renderSocial()}</div>
-      </div>
+    const html = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
 
-      <div class="footer-contact">
-        <ul class="footer-contact-list">
-          <li>
-            <img class="footer-contact-icon" src="/icons/canara-sprite/location.svg" alt="" aria-hidden="true">
-            <span>${CONTACT.address}</span>
-          </li>
-          <li>
-            <img class="footer-contact-icon" src="/icons/canara-sprite/email.svg" alt="" aria-hidden="true">
-            <a href="mailto:${CONTACT.email}">${CONTACT.email}</a>
-          </li>
-          <li>
-            <img class="footer-contact-icon" src="/icons/canara-sprite/contact.svg" alt="" aria-hidden="true">
-            <span>Toll Free: ${phonesHtml}</span>
-          </li>
-        </ul>
-        <div class="footer-apps">
-          <div class="footer-apps-label">Download the Canara HSBC Life Insurance Mobile App</div>
-          <div class="footer-apps-buttons">
-            <a class="footer-app-btn" href="https://play.google.com/store" aria-label="Get it on Google Play" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/canara-sprite/get-it-on-google-play.svg" alt="Get it on Google Play">
-            </a>
-            <a class="footer-app-btn" href="https://www.apple.com/app-store/" aria-label="Download on the App Store" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/canara-sprite/app-store-download.svg" alt="Download on the App Store">
-            </a>
-          </div>
-        </div>
-      </div>
+    // Extract section.footer__section
+    const footerSection = doc.querySelector('section.footer__section');
+    if (!footerSection) throw new Error('Could not find section.footer__section in source HTML');
 
-      <div class="footer-columns">
-        ${COLUMNS.map(renderColumn).join('')}
-      </div>
 
-      ${renderRecommended()}
-
-      ${renderPartners()}
-
-      ${renderSecondary()}
-      </div>
-    </div>
-  `;
-
-  const activateOnKey = (el, fn) => el.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      fn();
-    }
-  });
-
-  const toggle = block.querySelector('.footer-recommended-toggle');
-  const list = block.querySelector('.footer-recommended-list');
-  if (toggle && list) {
-    const activate = () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      list.hidden = expanded;
-    };
-    toggle.addEventListener('click', activate);
-    activateOnKey(toggle, activate);
-  }
-
-  const tabs = [...block.querySelectorAll('.footer-secondary-tab')];
-  const panels = [...block.querySelectorAll('.footer-secondary-panel')];
-  tabs.forEach((tab, idx) => {
-    const activate = () => {
-      const wasOpen = tab.getAttribute('aria-expanded') === 'true';
-      tabs.forEach((t) => {
-        t.setAttribute('aria-expanded', 'false');
-        t.setAttribute('aria-selected', 'false');
+    // Prepend domain to relative paths
+    const domain = 'https://www.canarahsbclife.com';
+    const attrs = ['src', 'href', 'xlink:href', 'srcset'];
+    footerSection.querySelectorAll(attrs.map((attr) => `[${attr.replace(':', '\\:')}]`).join(', ')).forEach((el) => {
+      attrs.forEach((attr) => {
+        if (el.hasAttribute(attr)) {
+          const val = el.getAttribute(attr);
+          if (attr === 'srcset') {
+            const newVal = val.split(',').map((part) => {
+              const [url, ...rest] = part.trim().split(/\s+/);
+              return (url.startsWith('/') && !url.startsWith('//'))
+                ? [`${domain}${url}`, ...rest].join(' ')
+                : part.trim();
+            }).join(', ');
+            el.setAttribute(attr, newVal);
+          } else if (val.startsWith('/') && !val.startsWith('//')) {
+            el.setAttribute(attr, `${domain}${val}`);
+          }
+        }
       });
-      panels.forEach((p) => { p.hidden = true; });
-      if (!wasOpen) {
-        tab.setAttribute('aria-expanded', 'true');
-        tab.setAttribute('aria-selected', 'true');
-        if (panels[idx]) panels[idx].hidden = false;
-      }
-    };
-    tab.addEventListener('click', activate);
-    activateOnKey(tab, activate);
-  });
+    });
 
-  const disclaimerBtn = block.querySelector('.footer-disclaimer-toggle');
-  const disclaimerBody = block.querySelector('.footer-disclaimer-body');
-  if (disclaimerBtn && disclaimerBody) {
-    const activate = () => {
-      const expanded = disclaimerBtn.getAttribute('aria-expanded') === 'true';
-      disclaimerBtn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      disclaimerBody.hidden = expanded;
-    };
-    disclaimerBtn.addEventListener('click', activate);
-    activateOnKey(disclaimerBtn, activate);
+    block.innerHTML = '';
+    block.appendChild(footerSection);
+
+    // Wire up all interactions
+    initFooterInteractions(block);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[footer block]', err);
+    block.classList.add('error');
+  } finally {
+    block.removeAttribute('aria-busy');
+    block.classList.remove('loading');
   }
 }
