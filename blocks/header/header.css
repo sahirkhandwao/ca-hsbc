@@ -1299,14 +1299,14 @@ body.menu-open {
         -webkit-transition: background-color 0.3s;
         transition: background-color 0.3s;
     }
-
+/* 
     .header__navbar--dropdown .sublinks__navigator--link:hover {
         background-color: #f5f9fc;
-    }
+    } */
 
-    .header__navbar--dropdown .sublinks__navigator--link:hover .sublinks__navigator--content--title {
+    /* .header__navbar--dropdown .sublinks__navigator--link:hover .sublinks__navigator--content--title {
         color: #00adef;
-    }
+    } */
 
     .header__navbar--dropdown .sublinks__navigator--content--title {
         font-size: 20px;
@@ -1318,8 +1318,13 @@ body.menu-open {
     }
 .sublinks__navigator--content a {
     font-size: 16px;
-    /* color: #00adef !important; */
     font-weight: 500;
+    text-decoration: none;
+}
+.sublinks__navigator--content a.chli_btn--link{
+  color: #00adef !important;
+  font-size: 16px;
+          margin-top: 12px;
 }
     .header__navbar--dropdown .sublinks__navigator--content--description,
     .header__navbar--dropdown .sublinks__navigator--content--description p {
@@ -1332,7 +1337,7 @@ body.menu-open {
     }
 
     .header__navbar--dropdown a:hover .sublinks__navigator--content--description {
-        color: #00adef;
+        /* color: #00adef; */
     }
 
     .header__navbar--dropdown .sublinks__navigator--icon svg {
@@ -1510,6 +1515,7 @@ body.menu-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    color: #000;
     font-family: Satoshi;
     font-size: .625rem;
     font-weight: 400;
@@ -1517,7 +1523,7 @@ body.menu-open {
     justify-content: center;
     left: 5px;
     line-height: 9.45px;
-    padding: 3px 6px!important;
+    padding: 0 6px!important;
     position: relative;
     top: -10px
 }
