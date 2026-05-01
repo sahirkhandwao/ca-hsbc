@@ -13,42 +13,36 @@ function toggleCollapse(btn, panel) {
   if (isOpen) {
     // Animate close
     panel.style.maxHeight = `${panel.scrollHeight}px`;
-    // eslint-disable-next-line no-unused-expressions
     panel.offsetHeight; // force reflow
     panel.style.maxHeight = '0';
     panel.style.overflow = 'hidden';
 
-    panel.addEventListener(
-      'transitionend',
-      () => {
-        panel.classList.remove('show');
-        panel.classList.add('collapse');
-        panel.removeAttribute('style');
-        btn.classList.add('collapsed');
-        btn.setAttribute('aria-expanded', 'false');
-      },
-      { once: true },
-    );
+    const onEnd = () => {
+      panel.classList.remove('show');
+      panel.classList.add('collapse');
+      panel.removeAttribute('style');
+      btn.classList.add('collapsed');
+      btn.setAttribute('aria-expanded', 'false');
+      panel.removeEventListener('transitionend', onEnd);
+    };
+    panel.addEventListener('transitionend', onEnd);
   } else {
     // Animate open
     panel.classList.remove('collapse');
     panel.classList.add('show');
     panel.style.overflow = 'hidden';
     panel.style.maxHeight = '0';
-    // eslint-disable-next-line no-unused-expressions
     panel.offsetHeight; // force reflow
     panel.style.maxHeight = `${panel.scrollHeight}px`;
-    panel.style.transition = 'max-height 280ms ease';
+    panel.style.transition = 'max-height 300ms ease';
 
-    panel.addEventListener(
-      'transitionend',
-      () => {
-        panel.removeAttribute('style');
-        btn.classList.remove('collapsed');
-        btn.setAttribute('aria-expanded', 'true');
-      },
-      { once: true },
-    );
+    const onEnd = () => {
+      panel.removeAttribute('style');
+      btn.classList.remove('collapsed');
+      btn.setAttribute('aria-expanded', 'true');
+      panel.removeEventListener('transitionend', onEnd);
+    };
+    panel.addEventListener('transitionend', onEnd);
   }
 }
 
