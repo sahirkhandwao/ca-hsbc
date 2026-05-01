@@ -1,0 +1,159 @@
+/*
+ * Quick Links Block
+ * Desktop: fixed right-side vertical strip
+ * Mobile:  fixed bottom horizontal bar
+ */
+
+/* ─── Block container ─────────────────────────────────────────── */
+.quick-links-wrapper-outer,
+.block.quick-links {
+  display: block;
+}
+
+/* ─── Inner strip (the visible widget) ───────────────────────── */
+.quick-links-inner {
+  position: fixed;
+  top: 159px;
+  right: 6px;
+  z-index: 99;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 66px;
+  padding: 20px 10px;
+  gap: 0; /* gaps handled by divider elements */
+
+  background: #f1fbfe;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+
+  /* hide animation */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  will-change: transform;
+}
+
+/* Hide — triggered by JS on scroll down */
+.quick-links-inner.quick-links-hidden {
+  transform: translateX(150%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── Divider ─────────────────────────────────────────────────── */
+.quick-links-divider {
+  display: block;
+  width: 1px;
+  height: 2.625rem; /* 42px */
+  background: #c8c8c8;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+/* ─── Link ────────────────────────────────────────────────────── */
+.quick-links-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
+  padding: 6px 0;
+}
+
+.quick-links-link:hover .quick-links-icon,
+.quick-links-link:focus .quick-links-icon {
+  opacity: 0.75;
+}
+
+/* ─── Wrapper (icon + label column) ──────────────────────────── */
+.quick-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ─── Icon ────────────────────────────────────────────────────── */
+.quick-links-icon {
+  width: 24px;
+  height: 24px;
+  color: #00adef;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ─── Label ───────────────────────────────────────────────────── */
+.quick-links-label {
+  display: block;
+  font-family: var(--body-font-family, 'Poppins', sans-serif);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.4px;
+  color: #323232;
+  text-align: center;
+  word-break: break-word;
+  hyphens: auto;
+  width: 100%;
+}
+
+/* ─── Mobile: bottom sticky bar ──────────────────────────────── */
+@media (max-width: 767px) {
+  .quick-links-inner {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: stretch;
+
+    padding: 8px 4px;
+    border-radius: 0;
+    border-top: 1px solid #d0d0d0;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    gap: 0;
+  }
+
+  /* restore visible when hidden on mobile */
+  .quick-links-inner.quick-links-hidden {
+    transform: translateY(150%);
+  }
+
+  .quick-links-divider {
+    width: 1px;
+    height: auto;
+    align-self: stretch;
+    margin: 4px 0;
+  }
+
+  .quick-links-link {
+    flex: 1;
+    padding: 4px 2px;
+  }
+
+  .quick-links-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .quick-links-label {
+    font-size: 9px;
+  }
+}
+
+/* ─── Tablet: keep desktop layout ────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .quick-links-inner {
+    top: 140px;
+    right: 4px;
+    width: 60px;
+    padding: 16px 8px;
+  }
+}
