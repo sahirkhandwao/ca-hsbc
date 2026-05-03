@@ -461,7 +461,7 @@ function showSuccess(wrapper) {
 // ---------------------------------------------------------------------------
 async function submitLead(form) {
   const servletId = form.dataset.servletId || 'digital';
-  const endpoint = `https://www.canarahsbclife.com/bin/chli/genericForm?servletID=${servletId}`;
+  const endpoint = `https://dev.canarahsbclife.com/bin/chli/genericForm?servletID=${servletId}&_cb=${Date.now()}`;
 
 
   const formData = new FormData(form);
