@@ -17,7 +17,7 @@
  *   Row 2: initialCount  — number of cards shown on first paint (default 6)
  */
 
-const API_BASE = 'https://www.canarahsbclife.com/bin/chli/bloglisting.json';
+const API_BASE = 'https://dev.canarahsbclife.com/bin/chli/bloglisting.json';
 const SITE_BASE = 'https://www.canarahsbclife.com';
 const CARDS_PER_LOAD = 6;
 
@@ -134,7 +134,7 @@ export default async function decorate(block) {
   // --- Fetch blog data ---
   let allCards = [];
   try {
-    const resp = await fetch(`${API_BASE}?blogName=${encodeURIComponent(blogName)}`);
+    const resp = await fetch(`${API_BASE}?blogName=${encodeURIComponent(blogName)}&lang=en&_cb=${Date.now()}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     allCards = await resp.json();
     if (!Array.isArray(allCards)) throw new Error('Unexpected response format');
