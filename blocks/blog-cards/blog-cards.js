@@ -17,7 +17,7 @@
  *   Row 2: initialCount  — number of cards shown on first paint (default 6)
  */
 
-import CONSTANTS from "../../utils/constants";
+import CONSTANTS from "../../utils/constants.js";
 
 const API_BASE = CONSTANTS.devDomain + '/bin/chli/bloglisting.json';
 const SITE_BASE = CONSTANTS.prodDomain;
