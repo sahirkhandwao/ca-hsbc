@@ -17,8 +17,10 @@
  *   Row 2: initialCount  — number of cards shown on first paint (default 6)
  */
 
-const API_BASE = 'https://dev.canarahsbclife.com/bin/chli/bloglisting.json';
-const SITE_BASE = 'https://www.canarahsbclife.com';
+import CONSTANTS from "../../utils/constants";
+
+const API_BASE = CONSTANTS.devDomain + '/bin/chli/bloglisting.json';
+const SITE_BASE = CONSTANTS.prodDomain;
 const CARDS_PER_LOAD = 6;
 
 /**
