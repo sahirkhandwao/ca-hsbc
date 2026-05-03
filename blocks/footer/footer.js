@@ -1,4 +1,6 @@
-const SOURCE = 'https://dev.canarahsbclife.com/content/experience-fragments/chli/in/en/site/footer/master.html' + `?_cb=${Date.now()}`;
+import CONSTANTS from "../../utils/constants.js";
+
+const SOURCE = CONSTANTS.devDomain + '/content/experience-fragments/chli/in/en/site/footer/master.html' + `?_cb=${CONSTANTS.cacheBuster}`;
 
 /* ─── Accordion / Collapse helper ─────────────────────────────────────────── */
 
@@ -198,7 +200,7 @@ export default async function decorate(block) {
 
 
     // Prepend domain to relative paths
-    const domain = 'https://www.canarahsbclife.com';
+    const domain = CONSTANTS.prodDomain;
     const attrs = ['src', 'href', 'xlink:href', 'srcset'];
     footerSection.querySelectorAll(attrs.map((attr) => `[${attr.replace(':', '\\:')}]`).join(', ')).forEach((el) => {
       attrs.forEach((attr) => {

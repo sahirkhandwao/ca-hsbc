@@ -8,6 +8,8 @@
  *   section-name, servlet-id, utm-cohort, recaptcha
  */
 
+import CONSTANTS from "../../utils/constants.js";
+
 // ---------------------------------------------------------------------------
 // Country-code list (matches source page dropdown order)
 // ---------------------------------------------------------------------------
@@ -496,7 +498,7 @@ function initFormInteractions(wrapper, config) {
   const form = wrapper.querySelector('.lf-form');
   if (!form) return;
 
-  const ctaUrl = config['cta-url'] || 'https://www.canarahsbclife.com/life-insurance-plans';
+  const ctaUrl = config['cta-url'] || CONSTANTS.prodDomain + '/life-insurance-plans';
 
   // Real-time error clearing
   form.querySelectorAll('input:not([type=hidden])').forEach((input) => {

@@ -136,7 +136,7 @@ export default async function decorate(block) {
   // --- Fetch blog data ---
   let allCards = [];
   try {
-    const resp = await fetch(`${API_BASE}?blogName=${encodeURIComponent(blogName)}&lang=en&_cb=${Date.now()}`);
+    const resp = await fetch(`${API_BASE}?blogName=${encodeURIComponent(blogName)}&lang=en&_cb=${CONSTANTS.cacheBuster}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     allCards = await resp.json();
     if (!Array.isArray(allCards)) throw new Error('Unexpected response format');
