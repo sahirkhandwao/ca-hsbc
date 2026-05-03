@@ -69,6 +69,28 @@ const NAME_REGEX = /^[a-zA-Z][a-zA-Z .'-]{1,48}[a-zA-Z .'-]$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
 // ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return '';
+}
+
+function getGaId() {
+  const gaCookie = getCookie('_ga') || '';
+  if (gaCookie) {
+    const parts = gaCookie.split('.');
+    if (parts.length >= 4) {
+      return `${parts[2]}.${parts[3]}`;
+    }
+  }
+  return '';
+}
+
+
+// ---------------------------------------------------------------------------
 // Config parser — reads EDS block table rows into a key/value map
 // ---------------------------------------------------------------------------
 function parseConfig(block) {
@@ -155,7 +177,7 @@ function buildForm(config) {
   const nameInput = el('input', {
     type: 'text',
     id: 'lf-name',
-    name: 'name',
+    name: 'fullName',
     className: 'lf-input',
     placeholder: 'Enter your name',
     required: true,
@@ -170,7 +192,7 @@ function buildForm(config) {
   const mobileInput = el('input', {
     type: 'tel',
     id: 'lf-mobile',
-    name: 'mobileNo',
+    name: 'mobileNumber',
     className: 'lf-input lf-mobile-input',
     placeholder: 'Enter your mobile number',
     required: true,
@@ -188,7 +210,7 @@ function buildForm(config) {
   const emailInput = el('input', {
     type: 'email',
     id: 'lf-email',
-    name: 'emaiID',
+    name: 'emailID',
     className: 'lf-input',
     placeholder: 'Enter your email',
     required: true,
@@ -213,7 +235,7 @@ function buildForm(config) {
   const consentCheckbox = el('input', {
     type: 'checkbox',
     id: 'lf-consent',
-    name: 'consent',
+    name: 'leadConsent',
     className: 'lf-consent-checkbox',
     required: true,
     checked: true,
@@ -326,7 +348,7 @@ function validateForm(form) {
   let valid = true;
 
   // Name
-  const nameInput = form.querySelector('[name="name"]');
+  const nameInput = form.querySelector('[name="fullName"]');
   if (nameInput) {
     const val = nameInput.value.trim();
     if (!val) {
@@ -341,7 +363,7 @@ function validateForm(form) {
   }
 
   // Mobile
-  const mobileInput = form.querySelector('[name="mobileNo"]');
+  const mobileInput = form.querySelector('[name="mobileNumber"]');
   const countrySelect = form.querySelector('[name="countryCode"]');
   if (mobileInput) {
     const val = mobileInput.value.trim();
@@ -361,7 +383,7 @@ function validateForm(form) {
   }
 
   // Email
-  const emailInput = form.querySelector('[name="emaiID"]');
+  const emailInput = form.querySelector('[name="emailID"]');
   if (emailInput) {
     const val = emailInput.value.trim();
     if (!val) {
@@ -376,7 +398,7 @@ function validateForm(form) {
   }
 
   // Consent
-  const consentCheckbox = form.querySelector('[name="consent"]');
+  const consentCheckbox = form.querySelector('[name="leadConsent"]');
   if (consentCheckbox && !consentCheckbox.checked) {
     const consentGroup = consentCheckbox.closest('.lf-consent-group');
     if (consentGroup) {
@@ -401,7 +423,7 @@ function validateForm(form) {
 // Consent toggle: custom checkbox + read more/less
 // ---------------------------------------------------------------------------
 function initConsentToggle(wrapper) {
-  const consentCheckbox = wrapper.querySelector('[name="consent"]');
+  const consentCheckbox = wrapper.querySelector('[name="leadConsent"]');
   const consentBox = wrapper.querySelector('.lf-consent-box');
   const consentLabel = wrapper.querySelector('.lf-consent-label');
 
@@ -463,24 +485,37 @@ function showSuccess(wrapper) {
 // ---------------------------------------------------------------------------
 async function submitLead(form) {
   const servletId = form.dataset.servletId || 'digital';
-  const endpoint = `https://dev.canarahsbclife.com/bin/chli/genericForm?servletID=${servletId}&_cb=${Date.now()}`;
-
+  const endpoint = `https://www.canarahsbclife.com/bin/chli/genericForm?servletID=${servletId}`;
 
   const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
 
-  // Append UTM params from URL if present
+  // Mapping/Formatting fields for API
+  const payload = {
+    ...data,
+    isQualified: true,
+    isOtpEnabled: false,
+    leadConsent: data.leadConsent === 'on' ? 'Yes' : 'No',
+    gaId: getGaId(),
+  };
+
+  // UTM handling
   const urlParams = new URLSearchParams(window.location.search);
-  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
-    if (urlParams.has(key)) formData.set(key, urlParams.get(key));
-  });
+  const utmSource = urlParams.get('utm_source') || 'Organic';
+  payload.utmSource = utmSource;
 
-  const body = new URLSearchParams(formData).toString();
+  ['utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
+    if (urlParams.has(key)) payload[key] = urlParams.get(key);
+  });
 
   try {
     const res = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return true;
@@ -527,9 +562,9 @@ function initFormInteractions(wrapper, config) {
 
     if (success) {
       // Dispatch analytics event before showing success state
-      const nameVal = form.querySelector('[name="name"]')?.value?.trim() || '';
-      const emailVal = form.querySelector('[name="emaiID"]')?.value?.trim() || '';
-      const mobileVal = form.querySelector('[name="mobileNo"]')?.value?.trim() || '';
+      const nameVal = form.querySelector('[name="fullName"]')?.value?.trim() || '';
+      const emailVal = form.querySelector('[name="emailID"]')?.value?.trim() || '';
+      const mobileVal = form.querySelector('[name="mobileNumber"]')?.value?.trim() || '';
       document.dispatchEvent(new CustomEvent('lead-form:submitted', {
         detail: {
           name: nameVal,
