@@ -1,4 +1,4 @@
-const SOURCE = 'https://dev.canarahsbclife.com/content/experience-fragments/chli/in/en/site/footer/master.html';
+const SOURCE = 'https://dev.canarahsbclife.com/content/experience-fragments/chli/in/en/site/footer/master.html' + `?_cb=${Date.now()}`;
 
 /* ─── Accordion / Collapse helper ─────────────────────────────────────────── */
 
