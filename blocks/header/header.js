@@ -1,4 +1,4 @@
-const SOURCE = '/static-html/header.html';
+const SOURCE = 'https://dev.canarahsbclife.com/content/experience-fragments/chli/in/en/site/chli_header/master.html';
 
 /* ─── Accordion / Collapse helper ─────────────────────────────────────────── */
 
