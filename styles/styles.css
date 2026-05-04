@@ -629,7 +629,7 @@ font-size: 20px;
    }
 
    .section.article-overview .default-content-wrapper ul {
-     padding: 0;
+     padding: 0 0 0 25px;
      margin: 10px 0 20px;
         gap: 25px 10px;
    }
@@ -639,7 +639,10 @@ font-size: 20px;
      font-size: 14px;
      color: #323232;
    }
-
+.section.article-overview .default-content-wrapper p:first-child{
+        padding-left: 23px;
+    margin-bottom: 10px;
+}
    .section.article-overview .default-content-wrapper ul li::before {
      width: 14px;
      height: 14px;

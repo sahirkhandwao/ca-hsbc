@@ -40,10 +40,6 @@ function initHeaderInteractions(block) {
       hamburgerMenu.classList.add('active');
       hamburgerMenu.removeAttribute('hidden');
     }
-    if (overlay) {
-      overlay.classList.remove('d-none');
-      overlay.classList.add('active');
-    }
     document.body.classList.add('menu-open');
   }
 
@@ -52,10 +48,6 @@ function initHeaderInteractions(block) {
     if (hamburgerBtn) hamburgerBtn.classList.remove('active');
     if (hamburgerMenu) {
       hamburgerMenu.classList.remove('active');
-    }
-    if (overlay) {
-      overlay.classList.add('d-none');
-      overlay.classList.remove('active');
     }
     document.body.classList.remove('menu-open');
   }

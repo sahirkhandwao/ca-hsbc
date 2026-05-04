@@ -849,7 +849,10 @@ body.search-open .header__notification--panel {
   overflow: hidden;
   transition: max-height var(--transition-med);
 }
-
+.header__accordion--collapse a{
+  color: #323232;
+  text-decoration: none;
+}
 .header__accordion--collapse.collapse:not(.show) {
   display: none;
 }
@@ -1283,8 +1286,8 @@ body.menu-open {
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    height: calc(100vh - 72px);
-    margin-top: 72px;
+    height: calc(100vh - 70px);
+    margin-top: 70px;
     min-width: 446px;
     opacity: 0;
     overflow-y: auto;
