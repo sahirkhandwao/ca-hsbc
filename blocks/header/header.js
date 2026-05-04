@@ -60,12 +60,16 @@ function initHeaderInteractions(block) {
     document.body.classList.remove('menu-open');
   }
 
-  if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMenu);
-  if (hamburgerClose) hamburgerClose.closest('div, button, span, svg') && hamburgerClose.closest('[class*="close"]')
-    ? hamburgerClose.closest('[class*="close"]').addEventListener('click', closeMenu)
-    : hamburgerClose.addEventListener('click', closeMenu);
+  // Hamburger button toggles open/close
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = hamburgerMenu && hamburgerMenu.classList.contains('active');
+      if (isOpen) closeMenu();
+      else openMenu();
+    });
+  }
 
-  // Also handle the close icon container
+  // Close icon inside the hamburger panel head
   const hamburgerHead = block.querySelector('.header__hamburger--head');
   if (hamburgerHead) {
     const closeBtn = hamburgerHead.querySelector('.header__hamburger--close-icon');
@@ -74,6 +78,23 @@ function initHeaderInteractions(block) {
       closeTarget.addEventListener('click', closeMenu);
     }
   }
+
+  // Also wire any standalone close-icon SVG directly (fallback)
+  if (hamburgerClose && !hamburgerHead) {
+    hamburgerClose.addEventListener('click', closeMenu);
+  }
+
+  // Close menu when clicking outside (on the overlay or page content)
+  document.addEventListener('click', (e) => {
+    if (
+      hamburgerMenu
+      && hamburgerMenu.classList.contains('active')
+      && !hamburgerMenu.contains(e.target)
+      && !(hamburgerBtn && hamburgerBtn.contains(e.target))
+    ) {
+      closeMenu();
+    }
+  });
 
   // ── 2. Overlay click closes menu and any open dropdowns ──────────────────
   if (overlay) {
@@ -200,30 +221,41 @@ function initHeaderInteractions(block) {
   const notifPanel = block.querySelector('.header__notification--panel');
 
   if (notifTrigger && notifPanel) {
-    notifTrigger.setAttribute('role', 'button');
-    notifTrigger.setAttribute('tabindex', '0');
+    // Apply data-notification-bgcolor to each item's background
+    notifPanel.querySelectorAll('.header__notification--item-background').forEach((section) => {
+      const bg = section.getAttribute('data-notification-bgcolor');
+      if (bg) section.style.backgroundColor = bg;
+    });
 
-    function toggleNotif(e) {
+    // Show on hover
+    let hideTimer;
+    notifTrigger.addEventListener('mouseenter', () => {
+      clearTimeout(hideTimer);
+      notifPanel.classList.add('show');
+    });
+    notifTrigger.addEventListener('mouseleave', () => {
+      hideTimer = setTimeout(() => notifPanel.classList.remove('show'), 200);
+    });
+    notifPanel.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+    notifPanel.addEventListener('mouseleave', () => {
+      hideTimer = setTimeout(() => notifPanel.classList.remove('show'), 200);
+    });
+
+    // Also support click / keyboard
+    notifTrigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = notifPanel.classList.contains('show');
-      notifPanel.classList.toggle('show', !isOpen);
-      notifTrigger.classList.toggle('active', !isOpen);
-    }
-
-    notifTrigger.addEventListener('click', toggleNotif);
+      notifPanel.classList.toggle('show');
+    });
     notifTrigger.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        toggleNotif(e);
+        notifPanel.classList.toggle('show');
       }
+      if (e.key === 'Escape') notifPanel.classList.remove('show');
     });
 
-    // Close notif panel on outside click
     document.addEventListener('click', (e) => {
-      if (!notifTrigger.contains(e.target) && !notifPanel.contains(e.target)) {
-        notifPanel.classList.remove('show');
-        notifTrigger.classList.remove('active');
-      }
+      if (!notifTrigger.contains(e.target)) notifPanel.classList.remove('show');
     });
   }
 
@@ -233,23 +265,62 @@ function initHeaderInteractions(block) {
   const closeSearch = block.querySelector('.close-search');
   const searchInput = searchWrapper ? searchWrapper.querySelector('.global__search--input') : null;
 
+  // Move close button into the input wrapper so it sits in the same flex row
+  if (closeSearch && searchWrapper) {
+    const inputWrapper = searchWrapper.querySelector('.global__search__input--wrapper');
+    if (inputWrapper && closeSearch.parentElement !== inputWrapper) {
+      inputWrapper.appendChild(closeSearch);
+    }
+  }
+
+  // Static HTML may include 'show' by default — remove it on init
+  if (searchWrapper) searchWrapper.classList.remove('show');
+
+  function openSearch() {
+    searchWrapper.classList.add('show');
+    document.body.classList.add('search-open');
+    // Measure panel height after render so overlay starts exactly below it
+    requestAnimationFrame(() => {
+      const panelBottom = searchWrapper.getBoundingClientRect().bottom;
+      document.documentElement.style.setProperty('--search-panel-bottom', `${panelBottom}px`);
+    });
+    if (searchInput) searchInput.focus();
+  }
+
+  function closeSearchPanel() {
+    searchWrapper.classList.remove('show');
+    document.body.classList.remove('search-open');
+    document.documentElement.style.removeProperty('--search-panel-bottom');
+  }
+
   if (searchTrigger && searchWrapper) {
     searchTrigger.addEventListener('click', () => {
-      searchWrapper.classList.toggle('show');
-      if (searchInput) searchInput.focus();
+      const isOpen = searchWrapper.classList.contains('show');
+      if (!isOpen) openSearch();
+      else closeSearchPanel();
     });
   }
 
   if (closeSearch && searchWrapper) {
-    closeSearch.addEventListener('click', () => {
-      searchWrapper.classList.remove('show');
-    });
+    closeSearch.addEventListener('click', closeSearchPanel);
   }
 
   // Close search on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && searchWrapper && searchWrapper.classList.contains('show')) {
-      searchWrapper.classList.remove('show');
+      closeSearchPanel();
+    }
+  });
+
+  // Clicking outside search panel closes it (via body::after pseudo-element backdrop)
+  document.addEventListener('click', (e) => {
+    if (
+      searchWrapper
+      && searchWrapper.classList.contains('show')
+      && !searchWrapper.contains(e.target)
+      && !searchTrigger.contains(e.target)
+    ) {
+      closeSearchPanel();
     }
   });
 
