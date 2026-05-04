@@ -127,6 +127,49 @@ function initAllCollapses(root) {
       }
 
       if (!panel) return;
+
+      // Mobile quick links mob: IDs #1–#4 clash with linklist mob IDs.
+      // Search within the closest accordion-item to get the right panel,
+      // and close all other open panels (one-open-at-a-time behaviour).
+      if (trigger.closest('.quick__links__mob')) {
+        const mobEl = trigger.closest('.quick__links__mob');
+        const closestItem = trigger.closest('.heading_icon_wrapper') || trigger.closest('.accordion-item');
+        const localPanel = closestItem
+          ? closestItem.querySelector(`[id="${targetSelector.slice(1)}"]`)
+          : panel;
+        const targetPanel = localPanel || panel;
+        const isOpen = targetPanel.classList.contains('show');
+
+        // Close all other open panels in the mob section
+        mobEl.querySelectorAll('.accordion-collapse.show').forEach((openPanel) => {
+          if (openPanel !== targetPanel) {
+            openPanel.classList.remove('show');
+            openPanel.classList.add('collapse');
+            // Reset the corresponding button
+            const siblingBtn = openPanel.closest('.heading_icon_wrapper')
+              && openPanel.closest('.heading_icon_wrapper').querySelector('.quick__Link__btn');
+            if (siblingBtn) {
+              siblingBtn.classList.add('collapsed');
+              siblingBtn.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+
+        // Toggle the clicked panel
+        if (isOpen) {
+          targetPanel.classList.remove('show');
+          targetPanel.classList.add('collapse');
+          trigger.classList.add('collapsed');
+          trigger.setAttribute('aria-expanded', 'false');
+        } else {
+          targetPanel.classList.remove('collapse');
+          targetPanel.classList.add('show');
+          trigger.classList.remove('collapsed');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+        return;
+      }
+
       toggleCollapse(trigger, panel);
     });
   });
