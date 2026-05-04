@@ -1285,7 +1285,10 @@ section.footer__section footer {
         gap: 0;
         border-bottom: none;
     }
-
+.section_container--primary{
+            padding-left: 1.25rem;
+        padding-right: 1.25rem;
+}
     /* Override the desktop max-width constraint on each linklist column */
     .footer__section .footer__top__section .footer__row--third > div,
     .footer__section .footer__top__section .footer__row--third .linklist {
@@ -1406,10 +1409,7 @@ section.footer__section footer {
     .quick__Link__btn {
         font-size: 0.8rem;
     }
-    .section_container--primary{
-            padding-left: 1.25rem;
-        padding-right: 1.25rem;
-}
+    
   
 }
 
