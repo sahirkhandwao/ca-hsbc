@@ -339,7 +339,7 @@
     ]
   },
   {
-    "id": "carousel-slide",
+    "id": "slide",
     "fields": [
       {
         "component": "reference",
