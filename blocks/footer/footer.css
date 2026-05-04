@@ -43,10 +43,12 @@ section.footer__section footer {
 
 /* ── Section container (max-width wrapper) ──────────────────── */
 .section_container--primary {
-    max-width: 1440px;
+    /* max-width: 1440px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    box-sizing: border-box;
+    box-sizing: border-box; */
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 /* ── TOP SECTION ────────────────────────────────────────────── */
@@ -1401,6 +1403,11 @@ section.footer__section footer {
     .quick__Link__btn {
         font-size: 0.8rem;
     }
+    .section_container--primary{
+            padding-left: 1.25rem;
+        padding-right: 1.25rem;
+}
+  
 }
 
 @media (min-width: 992px) {
@@ -1491,8 +1498,7 @@ section.footer__section footer {
         .info__wrapper:not(:last-child) {
         margin-bottom: 0.5rem;
     }
-
-    .footer__section
+  .footer__section
         .footer__top__section
         .footer__row--second
         .footer__contact__col--1

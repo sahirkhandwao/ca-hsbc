@@ -67,7 +67,12 @@
         --heading-font-size-xs: 18px;
     }
 }
-
+*{
+    border: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 .primary-btn-outline {
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -103,6 +108,15 @@ body {
 
 body.appear {
     display: block;
+}
+
+/* Neutralise third-party tracking pixels (e.g. Microsoft Bing UET batBeacon)
+   that inject fixed 20px transparent divs with z-index: 9999.
+   They are visually invisible but can block pointer events on the header. */
+body > div[style*="z-index: 9999"][style*="height: 20px"],
+body > div[id^="batBeacon"] {
+    pointer-events: none !important;
+    z-index: 0 !important;
 }
 
 header {
