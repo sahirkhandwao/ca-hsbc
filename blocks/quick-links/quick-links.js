@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import CONSTANTS from '../../utils/constants.js';
 
 /**
  * Quick Links Block — EDS vanilla JS
@@ -51,7 +52,7 @@ const DEFAULT_LINKS = [
     icon: 'contact', label: 'Contact us', href: '/customer-service/contact-details', target: '_blank',
   },
   {
-    icon: 'calculator', label: 'Calculator', href: 'https://www.canarahsbclife.com/tools-and-calculators', target: '_blank',
+    icon: 'calculator', label: 'Calculator', href: CONSTANTS.prodDomain + '/tools-and-calculators', target: '_blank',
   },
 ];
 
