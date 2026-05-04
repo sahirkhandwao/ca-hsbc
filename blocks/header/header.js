@@ -325,26 +325,37 @@ function initHeaderInteractions(block) {
   });
 
   // ── 7. Scroll-to-top button ───────────────────────────────────────────────
-  const scrollTopBtn = block.querySelector('#scrollTop') || document.querySelector('#scrollTop');
+  // Inject the button into <body> if it isn't already present
+  let scrollTopBtn = document.querySelector('#scrollTop');
 
-  if (scrollTopBtn) {
-    function handleScroll() {
-      if (window.scrollY > 300) {
-        scrollTopBtn.classList.remove('d-none');
-        scrollTopBtn.classList.add('visible');
-      } else {
-        scrollTopBtn.classList.add('d-none');
-        scrollTopBtn.classList.remove('visible');
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // initial check
-
-    scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+  if (!scrollTopBtn) {
+    scrollTopBtn = document.createElement('button');
+    scrollTopBtn.id = 'scrollTop';
+    scrollTopBtn.className = 'scroll-widget d-none';
+    scrollTopBtn.setAttribute('aria-label', 'Scroll to top');
+    scrollTopBtn.innerHTML = `
+      <svg class="scroll-widget__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>`;
+    document.body.appendChild(scrollTopBtn);
   }
+
+  function handleScroll() {
+    if (window.scrollY > 300) {
+      scrollTopBtn.classList.remove('d-none');
+      scrollTopBtn.classList.add('visible');
+    } else {
+      scrollTopBtn.classList.add('d-none');
+      scrollTopBtn.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll(); // initial check
+
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 }
 
 /* ─── Block entry point ────────────────────────────────────────────────────── */

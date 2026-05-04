@@ -882,9 +882,9 @@ body.search-open .header__notification--panel {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 73, 144, 0.35);
-  opacity: 0;
+  /* opacity: 0; */
   transform: translateY(8px);
-  transition: opacity var(--transition-med), transform var(--transition-med);
+  transition: all 0.3s ease;
 }
 
 #scrollTop.visible {
@@ -893,7 +893,10 @@ body.search-open .header__notification--panel {
 }
 
 #scrollTop.d-none {
-  display: none !important;
+  /* display: none !important; */
+  opacity: 0;
+  /* transform: translateY(8px); */
+  pointer-events: none !important;
 }
 
 #scrollTop svg {
