@@ -26,14 +26,14 @@
 .hero img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   object-position: right center;
 }
 
 .hero .hero-text {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  max-width: 51%;
   text-align: left;
   padding-top: 10%;
 }
@@ -71,10 +71,10 @@
   }
 
   .hero img {
-            opacity: 1;
-        object-position: right center;
-        height: auto;
-        object-fit: fill;
+    opacity: 1;
+    object-position: right center;
+    height: 100%;
+    object-fit: fill;
   }
 
   .hero .hero-text {
