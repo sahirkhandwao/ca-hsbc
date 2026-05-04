@@ -36,7 +36,10 @@
 section.footer__section {
     width: 100%;
 }
-
+.footer-wrapper{
+        margin: 0 auto;
+    max-width: 1438px;
+}
 section.footer__section footer {
     width: 100%;
 }
