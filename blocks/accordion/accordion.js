@@ -74,6 +74,37 @@ function wireAnimation(details) {
   });
 }
 
+function renderFAQSchema(block) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [],
+  };
+
+  const items = [...block.querySelectorAll('.accordion-item')];
+  items.forEach((item) => {
+    const question = item.querySelector('.accordion-item-label');
+    const answer = item.querySelector('.accordion-item-body');
+    if (question && answer) {
+      schema.mainEntity.push({
+        '@type': 'Question',
+        name: question.textContent.trim(),
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: answer.innerHTML.replace(/\s+/g, ' ').trim(),
+        },
+      });
+    }
+  });
+
+  if (schema.mainEntity.length > 0) {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.innerHTML = JSON.stringify(schema);
+    document.head.append(script);
+  }
+}
+
 export default function decorate(block) {
   [...block.children].forEach((row) => {
     const label = row.children[0];
@@ -96,6 +127,10 @@ export default function decorate(block) {
   block.querySelectorAll('.accordion-item').forEach(wireAnimation);
 
   const items = [...block.querySelectorAll('.accordion-item')];
+
+  // Render FAQ Schema
+  renderFAQSchema(block);
+
   if (items.length <= INITIAL_VISIBLE) return;
 
   items.forEach((item, i) => {
