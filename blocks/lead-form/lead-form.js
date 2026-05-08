@@ -8,7 +8,7 @@
  *   section-name, servlet-id, utm-cohort, recaptcha
  */
 
-import CONSTANTS from "../../utils/constants.js";
+import CONSTANTS from "../../scripts/utils/constants.js";
 
 // ---------------------------------------------------------------------------
 // Country-code list (matches source page dropdown order)

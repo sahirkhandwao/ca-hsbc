@@ -1,5 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import CONSTANTS from '../../utils/constants.js';
+import CONSTANTS from '../../scripts/utils/constants.js';
 
 /**
  * Quick Links Block — EDS vanilla JS

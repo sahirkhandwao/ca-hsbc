@@ -1,4 +1,4 @@
-import CONSTANTS from "../../utils/constants.js";
+import CONSTANTS from "../../scripts/utils/constants.js";
 
 const SOURCE = CONSTANTS.devDomain + '/content/experience-fragments/chli/in/en/site/chli_header/master.html' + `?_cb=${CONSTANTS.cacheBuster}`;
 
