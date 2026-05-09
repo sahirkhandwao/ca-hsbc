@@ -58,6 +58,8 @@ function initHeaderInteractions(block) {
       const isOpen = hamburgerMenu && hamburgerMenu.classList.contains('active');
       if (isOpen) closeMenu();
       else openMenu();
+      // Analytics: fire hamburgerMenuClick on every toggle
+      document.dispatchEvent(new CustomEvent('header:hamburger-toggle'));
     });
   }
 
@@ -348,6 +350,14 @@ function initHeaderInteractions(block) {
   scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // ── Analytics: Logo click ────────────────────────────────────────────────
+  const logoLink = block.querySelector('.header__logo a, a[href="/"], a[href="' + window.location.origin + '/"]');
+  if (logoLink) {
+    logoLink.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('header:logo-click', { detail: { section: 'Header_Logo' } }));
+    });
+  }
 }
 
 /* ─── Block entry point ────────────────────────────────────────────────────── */
