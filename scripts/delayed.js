@@ -69,15 +69,15 @@ function onIdleAfter(fn, delay) {
 // Tier 1 — fire at first idle slot (no extra delay beyond the 3 s from loadDelayed)
 // ---------------------------------------------------------------------------
 onIdle(() => {
-  // ── 1. Google Tag Manager (GTM-5G46XDD) ──────────────────────────────────
+  // ── 1. Google Tag Manager (GTM-WTFT6D3F) ──────────────────────────────────
   // Inline snippet + noscript fallback. GTM must be first so its tags fire.
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-  loadScript('https://www.googletagmanager.com/gtm.js?id=GTM-5G46XDD');
+  loadScript('https://www.googletagmanager.com/gtm.js?id=GTM-WTFT6D3F');
 
   // noscript fallback (harmless in JS context; browsers ignore <noscript> here)
   const ns = document.createElement('noscript');
-  ns.innerHTML = '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G46XDD" height="0" width="0" style="display:none;visibility:hidden"></iframe>';
+  ns.innerHTML = '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTFT6D3F" height="0" width="0" style="display:none;visibility:hidden"></iframe>';
   document.body.prepend(ns);
 
   // ── 2–4. GA4 + Google Ads + Floodlight (single gtag.js library) ──────────
