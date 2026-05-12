@@ -269,6 +269,17 @@ export function trackLeadFormSubmit({
 }
 
 // ---------------------------------------------------------------------------
+// Event: Expand (FAQ accordion expand)
+// ---------------------------------------------------------------------------
+export function trackFAQExpand(question) {
+  push('Expand', {
+    ButtonName: question,
+    Question: question,
+    PageSection: 'Frequently Asked Questions',
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Auto-wiring helpers
 // ---------------------------------------------------------------------------
 
@@ -477,6 +488,22 @@ function wireNavCTAs() {
   });
 }
 
+/** Wire FAQs (Accordion items) */
+function wireFAQs() {
+  document.querySelectorAll('.accordion-item-label').forEach((label) => {
+    if (label.dataset.analyticsWired) return;
+    label.dataset.analyticsWired = '1';
+    label.addEventListener('click', () => {
+      const details = label.closest('details');
+      // Only track when it's being opened (accordion.js uses preventDefault, 
+      // so details.open reflects the state BEFORE toggle)
+      if (details && !details.hasAttribute('open')) {
+        trackFAQExpand(label.textContent.trim());
+      }
+    });
+  });
+}
+
 // ---------------------------------------------------------------------------
 // init — called from scripts.js after blocks are decorated
 // ---------------------------------------------------------------------------
@@ -498,6 +525,7 @@ export function initAnalytics() {
     wireLeadForm();
     wireLeadFormSubmit();
     wireNavCTAs();
+    wireFAQs();
 
     // Re-wire after dynamic content loads (load-more appending cards, etc.)
     const main = document.querySelector('main');
@@ -507,6 +535,7 @@ export function initAnalytics() {
         wireLoadMore();
         wirePopularSearches();
         wireCategoryLinks();
+        wireFAQs();
       });
       mo.observe(main, { childList: true, subtree: true });
     }
