@@ -497,9 +497,11 @@ function wireFAQs() {
       const details = label.closest('details');
       // Only track when it's being opened (accordion.js uses preventDefault, 
       // so details.open reflects the state BEFORE toggle)
-      if (details && !details.hasAttribute('open')) {
-        trackFAQExpand(label.textContent.trim());
-      }
+      setTimeout(() => {
+        if (details && !details.hasAttribute('open')) {
+          trackFAQExpand(label.textContent.trim());
+        }
+      }, 500);
     });
   });
 }
