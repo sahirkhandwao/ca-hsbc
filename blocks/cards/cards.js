@@ -62,8 +62,31 @@ export default function decorate(block) {
     img.closest('picture').replaceWith(optimizedPic);
   });
 
-  /* wrap each li's contents in an <a> so the whole card is clickable */
+  /* wrap each li's contents in an <a> so the whole card is clickable.
+     For top-selling-plans the CTA button is extracted from the authored
+     link and added as a direct flex child of the card body to avoid
+     nested <a> elements and ensure margin-top:auto works correctly. */
+  const isTopSellingPlans = block.classList.contains('top-selling-plans');
   ul.querySelectorAll(':scope > li').forEach((li) => {
+    if (isTopSellingPlans) {
+      const cardBody = li.querySelector('.cards-card-body');
+      if (cardBody) {
+        const authoredLink = li.querySelector('a[href]');
+        const btn = document.createElement('a');
+        btn.href = authoredLink ? authoredLink.href : '#';
+        btn.className = 'know-more-btn';
+        btn.textContent = (authoredLink && authoredLink.textContent.trim()) || 'Know More';
+        if (authoredLink) {
+          const linkParent = authoredLink.parentElement;
+          authoredLink.remove();
+          if (linkParent && linkParent !== cardBody && !linkParent.textContent.trim()) {
+            linkParent.remove();
+          }
+        }
+        cardBody.append(btn);
+      }
+      return;
+    }
     const firstLink = li.querySelector('a[href]');
     if (!firstLink) return;
     const anchor = document.createElement('a');

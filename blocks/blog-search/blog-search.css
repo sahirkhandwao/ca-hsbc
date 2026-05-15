@@ -23,6 +23,7 @@
   flex-direction: row;
   align-items: flex-end;
   gap: 1.5rem;
+  justify-content: space-between;
 }
 
 /* ============================================================
@@ -38,6 +39,7 @@
 /* Search input takes most of the width */
 .blog-search-field--input {
   flex: 1 1 auto;
+  max-width: 50%;
 }
 
 /* Year select — fixed width on desktop */
@@ -269,7 +271,9 @@
   .blog-search {
     padding: 12px 0 20px;
   }
-
+.blog-search-field--input{
+  max-width: 100%;
+}
   .blog-search-row {
     gap: 10px;
     align-items: stretch;

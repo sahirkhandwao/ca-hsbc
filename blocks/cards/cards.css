@@ -353,12 +353,6 @@
     box-sizing: border-box;
 }
 
-.cards.top-selling-plans > ul > li {
-    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    transform-origin: center;
-    will-change: transform;
-}
-
 .cards.top-selling-plans > ul > li:hover {
     background-color: #323232 !important;
     box-shadow: 0 12px 30px rgb(0 0 0 / 25%);
@@ -368,7 +362,7 @@
     height: auto;
 }
 
-.cards.top-selling-plans > ul > li > a.cards-card-link {
+.cards.top-selling-plans > ul > li > .cards-card-link {
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -381,7 +375,7 @@
     width: 100%;
 }
 
-.cards.top-selling-plans > ul > li:hover > a.cards-card-link {
+.cards.top-selling-plans > ul > li:hover > .cards-card-link {
     min-height: 0;
     height: auto;
 }
@@ -468,8 +462,28 @@
     -webkit-mask: url("/icons/check-circle-bg.svg") no-repeat center / contain;
 }
 
-.cards.top-selling-plans .cards-card-body a.button {
-    display: none;
+.cards.top-selling-plans .cards-card-body .know-more-btn {
+    display: inline-block;
+    margin-top: auto;
+    align-self: center;
+    background: #fff;
+    color: #323232;
+    border:1.5px solid #ccc;
+    border-radius:8px;
+    padding: 9px 30px;
+    font-family: Satoshi, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    width: fit-content;
+}
+
+.cards.top-selling-plans .cards-card-body .know-more-btn:hover {
+    /* background: #e3530f;
+    color: #fff;
+    border-color: #e3530f; */
 }
 
 @media (max-width: 767px) {
@@ -503,14 +517,14 @@
         opacity: 1;
     }
 
-    .cards.top-selling-plans > ul > li > a.cards-card-link {
+    .cards.top-selling-plans > ul > li > .cards-card-link {
         min-height: 10.1875rem;
         padding: 1.125rem 1rem 1.25rem;
         background-color: #7a7a7a;
         box-shadow: none;
     }
 
-    .cards.top-selling-plans > ul > li:hover > a.cards-card-link {
+    .cards.top-selling-plans > ul > li:hover > .cards-card-link {
         min-height: 10.1875rem;
     }
 

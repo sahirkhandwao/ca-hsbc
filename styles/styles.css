@@ -509,7 +509,10 @@ font-size: 20px;
   font-size: 14px;
   line-height: 1.4;
 }
-
+.section.article-overview .default-content-wrapper ul li a{
+    text-decoration: none;
+    color: #7a7a7a;
+}
 .section.article-overview .default-content-wrapper ul li:first-child {
   padding-left: 0;
 }
