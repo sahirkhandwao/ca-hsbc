@@ -63,14 +63,23 @@ function animateClose(details, body) {
   body.addEventListener('transitionend', done);
 }
 
-function wireAnimation(details) {
+function wireAnimation(details, block) {
   const summary = details.querySelector('summary');
   const body = details.querySelector('.accordion-item-body');
   if (!summary || !body) return;
   summary.addEventListener('click', (e) => {
     e.preventDefault();
-    if (details.hasAttribute('open')) animateClose(details, body);
-    else animateOpen(details, body);
+    if (details.hasAttribute('open')) {
+      animateClose(details, body);
+    } else {
+      // Collapse any currently open item before opening this one
+      block.querySelectorAll('.accordion-item[open]').forEach((openItem) => {
+        if (openItem === details) return;
+        const openBody = openItem.querySelector('.accordion-item-body');
+        if (openBody) animateClose(openItem, openBody);
+      });
+      animateOpen(details, body);
+    }
   });
 }
 
@@ -124,7 +133,7 @@ export default function decorate(block) {
     row.replaceWith(details);
   });
 
-  block.querySelectorAll('.accordion-item').forEach(wireAnimation);
+  block.querySelectorAll('.accordion-item').forEach((item) => wireAnimation(item, block));
 
   const items = [...block.querySelectorAll('.accordion-item')];
 

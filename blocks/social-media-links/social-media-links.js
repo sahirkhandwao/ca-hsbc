@@ -1,6 +1,8 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  block.id = 'social-share';
+
   const rows = [...block.children];
   const titleRow = rows[0];
   const itemRows = rows.slice(1);

@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   font-family: Satoshi, sans-serif;
+  scroll-margin-top: calc(var(--header-height, 70px) + 20px);
 }
 
 .social-media-links .social-media-links-wrap {

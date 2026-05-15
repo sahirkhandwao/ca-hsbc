@@ -26,6 +26,7 @@ export default function decorate(block) {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
     while (row.firstElementChild) li.append(row.firstElementChild);
+    const isTopSelling = block.classList.contains('top-selling-plans');
     const nonImageDivs = [...li.children].filter(
       (div) => !(div.children.length === 1 && div.querySelector('picture')),
     );
@@ -35,6 +36,10 @@ export default function decorate(block) {
       } else if (nonImageDivs.length > 1 && div === nonImageDivs[0]) {
         div.className = 'cards-card-tag';
         if (!div.textContent.trim()) div.remove();
+      } else if (isTopSelling && div === nonImageDivs[nonImageDivs.length - 2]) {
+        div.className = 'cards-cta-text';
+      } else if (isTopSelling && div === nonImageDivs[nonImageDivs.length - 1]) {
+        div.className = 'cards-cta-url';
       } else {
         div.className = 'cards-card-body';
       }
@@ -62,8 +67,46 @@ export default function decorate(block) {
     img.closest('picture').replaceWith(optimizedPic);
   });
 
-  /* wrap each li's contents in an <a> so the whole card is clickable */
+  /* wrap each li's contents in an <a> so the whole card is clickable.
+     For top-selling-plans the CTA button is extracted from the authored
+     link and added as a direct flex child of the card body to avoid
+     nested <a> elements and ensure margin-top:auto works correctly. */
+  const isTopSellingPlans = block.classList.contains('top-selling-plans');
   ul.querySelectorAll(':scope > li').forEach((li) => {
+    if (isTopSellingPlans) {
+      const cardBody = li.querySelector('.cards-card-body');
+      if (cardBody) {
+        const ctaTextEl = li.querySelector('.cards-cta-text');
+        const ctaUrlEl = li.querySelector('.cards-cta-url');
+        const authoredLink = li.querySelector('a[href]');
+
+        const btnText = ctaTextEl?.textContent.trim()
+          || authoredLink?.textContent.trim()
+          || 'Know More';
+        const btnHref = ctaUrlEl?.textContent.trim()
+          || authoredLink?.href
+          || '#';
+
+        const btn = document.createElement('a');
+        btn.href = btnHref;
+        btn.className = 'know-more-btn';
+        btn.textContent = btnText;
+
+        // Clean up source cells
+        ctaTextEl?.remove();
+        ctaUrlEl?.remove();
+        if (authoredLink) {
+          const linkParent = authoredLink.parentElement;
+          authoredLink.remove();
+          if (linkParent && linkParent !== cardBody && !linkParent.textContent.trim()) {
+            linkParent.remove();
+          }
+        }
+
+        cardBody.append(btn);
+      }
+      return;
+    }
     const firstLink = li.querySelector('a[href]');
     if (!firstLink) return;
     const anchor = document.createElement('a');
@@ -75,6 +118,17 @@ export default function decorate(block) {
   });
 
   block.replaceChildren(ul);
+
+  // Dynamically measure and pin each top-selling-plans card height so hover
+  // expansion is based on the card's actual rendered size, not a fixed rem value.
+  if (isTopSellingPlans) {
+    requestAnimationFrame(() => {
+      block.querySelectorAll(':scope > ul > li').forEach((li) => {
+        li.style.setProperty('--card-h', `${li.offsetHeight}px`);
+      });
+    });
+  }
+
   if (isBlogCard) {
     const loadMoreWrap = document.createElement('div');
     loadMoreWrap.className = 'cards-loadmore-wrap';

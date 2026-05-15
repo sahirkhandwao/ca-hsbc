@@ -38,8 +38,8 @@
   padding-top: 10%;
 }
 
-.hero .hero-text h2,
-.hero .hero-text h3 {
+.hero .hero-text h1,
+.hero .hero-text h2 {
   color: #0a0a0a;
   font-size: 28px;
   font-weight: 700;
@@ -82,8 +82,8 @@
           padding: 0;
   }
 
-  .hero .hero-text h2,
-  .hero .hero-text h3 {
+  .hero .hero-text h1,
+  .hero .hero-text h2 {
     font-size: 22px;
     margin: 0 0 12px;
     line-height: 120%;
