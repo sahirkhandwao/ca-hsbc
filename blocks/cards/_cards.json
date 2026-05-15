@@ -83,6 +83,20 @@
           "value": "",
           "label": "Text",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "ctaText",
+          "value": "Know More",
+          "label": "CTA Button Text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "ctaUrl",
+          "value": "",
+          "label": "CTA Button URL",
+          "valueType": "string"
         }
       ]
     }

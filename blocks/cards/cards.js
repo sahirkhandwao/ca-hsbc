@@ -26,6 +26,7 @@ export default function decorate(block) {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
     while (row.firstElementChild) li.append(row.firstElementChild);
+    const isTopSelling = block.classList.contains('top-selling-plans');
     const nonImageDivs = [...li.children].filter(
       (div) => !(div.children.length === 1 && div.querySelector('picture')),
     );
@@ -35,6 +36,10 @@ export default function decorate(block) {
       } else if (nonImageDivs.length > 1 && div === nonImageDivs[0]) {
         div.className = 'cards-card-tag';
         if (!div.textContent.trim()) div.remove();
+      } else if (isTopSelling && div === nonImageDivs[nonImageDivs.length - 2]) {
+        div.className = 'cards-cta-text';
+      } else if (isTopSelling && div === nonImageDivs[nonImageDivs.length - 1]) {
+        div.className = 'cards-cta-url';
       } else {
         div.className = 'cards-card-body';
       }
@@ -71,11 +76,25 @@ export default function decorate(block) {
     if (isTopSellingPlans) {
       const cardBody = li.querySelector('.cards-card-body');
       if (cardBody) {
+        const ctaTextEl = li.querySelector('.cards-cta-text');
+        const ctaUrlEl = li.querySelector('.cards-cta-url');
         const authoredLink = li.querySelector('a[href]');
+
+        const btnText = ctaTextEl?.textContent.trim()
+          || authoredLink?.textContent.trim()
+          || 'Know More';
+        const btnHref = ctaUrlEl?.textContent.trim()
+          || authoredLink?.href
+          || '#';
+
         const btn = document.createElement('a');
-        btn.href = authoredLink ? authoredLink.href : '#';
+        btn.href = btnHref;
         btn.className = 'know-more-btn';
-        btn.textContent = (authoredLink && authoredLink.textContent.trim()) || 'Know More';
+        btn.textContent = btnText;
+
+        // Clean up source cells
+        ctaTextEl?.remove();
+        ctaUrlEl?.remove();
         if (authoredLink) {
           const linkParent = authoredLink.parentElement;
           authoredLink.remove();
@@ -83,6 +102,7 @@ export default function decorate(block) {
             linkParent.remove();
           }
         }
+
         cardBody.append(btn);
       }
       return;
