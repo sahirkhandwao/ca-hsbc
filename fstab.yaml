@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p102857-e1312424.adobeaemcloud.com/bin/franklin.delivery/sahirkhandwao/ca-hsbc/main"
+    url: "https://author-p133662-e1381076.adobeaemcloud.com/bin/franklin.delivery/sahirkhandwao/ca-hsbc/main"
     type: "markup"
     suffix: ".html"
