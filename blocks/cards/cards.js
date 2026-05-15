@@ -118,6 +118,17 @@ export default function decorate(block) {
   });
 
   block.replaceChildren(ul);
+
+  // Dynamically measure and pin each top-selling-plans card height so hover
+  // expansion is based on the card's actual rendered size, not a fixed rem value.
+  if (isTopSellingPlans) {
+    requestAnimationFrame(() => {
+      block.querySelectorAll(':scope > ul > li').forEach((li) => {
+        li.style.setProperty('--card-h', `${li.offsetHeight}px`);
+      });
+    });
+  }
+
   if (isBlogCard) {
     const loadMoreWrap = document.createElement('div');
     loadMoreWrap.className = 'cards-loadmore-wrap';

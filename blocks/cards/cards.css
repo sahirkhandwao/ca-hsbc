@@ -325,40 +325,35 @@
 
 .cards.top-selling-plans > ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, 25%));
+    grid-template-columns: repeat(auto-fit, 300px);
     justify-content: center;
     justify-items: center;
     align-items: start;
     gap: 1.25rem;
     margin: 2.625rem auto 0;
-    min-height: 404px;
     max-width: 1200px;
     padding: 0 1rem;
-    transition: min-height 0.2s ease-in-out;
 }
 
 .cards.top-selling-plans > ul > li {
     position: relative;
-    width: 100%;
+    width: 300px;
     padding: 0.875rem;
     background-color: #7a7a7a;
     border: 0;
     border-radius: 0;
     box-shadow: none;
     overflow: visible;
-    height: auto;
-    min-height: 23.5rem;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-    transform-origin: center bottom;
-    will-change: transform;
-    backface-visibility: hidden;
+    height: 404px;
     box-sizing: border-box;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, height 0.2s ease-in-out;
 }
 
+/* On hover: shift 27px up via translateY + grow 54px taller = 27px above + 27px below */
 .cards.top-selling-plans > ul > li:hover {
     background-color: #323232 !important;
-    box-shadow: 0 12px 30px rgb(0 0 0 / 25%);
-    transform: scale(1.10);
+    transform: translateY(-27px);
+    height: 458px;
     z-index: 2;
 }
 
@@ -366,18 +361,13 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    min-height: 23.5rem;
+    height: 100%;
     color: inherit;
     text-decoration: none;
     box-shadow: -6px -6px 24px 0 hsl(0deg 0% 100% / 0.35);
-    transition: min-height 0.2s ease-in-out;
     background: transparent;
     width: 100%;
-}
-
-.cards.top-selling-plans > ul > li:hover > .cards-card-link {
-    min-height: 26.9375rem;
-    height: auto;
+    box-sizing: border-box;
 }
 
 .cards.top-selling-plans .cards-card-image {
@@ -391,13 +381,10 @@
     flex-direction: column;
     gap: 0;
     border: 1px solid #ffc20e;
-    min-height: 23.5rem;
+    height: 100%;
     box-shadow: -6px -6px 24px 0 hsla(0, 0%, 100%, .35);
-    transition: background-color .2s ease-in-out, min-height 0.2s ease-in-out;
-}
-
-.cards.top-selling-plans > ul > li:hover .cards-card-body {
-    min-height: 0;
+    transition: background-color 0.2s ease-in-out;
+    box-sizing: border-box;
 }
 
 .cards.top-selling-plans .cards-card-body h3,
@@ -448,7 +435,7 @@
     padding-left: 30px;
     color: #fff;
     font-family: Satoshi, sans-serif;
-    font-size: 0.9375rem;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
     box-sizing: border-box;
