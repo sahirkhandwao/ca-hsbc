@@ -21,10 +21,20 @@ export default function decorate(block) {
 
   if (desktopPicture) {
     desktopPicture.classList.add('hero-picture-desktop');
+    const img = desktopPicture.querySelector('img');
+    if (img) {
+      img.setAttribute('loading', 'eager');
+      img.setAttribute('fetchpriority', 'high');
+    }
     block.appendChild(desktopPicture);
   }
   if (mobilePicture) {
     mobilePicture.classList.add('hero-picture-mobile');
+    const img = mobilePicture.querySelector('img');
+    if (img) {
+      img.setAttribute('loading', 'eager');
+      img.setAttribute('fetchpriority', 'high');
+    }
     block.appendChild(mobilePicture);
   }
 

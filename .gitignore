@@ -7,3 +7,13 @@ helix-importer-ui
 .DS_Store
 *.bak
 .idea
+
+# Personals
+.github
+.agent
+.agents
+openspec
+graphify-out
+.rtk
+CLAUDE.md
+.claude
